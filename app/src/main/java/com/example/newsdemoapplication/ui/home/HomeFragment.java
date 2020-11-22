@@ -1,8 +1,10 @@
 package com.example.newsdemoapplication.ui.home;
 
 import android.app.Service;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.newsdemoapplication.NewsVo;
@@ -28,9 +31,12 @@ import com.example.newsdemoapplication.adapter.NewsContentAdapter;
 import com.example.newsdemoapplication.callback.OnItemClickListener;
 import com.example.newsdemoapplication.ui.dashboard.ItemHelper;
 import com.example.newsdemoapplication.callback.ItemDragHelperCallBack;
+import com.example.newsdemoapplication.ui.login.LoginActivity;
 import com.example.newsdemoapplication.util.CommonUtils;
 import com.example.newsdemoapplication.view.DragRecycleView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.lxj.xpopup.XPopup;
+import com.lxj.xpopup.interfaces.OnInputConfirmListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -63,6 +69,8 @@ public class HomeFragment extends Fragment {
     List<NewsVo> mData =new ArrayList<>();
     List<String> list=new ArrayList<>();
     private int singleLineHeight;
+    private ListDragAdapter.MyDragViewHolder oldViewHolder;
+    private NewsContentAdapter mContenAdapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -74,6 +82,9 @@ public class HomeFragment extends Fragment {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
+                textView.setOnClickListener(v -> {
+                    startActivity( new Intent(getContext(),LoginActivity.class));
+                });
             }
         });
         return root;
@@ -88,6 +99,10 @@ public class HomeFragment extends Fragment {
         initTitleRecycleView();
         initContentRecycleView();
         initBottomSheetDiaLog();
+        initLoginBtn();
+    }
+
+    private void initLoginBtn() {
     }
 
     private void initTopContainer() {
@@ -131,9 +146,11 @@ public class HomeFragment extends Fragment {
         titleAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
+                if(oldViewHolder!=null) oldViewHolder.setSelected(false);
                 ((ListDragAdapter.MyDragViewHolder)mTitleRecycleView.getChildViewHolder(view)).setSelected(true);
                 currSelectedPosition = position;
-                Util.Loge(String.format("%d",currSelectedPosition));
+                oldViewHolder = ((ListDragAdapter.MyDragViewHolder)mTitleRecycleView.getChildViewHolder(view));
+                contentScrollToPosition(position);
             }
 
             @Override
@@ -157,8 +174,23 @@ public class HomeFragment extends Fragment {
 
             }
 
+
             @Override
-            public void itemSelected() {
+            public void itemClear(int position) {
+                mContenAdapter.notifyDataSetChanged();
+                mContentRecycleView.postDelayed(() -> contentScrollToPosition(position),50);
+
+            }
+
+            @Override
+            public void itemSelected(int position) {
+                if(position!=currSelectedPosition){
+                    currSelectedPosition =position;
+                    if(oldViewHolder!=null)
+                        oldViewHolder.setSelected(false);
+                    oldViewHolder = (ListDragAdapter.MyDragViewHolder) mTitleRecycleView.findViewHolderForAdapterPosition(position);
+                }
+
                 Vibrator vib = (Vibrator) getContext().getSystemService(Service.VIBRATOR_SERVICE);
                 vib.vibrate(150);
             }
@@ -184,6 +216,13 @@ public class HomeFragment extends Fragment {
                 currTitleState =COMPLETE_EXPANDED;
             }
         },50);
+    }
+
+    private void contentScrollToPosition(int position) {
+        LinearLayoutManager mLayoutManager =
+                (LinearLayoutManager) mContentRecycleView.getLayoutManager();
+        mLayoutManager.scrollToPositionWithOffset(position,0);
+//        mContentRecycleView.offsetTopAndBottom(0);
     }
 
     private void showSingLine() {
@@ -234,13 +273,52 @@ public class HomeFragment extends Fragment {
 
     private void initContentRecycleView() {
         mContentRecycleView = getView().findViewById(R.id.rv_content_list);
-        mContentRecycleView.setAdapter(new NewsContentAdapter(getContext(),list));
+        mContenAdapter =new NewsContentAdapter(getContext(),list);
+        mContentRecycleView.setAdapter(mContenAdapter);
+        mContentRecycleView.setOnScrollChangeListener((v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+            LinearLayoutManager linearLayoutManager = (LinearLayoutManager) mContentRecycleView.getLayoutManager();
+            int topPosition =linearLayoutManager.findFirstVisibleItemPosition();
+            if(topPosition>=0&&topPosition!=currSelectedPosition){
+                if(oldViewHolder!=null){
+                    oldViewHolder.setSelected(false);
+                }
+                oldViewHolder= (ListDragAdapter.MyDragViewHolder) mTitleRecycleView.findViewHolderForAdapterPosition(topPosition);
+                if(oldViewHolder!=null)
+                oldViewHolder.setSelected(true);
+
+                currSelectedPosition=topPosition;
+                Log.e("TAG", "initContentRecycleView: "+ topPosition);
+                titleLayoutManager.scrollToPositionWithOffset(topPosition,0);
+            }
+        });
     }
     private void initBottomSheetDiaLog() {
         bottomSheetDialog =new BottomSheetDialog(getContext());
         bottomSheetDialog.setContentView(R.layout.botton_dialog);
         bottomSheetDialog.setCancelable(true);
         bottomSheetDialog.findViewById(R.id.tv_cancel).setOnClickListener(v -> {
+            list.remove(currSelectedPosition);
+            titleAdapter.notifyItemChanged(currSelectedPosition);
+            mContenAdapter.notifyItemChanged(currSelectedPosition);
+            bottomSheetDialog.dismiss(); }
+        );
+        bottomSheetDialog.findViewById(R.id.tv_rename).setOnClickListener(v -> {
+            Log.e("TAG", "initBottomSheetDiaLog: "+currSelectedPosition );
+            bottomSheetDialog.dismiss();
+                    new XPopup.Builder(getContext()).asInputConfirm("重命名", "请输入内容。",
+                            text -> {
+                                list.set(currSelectedPosition,text);
+                                titleAdapter.notifyItemChanged(currSelectedPosition);
+                                mContenAdapter.notifyItemChanged(currSelectedPosition);
+                            })
+                            .show();
+        }
+        );
+        bottomSheetDialog.findViewById(R.id.tv_delete).setOnClickListener(v -> {
+            Log.e("TAG", "initBottomSheetDiaLog: "+currSelectedPosition );
+            list.remove(currSelectedPosition);
+            titleAdapter.notifyItemRemoved(currSelectedPosition);
+            mContenAdapter.notifyItemRemoved(currSelectedPosition);
             bottomSheetDialog.dismiss(); }
         );
     }

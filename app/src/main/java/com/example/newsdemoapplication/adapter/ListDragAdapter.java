@@ -61,6 +61,9 @@ public class ListDragAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return list;
     }
 
+    public void setSelectPosition(int topPosition) {
+    }
+
     public static class MyDragViewHolder extends RecyclerView.ViewHolder {
 
         private TextView tvTag;

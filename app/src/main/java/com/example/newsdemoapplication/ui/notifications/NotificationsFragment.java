@@ -102,9 +102,14 @@ public class NotificationsFragment extends Fragment {
             }
 
             @Override
-            public void itemSelected() {
+            public void itemSelected(int position) {
                 Vibrator vib = (Vibrator) getContext().getSystemService(Service.VIBRATOR_SERVICE);
                 vib.vibrate(150);
+            }
+
+            @Override
+            public void itemClear(int position) {
+
             }
         }));
         //关联RecyclerView

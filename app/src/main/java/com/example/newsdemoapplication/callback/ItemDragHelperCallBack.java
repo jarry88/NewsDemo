@@ -79,6 +79,8 @@ public class ItemDragHelperCallBack extends ItemTouchHelper.Callback {
             // Let the view holder know that this item is being moved or dragged
             ListDragAdapter.MyDragViewHolder itemViewHolder = (ListDragAdapter.MyDragViewHolder) viewHolder;
             itemViewHolder.setSelected(false);
+
+            ItemHelper.itemClear(viewHolder.getAdapterPosition());
             //选中状态回调
 //                itemViewHolder.onItemSelected();
         }
@@ -96,7 +98,7 @@ public class ItemDragHelperCallBack extends ItemTouchHelper.Callback {
                 // Let the view holder know that this item is being moved or dragged
                 ListDragAdapter.MyDragViewHolder itemViewHolder = (ListDragAdapter.MyDragViewHolder) viewHolder;
                 itemViewHolder.setSelected(true);
-                ItemHelper.itemSelected();
+                ItemHelper.itemSelected(viewHolder.getAdapterPosition());
 
                 //选中状态回调
 //                itemViewHolder.onItemSelected();
