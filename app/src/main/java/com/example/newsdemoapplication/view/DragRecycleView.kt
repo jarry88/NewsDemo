@@ -19,6 +19,7 @@ class DragRecycleView @JvmOverloads constructor(context: Context, attributes: At
             Log.e("TAG", "$diff: ", )
             return  diff>longPressDuration
         }
+    var count =0;
     var startX =0f
     var startY =0f
     var currX= 0f
@@ -39,7 +40,7 @@ class DragRecycleView @JvmOverloads constructor(context: Context, attributes: At
                 MotionEvent.ACTION_DOWN -> {
                     startX = event.rawX
                     startY = event.rawY
-                    mCallBack?.onLongPress()
+                    reset()
                 }
                 MotionEvent.ACTION_MOVE -> {
                     currX = event.rawX
@@ -48,10 +49,14 @@ class DragRecycleView @JvmOverloads constructor(context: Context, attributes: At
                             Math.abs(startY - currY) > maxDistance) {
                         startX = currX
                         startY = currY
+                        if(count>0){
+                            count=0
+                            mCallBack?.onAfterPressMove()
+                        }
                         reset()
                     } else {
                         if (beginTime.finish) {
-                            mCallBack?.onLongPress()
+                            mCallBack?.onLongPress().apply { count++ }
                             reset()
                         }
                     }
@@ -67,6 +72,7 @@ class DragRecycleView @JvmOverloads constructor(context: Context, attributes: At
     }
     interface DragAndPressCallBack{
         fun onLongPress()
+        fun onAfterPressMove()
     }
 
     private fun reset() {

@@ -76,9 +76,6 @@ public class NotificationsFragment extends Fragment {
         bottomSheetDialog.findViewById(R.id.tv_cancel).setOnClickListener(v -> {
             bottomSheetDialog.dismiss(); }
         );
-        dragRecycleView.setMCallBack(() -> {
-            Util.Loge("长按反应");
-        });
         listDragAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {

@@ -153,8 +153,16 @@ public class HomeFragment extends Fragment {
             }
         }));
         itemTouchHelper.attachToRecyclerView(mTitleRecycleView);
-        mTitleRecycleView.setMCallBack(() -> {
-            bottomSheetDialog.show();
+        mTitleRecycleView.setMCallBack(new DragRecycleView.DragAndPressCallBack() {
+            @Override
+            public void onLongPress() {
+                bottomSheetDialog.show();
+            }
+
+            @Override
+            public void onAfterPressMove() {
+                bottomSheetDialog.dismiss();
+            }
         });
         mTitleRecycleView.postDelayed((Runnable) () -> {
             Util.Loge(String.format("height %d",mTitleRecycleView.getMeasuredHeight()));
@@ -192,6 +200,9 @@ public class HomeFragment extends Fragment {
         showExpandFoldBtns();
     }
 
+    /**
+     * 根据标题栏折叠状态显示按钮
+     */
     private void showExpandFoldBtns() {
         switch (currTitleState){
             case SINGLE_LINE:
@@ -203,7 +214,7 @@ public class HomeFragment extends Fragment {
                 btnFold.setVisibility(View.VISIBLE);
                 break;
             case COMPLETE_EXPANDED:
-                btnExpand.setImageResource(R.drawable.ic_baseline_arrow_upward_24);
+                btnExpand.setImageResource(R.drawable.ic_baseline_expand_less_24);
                 btnFold.setVisibility(View.VISIBLE);
                 break;
             default:break;
