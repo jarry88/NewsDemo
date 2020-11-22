@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">News Demo Application</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="login_in">登录</string>
+    <string name="login_account_tint">请输入账号</string>
+    <string name="register">注册</string>
+    <string name="or">Or</string>
+    <string name="login_password_tint">请输入密码</string>
+</resources>
