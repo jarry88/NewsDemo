@@ -32,7 +32,8 @@
                 android:layout_height="@dimen/dp_32"
                 android:padding="@dimen/dp_10"
                 android:id="@+id/btn_expand"
-                android:src="@drawable/ic_baseline_expand_more_24"/>
+                android:src="@drawable/ic_baseline_expand_more_24"
+                android:layout_marginEnd="@dimen/dp_10"/>
             <ImageView
                 android:background="@color/white"
                 android:layout_width="@dimen/dp_32"

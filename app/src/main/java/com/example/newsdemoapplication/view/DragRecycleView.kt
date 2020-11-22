@@ -72,5 +72,6 @@ class DragRecycleView @JvmOverloads constructor(context: Context, attributes: At
     private fun reset() {
         beginTime =System.currentTimeMillis().apply { Log.e("TAG", "reset: rese", ) }
     }
+
 }
 
