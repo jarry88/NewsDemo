@@ -15,7 +15,7 @@
         android:orientation="vertical"
         android:padding="@dimen/dp_10">
         <com.example.newsdemoapplication.view.DragRecycleView
-            android:background="@color/blue"
+            android:background="@color/title_default_bg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/rv_title"/>

@@ -43,6 +43,8 @@ public class HomeFragment extends Fragment {
     final int HALF_EXPANDED=1;
     final int COMPLETE_EXPANDED=2;
 
+    final int ColumnNum =4;
+
     private HomeViewModel homeViewModel;
     ImageView btnExpand;
     ImageView btnFold;
@@ -81,7 +83,7 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         titleMaxHeight=CommonUtils.dp2px(getActivity(),200);
         singleLineHeight=CommonUtils.dp2px(getActivity(),40);
-        list =getData(45);
+        list =getData(47);
         initTopContainer();
         initTitleRecycleView();
         initContentRecycleView();
@@ -112,15 +114,24 @@ public class HomeFragment extends Fragment {
         });
     }
 
-
-
     private void initTitleRecycleView() {
         mTitleRecycleView =getView().findViewById(R.id.rv_title);
-        titleLayoutManager =new GridLayoutManager(requireContext(),4);
+        titleLayoutManager =new GridLayoutManager(requireContext(),ColumnNum*3);
+        titleLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                int end=list.size()%ColumnNum;
+                if(list.size()-position<=end)
+                    return ColumnNum*3/end;
+                else
+                return 3;
+            }
+        });
         titleAdapter =new ListDragAdapter(getActivity(),list);
         titleAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
+                ((ListDragAdapter.MyDragViewHolder)mTitleRecycleView.getChildViewHolder(view)).setSelected(true);
                 currSelectedPosition = position;
                 Util.Loge(String.format("%d",currSelectedPosition));
             }
