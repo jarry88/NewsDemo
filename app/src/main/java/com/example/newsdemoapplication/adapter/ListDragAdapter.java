@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ public class ListDragAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private Context mContext;
     private List<String> list;
     private OnItemClickListener mOnItemClickListener;
+    private int currSelectPosition;
     public ListDragAdapter(Context context, List<String> list) {
         this.mContext = context;
         this.list = list;
@@ -39,15 +41,11 @@ public class ListDragAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         MyDragViewHolder mHolder = (MyDragViewHolder) holder;
         mHolder.tvTag.setText(list.get(position));
-//        mHolder.clItem.setOnLongClickListener(v -> {
-//            //获取系统震动服务
-//            Vibrator vib = (Vibrator) mContext.getSystemService(Service.VIBRATOR_SERVICE);
-//            vib.vibrate(150);
-//            return false;
-//        });
+        mHolder.setSelected(holder.getAdapterPosition()==currSelectPosition);
         if(mOnItemClickListener!=null){
             mHolder.clItem.setOnClickListener(v -> {
-                mOnItemClickListener.onItemClick(mHolder.itemView,position);
+                mOnItemClickListener.onItemClick(mHolder.itemView,
+                        holder.getAdapterPosition());
             });
         }
     }
@@ -59,9 +57,6 @@ public class ListDragAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     public List<String> getData() {
         return list;
-    }
-
-    public void setSelectPosition(int topPosition) {
     }
 
     public static class MyDragViewHolder extends RecyclerView.ViewHolder {
@@ -84,5 +79,12 @@ public class ListDragAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
     public void setOnItemClickListener(OnItemClickListener onItemClickListener){
         this.mOnItemClickListener =onItemClickListener;
+    }
+    public void setCurrSelectPosition(int position){
+        Log.e("TAG", "setCurrSelectPosition: "+position+list.get(position));
+        int old =currSelectPosition;
+        currSelectPosition =position;
+        notifyItemChanged(old);
+        notifyItemChanged(currSelectPosition);
     }
 }

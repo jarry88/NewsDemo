@@ -146,10 +146,8 @@ public class HomeFragment extends Fragment {
         titleAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                if(oldViewHolder!=null) oldViewHolder.setSelected(false);
-                ((ListDragAdapter.MyDragViewHolder)mTitleRecycleView.getChildViewHolder(view)).setSelected(true);
-                currSelectedPosition = position;
-                oldViewHolder = ((ListDragAdapter.MyDragViewHolder)mTitleRecycleView.getChildViewHolder(view));
+                currSelectedPosition =position;
+                titleAdapter.setCurrSelectPosition(position);
                 contentScrollToPosition(position);
             }
 
@@ -159,7 +157,7 @@ public class HomeFragment extends Fragment {
         });
         mTitleRecycleView.setLayoutManager(titleLayoutManager);
         mTitleRecycleView.setAdapter(titleAdapter);
-
+        mTitleRecycleView.getRecycledViewPool().setMaxRecycledViews(0,0);
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemDragHelperCallBack(new ItemHelper() {
             @Override
             public void itemMoved(int oldPosition, int newPosition) {
@@ -167,6 +165,8 @@ public class HomeFragment extends Fragment {
                 //交换变换位置的集合数据
                 Collections.swap(titleAdapter.getData(), oldPosition, newPosition);
                 titleAdapter.notifyItemMoved(oldPosition, newPosition);
+                currSelectedPosition =newPosition;
+                titleAdapter.setCurrSelectPosition(currSelectedPosition);
             }
 
             @Override
@@ -187,9 +187,7 @@ public class HomeFragment extends Fragment {
 
                 if(position!=currSelectedPosition){
                     currSelectedPosition =position;
-                    if(oldViewHolder!=null)
-                        oldViewHolder.setSelected(false);
-                    oldViewHolder = (ListDragAdapter.MyDragViewHolder) mTitleRecycleView.findViewHolderForAdapterPosition(position);
+                    titleAdapter.setCurrSelectPosition(currSelectedPosition);
                 }
                 Vibrator vib = (Vibrator) getContext().getSystemService(Service.VIBRATOR_SERVICE);
                 vib.vibrate(150);
@@ -284,14 +282,8 @@ public class HomeFragment extends Fragment {
             LinearLayoutManager linearLayoutManager = (LinearLayoutManager) mContentRecycleView.getLayoutManager();
             int topPosition =linearLayoutManager.findFirstVisibleItemPosition();
             if(topPosition>=0&&topPosition!=currSelectedPosition){
-                if(oldViewHolder!=null){
-                    oldViewHolder.setSelected(false);
-                }
-                oldViewHolder= (ListDragAdapter.MyDragViewHolder) mTitleRecycleView.findViewHolderForAdapterPosition(topPosition);
-                if(oldViewHolder!=null)
-                oldViewHolder.setSelected(true);
-
                 currSelectedPosition=topPosition;
+                titleAdapter.setCurrSelectPosition(currSelectedPosition);
                 Log.e("TAG", "initContentRecycleView: "+ topPosition);
                 titleLayoutManager.scrollToPositionWithOffset(topPosition,0);
             }
@@ -302,9 +294,6 @@ public class HomeFragment extends Fragment {
         bottomSheetDialog.setContentView(R.layout.botton_dialog);
         bottomSheetDialog.setCancelable(true);
         bottomSheetDialog.findViewById(R.id.tv_cancel).setOnClickListener(v -> {
-            list.remove(currSelectedPosition);
-            titleAdapter.notifyItemChanged(currSelectedPosition);
-            mContenAdapter.notifyItemChanged(currSelectedPosition);
             bottomSheetDialog.dismiss(); }
         );
         bottomSheetDialog.findViewById(R.id.tv_rename).setOnClickListener(v -> {
