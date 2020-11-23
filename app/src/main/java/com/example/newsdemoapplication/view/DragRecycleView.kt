@@ -16,7 +16,7 @@ class DragRecycleView @JvmOverloads constructor(context: Context, attributes: At
             if(System.currentTimeMillis() -this>2*longPressDuration)
                 return false
             val diff =System.currentTimeMillis() -this
-            Log.e("TAG", "$diff: ", )
+//            Log.e("TAG", "$diff: ", )
             return  diff>longPressDuration
         }
     var count =0;
@@ -24,13 +24,14 @@ class DragRecycleView @JvmOverloads constructor(context: Context, attributes: At
     var startY =0f
     var currX= 0f
     var currY=0f
-    var maxDistance =50
+    var maxDistance =80
     var mCallBack : DragAndPressCallBack?=null
         set(value) {
             field= value
             addTouch()
         }
     var beginTime =System.currentTimeMillis()
+    var bottomShowTime =System.currentTimeMillis()
     var longPressDuration =1000
     @SuppressLint("ClickableViewAccessibility")
     private fun addTouch() {
@@ -49,7 +50,9 @@ class DragRecycleView @JvmOverloads constructor(context: Context, attributes: At
                             Math.abs(startY - currY) > maxDistance) {
                         startX = currX
                         startY = currY
-                        if(count>0){
+                        if(count>0&&!shortShow()){
+
+                            Util.Loge("移动了")
                             count=0
                             mCallBack?.onAfterPressMove()
                         }
@@ -78,6 +81,11 @@ class DragRecycleView @JvmOverloads constructor(context: Context, attributes: At
     private fun reset() {
         beginTime =System.currentTimeMillis().apply { Log.e("TAG", "reset: rese", ) }
     }
+
+    /**
+     * 间隔太短不响应
+     */
+    private fun shortShow() =System.currentTimeMillis()-bottomShowTime<200
 
 }
 

@@ -174,7 +174,6 @@ public class HomeFragment extends Fragment {
 
             }
 
-
             @Override
             public void itemClear(int position) {
                 mContenAdapter.notifyDataSetChanged();
@@ -183,20 +182,25 @@ public class HomeFragment extends Fragment {
             }
 
             @Override
-            public void itemSelected(int position) {
+            public void itemSelected(int position) {//选中title 后的响应操作
+                if(position<0) return;
+
                 if(position!=currSelectedPosition){
                     currSelectedPosition =position;
                     if(oldViewHolder!=null)
                         oldViewHolder.setSelected(false);
                     oldViewHolder = (ListDragAdapter.MyDragViewHolder) mTitleRecycleView.findViewHolderForAdapterPosition(position);
                 }
-
                 Vibrator vib = (Vibrator) getContext().getSystemService(Service.VIBRATOR_SERVICE);
                 vib.vibrate(150);
+                bottomSheetDialog.show();
+                // 记录弹窗信息
+                mTitleRecycleView.setCount(1);
+                mTitleRecycleView.setBottomShowTime(System.currentTimeMillis());
             }
         }));
         itemTouchHelper.attachToRecyclerView(mTitleRecycleView);
-        mTitleRecycleView.setMCallBack(new DragRecycleView.DragAndPressCallBack() {
+        mTitleRecycleView.setMCallBack(new DragRecycleView.DragAndPressCallBack() {//设置移动监听回调
             @Override
             public void onLongPress() {
                 bottomSheetDialog.show();
@@ -207,7 +211,8 @@ public class HomeFragment extends Fragment {
                 bottomSheetDialog.dismiss();
             }
         });
-        mTitleRecycleView.postDelayed((Runnable) () -> {
+
+        mTitleRecycleView.postDelayed((Runnable) () -> { //视图刷新后，计算视图高度
             Util.Loge(String.format("height %d",mTitleRecycleView.getMeasuredHeight()));
             if(mTitleRecycleView.getMeasuredHeight()>titleMaxHeight){
                 supportHalfExpand =true;
