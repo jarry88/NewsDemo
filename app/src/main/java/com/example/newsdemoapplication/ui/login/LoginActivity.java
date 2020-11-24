@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.newsdemoapplication.R;
+import com.lxj.xpopup.XPopup;
 
 
 public class LoginActivity extends AppCompatActivity {

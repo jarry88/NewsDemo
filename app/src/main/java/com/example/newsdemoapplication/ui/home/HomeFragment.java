@@ -69,8 +69,8 @@ public class HomeFragment extends Fragment {
     List<NewsVo> mData =new ArrayList<>();
     List<String> list=new ArrayList<>();
     private int singleLineHeight;
-    private ListDragAdapter.MyDragViewHolder oldViewHolder;
     private NewsContentAdapter mContenAdapter;
+    private boolean longPress;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -157,7 +157,6 @@ public class HomeFragment extends Fragment {
         });
         mTitleRecycleView.setLayoutManager(titleLayoutManager);
         mTitleRecycleView.setAdapter(titleAdapter);
-        mTitleRecycleView.getRecycledViewPool().setMaxRecycledViews(0,0);
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemDragHelperCallBack(new ItemHelper() {
             @Override
             public void itemMoved(int oldPosition, int newPosition) {
@@ -166,7 +165,7 @@ public class HomeFragment extends Fragment {
                 Collections.swap(titleAdapter.getData(), oldPosition, newPosition);
                 titleAdapter.notifyItemMoved(oldPosition, newPosition);
                 currSelectedPosition =newPosition;
-                titleAdapter.setCurrSelectPosition(currSelectedPosition);
+//                titleAdapter.setCurrSelectPosition(currSelectedPosition);
             }
 
             @Override
@@ -176,25 +175,30 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void itemClear(int position) {
-                mContenAdapter.notifyDataSetChanged();
-                mContentRecycleView.postDelayed(() -> contentScrollToPosition(position),50);
+//                mContenAdapter.notifyDataSetChanged();
+//                if(position!=currSelectedPosition){
+                    currSelectedPosition=position;
+                    titleAdapter.setCurrSelectPosition(currSelectedPosition);
+                    titleAdapter.notifyDataSetChanged();
+                    if(longPress){
+                        bottomSheetDialog.show();
+                    }
+//                }
 
             }
 
             @Override
             public void itemSelected(int position) {//选中title 后的响应操作
                 if(position<0) return;
-
+                mTitleRecycleView.setCount(1);
                 if(position!=currSelectedPosition){
+                    ((ListDragAdapter.MyDragViewHolder)mTitleRecycleView.findViewHolderForAdapterPosition(currSelectedPosition)).setSelected(false);
                     currSelectedPosition =position;
-                    titleAdapter.setCurrSelectPosition(currSelectedPosition);
                 }
                 Vibrator vib = (Vibrator) getContext().getSystemService(Service.VIBRATOR_SERVICE);
                 vib.vibrate(150);
-                bottomSheetDialog.show();
-                // 记录弹窗信息
-                mTitleRecycleView.setCount(1);
-                mTitleRecycleView.setBottomShowTime(System.currentTimeMillis());
+//                 记录弹窗信息
+                longPress =true;
             }
         }));
         itemTouchHelper.attachToRecyclerView(mTitleRecycleView);
@@ -202,10 +206,11 @@ public class HomeFragment extends Fragment {
             @Override
             public void onLongPress() {
                 bottomSheetDialog.show();
+                mTitleRecycleView.setBottomShowTime(System.currentTimeMillis());
             }
-
             @Override
             public void onAfterPressMove() {
+                longPress=false;
                 bottomSheetDialog.dismiss();
             }
         });

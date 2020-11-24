@@ -22,7 +22,8 @@ public class ToucheCallBack extends ItemTouchHelper.Callback {
         RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
 
         int dragFlags = ItemTouchHelper.UP|ItemTouchHelper.DOWN|ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT;
-        int swipedFlags = ItemTouchHelper.START|ItemTouchHelper.END;
+//        int swipedFlags = ItemTouchHelper.START|ItemTouchHelper.END;
+        int swipedFlags = 0;
         return makeMovementFlags(dragFlags,swipedFlags);
     }
 
@@ -57,6 +58,8 @@ public class ToucheCallBack extends ItemTouchHelper.Callback {
         if(actionState!= ItemTouchHelper.ACTION_STATE_IDLE){
             viewHolder.itemView.setBackgroundColor(Color.GRAY);
         }
+        if(viewHolder!=null)
+        itemHelper.itemSelected(viewHolder.getLayoutPosition());
     }
 
     //滑动完，拖动完调用
@@ -64,6 +67,7 @@ public class ToucheCallBack extends ItemTouchHelper.Callback {
     public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
         super.clearView(recyclerView, viewHolder);
         viewHolder.itemView.setBackgroundColor(0);
+        itemHelper.itemClear(viewHolder.getLayoutPosition());
     }
 
 }

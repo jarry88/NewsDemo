@@ -20,11 +20,12 @@ class DragRecycleView @JvmOverloads constructor(context: Context, attributes: At
             return  diff>longPressDuration
         }
     var count =0;
+    var moveCount =0
     var startX =0f
     var startY =0f
     var currX= 0f
     var currY=0f
-    var maxDistance =80
+    var maxDistance =30
     var mCallBack : DragAndPressCallBack?=null
         set(value) {
             field= value
@@ -44,29 +45,30 @@ class DragRecycleView @JvmOverloads constructor(context: Context, attributes: At
                     reset()
                 }
                 MotionEvent.ACTION_MOVE -> {
-                    currX = event.rawX
-                    currY = event.rawY
-                    if (Math.abs(startX - currX) >= maxDistance ||
-                            Math.abs(startY - currY) > maxDistance) {
-                        startX = currX
-                        startY = currY
-                        if(count>0&&!shortShow()){
+                    if(count>0){
+                        currX = event.rawX
+                        currY = event.rawY
+                        if (Math.abs(startX - currX) >= maxDistance ||
+                                Math.abs(startY - currY) > maxDistance) {
+                            startX =currX
+                            startY =currY
 
+                            if(moveCount++>0){
+                                mCallBack?.onAfterPressMove()
+                                reset()
+                            }
                             Util.Loge("移动了")
-                            count=0
-                            mCallBack?.onAfterPressMove()
-                        }
-                        reset()
-                    } else {
-                        if (beginTime.finish) {
-                            mCallBack?.onLongPress().apply { count++ }
-                            reset()
                         }
                     }
                 }
                 MotionEvent.ACTION_UP -> {
                     Util.Loge("ACTION_UP")
                     reset()
+//                    if(count>0){
+//                        count=0
+//                        mCallBack?.onLongPress()
+//                    }
+//                    reset()
                 }
                 else ->{}
             }
