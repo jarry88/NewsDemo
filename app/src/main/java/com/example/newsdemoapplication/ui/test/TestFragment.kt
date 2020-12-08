@@ -8,8 +8,6 @@ import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.example.newsdemoapplication.R
 import com.example.newsdemoapplication.databinding.TestFragmentBinding
 import com.google.android.material.navigation.NavigationView
@@ -17,15 +15,6 @@ import com.gzp.baselib.base.MvvmBaseFragment
 
 class TestFragment : MvvmBaseFragment<TestViewModel,TestFragmentBinding>() {
 
-    var flag = false
-    var suo_textView: TextView? = null
-    var ts_textView: TextView? = null
-    var ts1_textView: TextView? = null
-    var sz_imagebutton: ImageButton? = null
-    var cy_imagebutton: ImageButton? = null
-    var dl: DrawerLayout? = null
-    var navigationView: NavigationView? = null
-    var linearLayout1: LinearLayout? = null
     companion object {
         fun newInstance() = TestFragment()
     }
@@ -45,6 +34,15 @@ class TestFragment : MvvmBaseFragment<TestViewModel,TestFragmentBinding>() {
             szImagebuttonId.setOnClickListener{
                 binding.drawerLayout.openDrawer(binding.leftNavView)
             }
+        }
+        binding.drawerLayout.findViewById<TextView>(R.id.textView)?.let{
+            it.setOnClickListener { binding.drawerLayout.closeDrawer(binding.leftNavView) }
+        }
+        binding.btnClose.setOnClickListener {
+            it.setOnClickListener { binding.drawerLayout.closeDrawer(binding.leftNavView) }
+        }
+        binding.btnAdd.setOnClickListener {
+
         }
     }
 
