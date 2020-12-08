@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/dd1"
+        android:orderInCategory="100"
+        android:title="章节1"/>
+    <item
+        android:id="@+id/dd2"
+        android:orderInCategory="100"
+        android:title="章节2"/>
+    <item
+        android:id="@+id/dd3"
+        android:orderInCategory="100"
+        android:title="章节3"/>
+    <item
+        android:id="@+id/dd4"
+        android:orderInCategory="100"
+        android:title="最下面【添加章节】和【关闭侧页图标】"/>
+
+</menu>

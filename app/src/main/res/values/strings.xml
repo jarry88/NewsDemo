@@ -17,4 +17,17 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+
+
+
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="nav_header_title">昵称：大猪哥  帐号：1388080800</string>
+    <string name="nav_header_subtitle">普通成员  单机单登        》》</string>
+    <string name="cy_imagebutton">侧页</string>
+    <string name="sz_imagebutton">设置</string>
+    <string name="ts_textView">提示</string>
+    <string name="ts1_textView">提示1</string>
+    <string name="xnty_textView">虚拟体验︾</string>
+    <string name="title_test">测试页面</string>
+
 </resources>

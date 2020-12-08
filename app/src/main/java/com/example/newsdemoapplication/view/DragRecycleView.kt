@@ -16,7 +16,6 @@ class DragRecycleView @JvmOverloads constructor(context: Context, attributes: At
             if(System.currentTimeMillis() -this>2*longPressDuration)
                 return false
             val diff =System.currentTimeMillis() -this
-//            Log.e("TAG", "$diff: ", )
             return  diff>longPressDuration
         }
     var count =0;
