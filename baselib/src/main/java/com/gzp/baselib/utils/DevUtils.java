@@ -202,7 +202,7 @@ public class DevUtils {
         } catch (Exception e) {
         }
         if (TextUtils.isEmpty(strMacAddr)){
-            strMacAddr=getLocalIpAddress();
+//            strMacAddr=getLocalIpAddress();
         }
         return strMacAddr;
     }
@@ -245,8 +245,7 @@ public class DevUtils {
      */
     private static String getLocalIpAddress() {
         try {
-            for (Enumeration<NetworkInterface> en = NetworkInterface
-                    .getNetworkInterfaces(); en.hasMoreElements(); ) {
+            for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces();en.hasMoreElements(); ) {
                 NetworkInterface intf = en.nextElement();
                 for (Enumeration<InetAddress> enumIpAddr = intf
                         .getInetAddresses(); enumIpAddr.hasMoreElements(); ) {

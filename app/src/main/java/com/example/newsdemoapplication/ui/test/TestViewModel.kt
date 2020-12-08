@@ -1,6 +1,6 @@
 package com.example.newsdemoapplication.ui.test
 
-import androidx.lifecycle.ViewModel
+import com.gzp.baselib.base.BaseViewModel
 
-class TestViewModel : ViewModel() {
+class TestViewModel : BaseViewModel() {
 }

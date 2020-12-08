@@ -1,99 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout>
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <ImageButton
-        android:id="@+id/cy_imagebutton_id"
-        android:layout_width="40dp"
-        android:layout_height="22dp"
-        android:layout_marginTop="4dp"
-        android:background="#FFFFFF"
-        android:contentDescription="@string/cy_imagebutton"
-        android:scaleType="fitCenter"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/z" />
+        <ImageButton
+            android:id="@+id/cy_imagebutton_id"
+            android:layout_width="40dp"
+            android:layout_height="22dp"
+            android:layout_marginTop="4dp"
+            android:background="#FFFFFF"
+            android:contentDescription="@string/cy_imagebutton"
+            android:scaleType="fitCenter"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/z" />
 
-    <ImageButton
-        android:id="@+id/sz_imagebutton_id"
-        android:layout_width="40dp"
-        android:layout_height="22dp"
-        android:layout_marginTop="4dp"
-        android:background="#FFFFFF"
-        android:contentDescription="@string/sz_imagebutton"
-        android:scaleType="fitCenter"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/y" />
+        <ImageButton
+            android:id="@+id/sz_imagebutton_id"
+            android:layout_width="40dp"
+            android:layout_height="22dp"
+            android:layout_marginTop="4dp"
+            android:background="#FFFFFF"
+            android:contentDescription="@string/sz_imagebutton"
+            android:scaleType="fitCenter"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/y" />
 
-    <TextView
-        android:id="@+id/suo_textView_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="6dp"
-        android:layout_marginTop="5dp"
-        android:text="【未锁】"
-        android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/cy_imagebutton_id"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/suo_textView_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="5dp"
+            android:text="【未锁】"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@+id/cy_imagebutton_id"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/dd_textView_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="章节2"
-        android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/suo_textView_id"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/dd_textView_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="章节2"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@+id/suo_textView_id"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tx_textView_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="（掉线）"
-        android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/dd_textView_id"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/tx_textView_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="（掉线）"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@+id/dd_textView_id"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/ts_textView_id"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="10dp"
-        android:singleLine="true"
-        android:text="@string/ts_textView"
-        app:layout_constraintEnd_toStartOf="@+id/ts1_textView_id"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dd_textView_id" />
+        <TextView
+            android:id="@+id/ts_textView_id"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="10dp"
+            android:singleLine="true"
+            android:text="@string/ts_textView"
+            app:layout_constraintEnd_toStartOf="@+id/ts1_textView_id"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dd_textView_id" />
 
-    <TextView
-        android:id="@+id/ts1_textView_id"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:singleLine="true"
-        android:text="@string/ts1_textView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dd_textView_id" />
+        <TextView
+            android:id="@+id/ts1_textView_id"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:singleLine="true"
+            android:text="@string/ts1_textView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dd_textView_id" />
 
-    <TextView
-        android:id="@+id/xnty_textView_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="187dp"
-        android:layout_marginEnd="154dp"
-        android:layout_marginBottom="16dp"
-        android:text="@string/xnty_textView"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <TextView
+            android:id="@+id/xnty_textView_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="187dp"
+            android:layout_marginEnd="154dp"
+            android:layout_marginBottom="16dp"
+            android:text="@string/xnty_textView"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,1160 @@
+{
+  "code": 200,
+  "datas": {
+    "list": [
+      {
+        "floorId": 12,
+        "floorType": "treeHole",
+        "hotZoneType": true,
+        "floorListValue": [
+          {
+            "url": "image/62/c8/62c8a74210f00d64bc0c962d467f24c6.png",
+            "xProportion": "1.30",
+            "yProportion": "1.29",
+            "originalWidth": "750",
+            "originalHeight": "336",
+            "hotZoneList": [
+              {
+                "x": "30.769230769230766",
+                "y": "12.403100775193797",
+                "width": "104.61538461538461",
+                "height": "162.7906976744186",
+                "linkType": "GO853",
+                "linkValue": ""
+              },
+              {
+                "x": "180",
+                "y": "16.27906976744186",
+                "width": "105.38461538461539",
+                "height": "158.13953488372093",
+                "linkType": "GO853",
+                "linkValue": ""
+              },
+              {
+                "x": "321.53846153846155",
+                "y": "11.627906976744185",
+                "width": "111.53846153846153",
+                "height": "160.46511627906978",
+                "linkType": "GO853",
+                "linkValue": ""
+              },
+              {
+                "x": "466.9230769230769",
+                "y": "174.41860465116278",
+                "width": "103.84615384615384",
+                "height": "159.68992248062014",
+                "linkType": "GO853",
+                "linkValue": ""
+              }
+            ]
+          }
+        ],
+        "floorMapValue": {},
+        "floorSort": 0,
+        "floorRegion": 0
+      },
+      {
+        "floorId": 21,
+        "floorType": "group",
+        "hotZoneType": false,
+        "floorListValue": [
+          {
+            "commonId": 3793,
+            "bottomPrice": 300.00,
+            "goodsPrice": 100.00,
+            "goodsName": null,
+            "imageSrc": "https://ftofs-editor.oss-cn-shenzhen.aliyuncs.com/image/98/93/9893d5168187967758925f92dec8d194.jpg"
+          }
+        ],
+        "floorMapValue": {},
+        "floorSort": 0,
+        "floorRegion": 0
+      },
+      {
+        "floorId": 36,
+        "floorType": "tariffBuy",
+        "hotZoneType": false,
+        "floorListValue": [
+          {
+            "type": "推薦",
+            "dataList": [
+              {
+                "commonId": 4516,
+                "bottomPrice": 569.0,
+                "goodsPrice": 569.0,
+                "goodsName": "雀巢小佰太能 深度水解配方营养奶粉 原小百肽 特殊医学用途全",
+                "imageSrc": "https://ftofs-editor.oss-cn-shenzhen.aliyuncs.com/image/4b/91/4b918913a2210f6e3689d90f73ff0f09.jpg"
+              },
+              {
+                "commonId": 4512,
+                "bottomPrice": 6.0,
+                "goodsPrice": 12.0,
+                "goodsName": "發版測試2020年11月25日",
+                "imageSrc": "https://ftofs-editor.oss-cn-shenzhen.aliyuncs.com/image/e5/53/e553fae406714e5b28b52273b920c859.jpg"
+              }
+            ]
+          },
+          {
+            "type": "最新",
+            "dataList": [
+              {
+                "commonId": 4515,
+                "bottomPrice": 999999999,
+                "goodsPrice": 999999999,
+                "goodsName": "2020年11月30日，測試票務資訊商品",
+                "imageSrc": "https://ftofs-editor.oss-cn-shenzhen.aliyuncs.com/image/d3/5f/d35fac41eee89a7b1dcc8814276102c0.jpg"
+              },
+              {
+                "commonId": 4514,
+                "bottomPrice": 55.0,
+                "goodsPrice": 55.0,
+                "goodsName": "確定您的產品所屬分類確定您的產品所屬分類確定您的產品所屬1212",
+                "imageSrc": "https://ftofs-editor.oss-cn-shenzhen.aliyuncs.com/image/b2/66/b266081b9c6b338d5ca6e52b76b1acf1.jpg"
+              }
+            ]
+          },
+          {
+            "type": "人氣",
+            "dataList": [
+              {
+                "commonId": 4513,
+                "bottomPrice": 90.0,
+                "goodsPrice": 1000.0,
+                "goodsName": "H5折扣測試",
+                "imageSrc": "https://ftofs-editor.oss-cn-shenzhen.aliyuncs.com/image/26/93/2693e6242bb6da4e1eb6b87e1fd1119e.jpg"
+              },
+              {
+                "commonId": 4512,
+                "bottomPrice": 6.0,
+                "goodsPrice": 12.0,
+                "goodsName": "發版測試2020年11月25日",
+                "imageSrc": "https://ftofs-editor.oss-cn-shenzhen.aliyuncs.com/image/e5/53/e553fae406714e5b28b52273b920c859.jpg"
+              }
+            ]
+          },
+          {
+            "type": "熱賣",
+            "dataList": [
+              {
+                "commonId": 4509,
+                "bottomPrice": 3499.5,
+                "goodsPrice": 8999.0,
+                "goodsName": "HUAWEI Mate 40 Pro",
+                "imageSrc": "https://ftofs-editor.oss-cn-shenzhen.aliyuncs.com/image/5a/9a/5a9aee19acdf5207a31ef041eebbdb93.png"
+              },
+              {
+                "commonId": 4508,
+                "bottomPrice": 5699.0,
+                "goodsPrice": 5699.0,
+                "goodsName": "TCL 55Q10 55英寸液晶电视机 QLED量子点 3+32GB大内存",
+                "imageSrc": "https://ftofs-editor.oss-cn-shenzhen.aliyuncs.com/image/b3/9d/b39da23d6db09a2ceca42a080e08b31d.png"
+              }
+            ]
+          }
+        ],
+        "floorMapValue": {},
+        "floorSort": 1,
+        "floorRegion": 0
+      },
+      {
+        "floorId": 37,
+        "floorType": "activity",
+        "hotZoneType": true,
+        "floorListValue": [
+          {
+            "url": "image/76/95/769593bb3262b00635826199a6660382.jpg",
+            "xProportion": "1.38",
+            "yProportion": "1.38",
+            "originalWidth": "702",
+            "originalHeight": "172",
+            "hotZoneList": [
+              {
+                "x": "0.7246376811594204",
+                "y": "0.7246376811594204",
+                "width": "700.7246376811595",
+                "height": "171.0144927536232",
+                "linkType": "shoppingZone",
+                "linkValue": "55"
+              }
+            ]
+          }
+        ],
+        "floorMapValue": {},
+        "floorSort": 1,
+        "floorRegion": 0
+      },
+      {
+        "floorId": 19,
+        "floorType": "seckill",
+        "hotZoneType": false,
+        "floorListValue": [
+          {
+            "commonId": 3517,
+            "bottomPrice": 10.01,
+            "goodsPrice": 1.00,
+            "goodsName": "虛擬商品 測試-100塊",
+            "imageSrc": "https://ftofs-editor.oss-cn-shenzhen.aliyuncs.com/image/6b/cb/6bcb23229530f93afd9c044714e31585.jpg"
+          },
+          {
+            "commonId": 3624,
+            "bottomPrice": 90000.5,
+            "goodsPrice": 1.00,
+            "goodsName": "彈——閃【複製商品】ty",
+            "imageSrc": "https://ftofs-editor.oss-cn-shenzhen.aliyuncs.com/image/94/bb/94bba2a57f12fd1f2b73b2589b2115db.jpg"
+          },
+          {
+            "commonId": 3650,
+            "bottomPrice": 13.0,
+            "goodsPrice": 1.00,
+            "goodsName": "地勢坤困",
+            "imageSrc": "https://ftofs-editor.oss-cn-shenzhen.aliyuncs.com/image/5a/63/5a635d1117169d483fd7e66b5330b9c5.png"
+          }
+        ],
+        "floorMapValue": {
+          "seckillScheduleList": [],
+          "seckillSchedule": null
+        },
+        "floorSort": 2,
+        "floorRegion": 0
+      },
+      {
+        "floorId": 14,
+        "floorType": "goods",
+        "hotZoneType": false,
+        "floorListValue": [
+          {
+            "type": "推薦",
+            "dataList": [
+              {
+                "commonId": 4514,
+                "bottomPrice": 55.0,
+                "goodsPrice": 55.0,
+                "goodsName": "確定您的產品所屬分類確定您的產品所屬分類確定您的產品所屬1212",
+                "imageSrc": "https://ftofs-editor.oss-cn-shenzhen.aliyuncs.com/image/b2/66/b266081b9c6b338d5ca6e52b76b1acf1.jpg"
+              },
+              {
+                "commonId": 4513,
+                "bottomPrice": 90.0,
+                "goodsPrice": 1000.0,
+                "goodsName": "H5折扣測試",
+                "imageSrc": "https://ftofs-editor.oss-cn-shenzhen.aliyuncs.com/image/26/93/2693e6242bb6da4e1eb6b87e1fd1119e.jpg"
+              },
+              {
+                "commonId": 4511,
+                "bottomPrice": 1.0,
+                "goodsPrice": 1.0,
+                "goodsName": "耐用的狗繩",
+                "imageSrc": "https://ftofs-editor.oss-cn-shenzhen.aliyuncs.com/image/26/93/2693e6242bb6da4e1eb6b87e1fd1119e.jpg"
+              },
+              {
+                "commonId": 4441,
+                "bottomPrice": 999999999,
+                "goodsPrice": 999999999,
+                "goodsName": "按時發順豐是的噶啥地方",
+                "imageSrc": "https://ftofs-editor.oss-cn-shenzhen.aliyuncs.com/image/35/3c/353cead158d2dd95f22a83b70a70b795.jpg"
+              },
+              {
+                "commonId": 4442,
+                "bottomPrice": 999999999,
+                "goodsPrice": 999999999,
+                "goodsName": "關注評論",
+                "imageSrc": "https://ftofs-editor.oss-cn-shenzhen.aliyuncs.com/image/96/be/96be8d3bba26f9ee5449f9a01c1d56d0.jpg"
+              },
+              {
+                "commonId": 4427,
+                "bottomPrice": 999999999,
+                "goodsPrice": 999999999,
+                "goodsName": "滿漢全席",
+                "imageSrc": "https://ftofs-editor.oss-cn-shenzhen.aliyuncs.com/image/36/58/3658a9b9403f00d1c6241b3f94f026e5.jpg"
+              },
+              {
+                "commonId": 4414,
+                "bottomPrice": 999999999,
+                "goodsPrice": 999999999,
+                "goodsName": "分院帽",
+                "imageSrc": "https://ftofs-editor.oss-cn-shenzhen.aliyuncs.com/image/0c/ea/0ceaa97aa718ff2aa45defc4efc031dc.jpg"
+              },
+              {
+                "commonId": 4413,
+                "bottomPrice": 999999999,
+                "goodsPrice": 999999999,
+                "goodsName": "咨詢商品",
+                "imageSrc": "https://ftofs-editor.oss-cn-shenzhen.aliyuncs.com/image/db/fe/dbfe4c9b33ccf85212079017128e06e8.jpg"
+              },
+              {
+                "commonId": 4506,
+                "bottomPrice": 1010.0,
+                "goodsPrice": 1010.0,
+                "goodsName": "想成模版",
+                "imageSrc": "https://ftofs-editor.oss-cn-shenzhen.aliyuncs.com/image/02/64/0264ac90c8b2052c6bde8603985eaec8.jpeg"
+              }
+            ]
+          },
+          {
+            "type": "最新",
+            "dataList": [
+              {
+                "commonId": 4509,
+                "bottomPrice": 3499.5,
+                "goodsPrice": 8999.0,
+                "goodsName": "HUAWEI Mate 40 Pro",
+                "imageSrc": "https://ftofs-editor.oss-cn-shenzhen.aliyuncs.com/image/5a/9a/5a9aee19acdf5207a31ef041eebbdb93.png"
+              },
+              {
+                "commonId": 4510,
+                "bottomPrice": 100.0,
+                "goodsPrice": 100.0,
+                "goodsName": "楊建測試",
+                "imageSrc": "https://ftofs-editor.oss-cn-shenzhen.aliyuncs.com/image/0a/bd/0abda80ff5751aed26bb230724c5a4fb.jpeg"
+              },
+              {
+                "commonId": 4508,
+                "bottomPrice": 5699.0,
+                "goodsPrice": 5699.0,
+                "goodsName": "TCL 55Q10 55英寸液晶电视机 QLED量子点 3+32GB大内存",
+                "imageSrc": "https://ftofs-editor.oss-cn-shenzhen.aliyuncs.com/image/b3/9d/b39da23d6db09a2ceca42a080e08b31d.png"
+              },
+              {
+                "commonId": 4413,
+                "bottomPrice": 999999999,
+                "goodsPrice": 999999999,
+                "goodsName": "咨詢商品",
+                "imageSrc": "https://ftofs-editor.oss-cn-shenzhen.aliyuncs.com/image/db/fe/dbfe4c9b33ccf85212079017128e06e8.jpg"
+              },
+              {
+                "commonId": 4506,
+                "bottomPrice": 1010.0,
+                "goodsPrice": 1010.0,
+                "goodsName": "想成模版",
+                "imageSrc": "https://ftofs-editor.oss-cn-shenzhen.aliyuncs.com/image/02/64/0264ac90c8b2052c6bde8603985eaec8.jpeg"
+              }
+            ]
+          },
+          {
+            "type": "人氣",
+            "dataList": [
+              {
+                "commonId": 4507,
+                "bottomPrice": 199.0,
+                "goodsPrice": 199.0,
+                "goodsName": "花王妙而舒Merries婴儿纸尿裤 NB90片（出生-5kg）新生儿小号婴儿尿不湿（日本进口）纸尿片",
+                "imageSrc": "https://ftofs-editor.oss-cn-shenzhen.aliyuncs.com/image/fb/a6/fba68d5249695d81d2ccdc0c8f73ae33.jpg"
+              },
+              {
+                "commonId": 4506,
+                "bottomPrice": 1010.0,
+                "goodsPrice": 1010.0,
+                "goodsName": "想成模版",
+                "imageSrc": "https://ftofs-editor.oss-cn-shenzhen.aliyuncs.com/image/02/64/0264ac90c8b2052c6bde8603985eaec8.jpeg"
+              },
+              {
+                "commonId": 4413,
+                "bottomPrice": 999999999,
+                "goodsPrice": 999999999,
+                "goodsName": "咨詢商品",
+                "imageSrc": "https://ftofs-editor.oss-cn-shenzhen.aliyuncs.com/image/db/fe/dbfe4c9b33ccf85212079017128e06e8.jpg"
+              },
+              {
+                "commonId": 4506,
+                "bottomPrice": 1010.0,
+                "goodsPrice": 1010.0,
+                "goodsName": "想成模版",
+                "imageSrc": "https://ftofs-editor.oss-cn-shenzhen.aliyuncs.com/image/02/64/0264ac90c8b2052c6bde8603985eaec8.jpeg"
+              }
+            ]
+          },
+          {
+            "type": "熱賣",
+            "dataList": [
+              {
+                "commonId": 4433,
+                "bottomPrice": 999999999,
+                "goodsPrice": 999999999,
+                "goodsName": "生塊叉燒",
+                "imageSrc": "https://ftofs-editor.oss-cn-shenzhen.aliyuncs.com/image/c7/14/c7149f078c0a83f50b003b922f1764e7.png"
+              },
+              {
+                "commonId": 4434,
+                "bottomPrice": 999999999,
+                "goodsPrice": 999999999,
+                "goodsName": "隨便來",
+                "imageSrc": "https://ftofs-editor.oss-cn-shenzhen.aliyuncs.com/image/97/4d/974dc52a30a0f9f4b025349bf6d54eed.png"
+              },
+              {
+                "commonId": 4437,
+                "bottomPrice": 999999999,
+                "goodsPrice": 999999999,
+                "goodsName": "沒選擇規格和店內分類",
+                "imageSrc": "https://ftofs-editor.oss-cn-shenzhen.aliyuncs.com/image/72/c5/72c56880b629b998dd8b1f7207488c8a.gif"
+              },
+              {
+                "commonId": 4441,
+                "bottomPrice": 999999999,
+                "goodsPrice": 999999999,
+                "goodsName": "按時發順豐是的噶啥地方",
+                "imageSrc": "https://ftofs-editor.oss-cn-shenzhen.aliyuncs.com/image/35/3c/353cead158d2dd95f22a83b70a70b795.jpg"
+              },
+              {
+                "commonId": 4442,
+                "bottomPrice": 999999999,
+                "goodsPrice": 999999999,
+                "goodsName": "關注評論",
+                "imageSrc": "https://ftofs-editor.oss-cn-shenzhen.aliyuncs.com/image/96/be/96be8d3bba26f9ee5449f9a01c1d56d0.jpg"
+              },
+              {
+                "commonId": 4427,
+                "bottomPrice": 999999999,
+                "goodsPrice": 999999999,
+                "goodsName": "滿漢全席",
+                "imageSrc": "https://ftofs-editor.oss-cn-shenzhen.aliyuncs.com/image/36/58/3658a9b9403f00d1c6241b3f94f026e5.jpg"
+              },
+              {
+                "commonId": 4414,
+                "bottomPrice": 999999999,
+                "goodsPrice": 999999999,
+                "goodsName": "分院帽",
+                "imageSrc": "https://ftofs-editor.oss-cn-shenzhen.aliyuncs.com/image/0c/ea/0ceaa97aa718ff2aa45defc4efc031dc.jpg"
+              },
+              {
+                "commonId": 4413,
+                "bottomPrice": 999999999,
+                "goodsPrice": 999999999,
+                "goodsName": "咨詢商品",
+                "imageSrc": "https://ftofs-editor.oss-cn-shenzhen.aliyuncs.com/image/db/fe/dbfe4c9b33ccf85212079017128e06e8.jpg"
+              },
+              {
+                "commonId": 4506,
+                "bottomPrice": 1010.0,
+                "goodsPrice": 1010.0,
+                "goodsName": "想成模版",
+                "imageSrc": "https://ftofs-editor.oss-cn-shenzhen.aliyuncs.com/image/02/64/0264ac90c8b2052c6bde8603985eaec8.jpeg"
+              }
+            ]
+          }
+        ],
+        "floorMapValue": {},
+        "floorSort": 5,
+        "floorRegion": 0
+      },
+      {
+        "floorId": 15,
+        "floorType": "store",
+        "hotZoneType": false,
+        "floorListValue": [
+          {
+            "type": "推薦",
+            "dataList": [
+              {
+                "storeId": 444,
+                "state": 0,
+                "storeName": "天意的店",
+                "storeAvatar": "",
+                "storeFigureImage": "",
+                "sellerName": null,
+                "chainPhone": null,
+                "className": "超級市場"
+              },
+              {
+                "storeId": 281,
+                "state": 0,
+                "storeName": "科研室",
+                "storeAvatar": "image/3d/bb/3dbb082f98537a7b5cccba729db31aad.png",
+                "storeFigureImage": "image/39/36/3936ceba8500da2a113530805f775d49.png",
+                "sellerName": null,
+                "chainPhone": null,
+                "className": "工藝品店"
+              },
+              {
+                "storeId": 576,
+                "state": 0,
+                "storeName": "母嬰店",
+                "storeAvatar": "image/0d/a6/0da6c517fff97f4e8a5e1b746997099d.jpg",
+                "storeFigureImage": "image/1d/4a/1d4acaaef8d1567e3e05f065dca418b6.png",
+                "sellerName": null,
+                "chainPhone": null,
+                "className": "母嬰店"
+              }
+            ]
+          },
+          {
+            "type": "活躍",
+            "dataList": [
+              {
+                "storeId": 14,
+                "state": 0,
+                "storeName": "帝豪軒",
+                "storeAvatar": "image/9f/33/9f33841ee8327359a0e0569ae1d70540.jpeg",
+                "storeFigureImage": "image/3a/34/3a34161ab4e6362831c653b7c4ecc64d.png",
+                "sellerName": null,
+                "chainPhone": null,
+                "className": "雜貨店"
+              },
+              {
+                "storeId": 281,
+                "state": 0,
+                "storeName": "科研室",
+                "storeAvatar": "image/3d/bb/3dbb082f98537a7b5cccba729db31aad.png",
+                "storeFigureImage": "image/39/36/3936ceba8500da2a113530805f775d49.png",
+                "sellerName": null,
+                "chainPhone": null,
+                "className": "工藝品店"
+              },
+              {
+                "storeId": 20,
+                "state": 0,
+                "storeName": "666测试&3#2",
+                "storeAvatar": "image/45/78/457852fc71de5379f8a6525f4bffb045.jpg",
+                "storeFigureImage": "image/37/4a/374a997f9a72547eb01375fdb61103e6.png",
+                "sellerName": null,
+                "chainPhone": null,
+                "className": "裝修"
+              }
+            ]
+          },
+          {
+            "type": "最新",
+            "dataList": [
+              {
+                "storeId": 375,
+                "state": 0,
+                "storeName": "楊建測試店鋪",
+                "storeAvatar": "",
+                "storeFigureImage": null,
+                "sellerName": null,
+                "chainPhone": null,
+                "className": "超級市場"
+              },
+              {
+                "storeId": 20,
+                "state": 0,
+                "storeName": "666测试&3#2",
+                "storeAvatar": "image/45/78/457852fc71de5379f8a6525f4bffb045.jpg",
+                "storeFigureImage": "image/37/4a/374a997f9a72547eb01375fdb61103e6.png",
+                "sellerName": null,
+                "chainPhone": null,
+                "className": "裝修"
+              },
+              {
+                "storeId": 577,
+                "state": 0,
+                "storeName": "李總電器",
+                "storeAvatar": "image/c2/f5/c2f538c7cf062abf3c766056498e91cc.jpg",
+                "storeFigureImage": "image/compress/te/st/6780df558002b3b81d0f3cea19383f89.png",
+                "sellerName": null,
+                "chainPhone": null,
+                "className": "超級市場"
+              }
+            ]
+          },
+          {
+            "type": "人氣",
+            "dataList": [
+              {
+                "storeId": 444,
+                "state": 0,
+                "storeName": "天意的店",
+                "storeAvatar": "",
+                "storeFigureImage": "",
+                "sellerName": null,
+                "chainPhone": null,
+                "className": "超級市場"
+              },
+              {
+                "storeId": 281,
+                "state": 0,
+                "storeName": "科研室",
+                "storeAvatar": "image/3d/bb/3dbb082f98537a7b5cccba729db31aad.png",
+                "storeFigureImage": "image/39/36/3936ceba8500da2a113530805f775d49.png",
+                "sellerName": null,
+                "chainPhone": null,
+                "className": "工藝品店"
+              },
+              {
+                "storeId": 576,
+                "state": 0,
+                "storeName": "母嬰店",
+                "storeAvatar": "image/0d/a6/0da6c517fff97f4e8a5e1b746997099d.jpg",
+                "storeFigureImage": "image/1d/4a/1d4acaaef8d1567e3e05f065dca418b6.png",
+                "sellerName": null,
+                "chainPhone": null,
+                "className": "母嬰店"
+              }
+            ]
+          },
+          {
+            "type": "星級",
+            "dataList": []
+          }
+        ],
+        "floorMapValue": {},
+        "floorSort": 6,
+        "floorRegion": 0
+      },
+      {
+        "floorId": 16,
+        "floorType": "share",
+        "hotZoneType": false,
+        "floorListValue": [
+          {
+            "type": "推薦",
+            "dataList": [
+              {
+                "postId": 2723,
+                "title": "open app测试",
+                "coverImage": "image/d8/0c/d80c43158df1414709eb4d102df61e3e.png",
+                "postLike": 0,
+                "memberName": "u_032615705239",
+                "nickName": "oorz",
+                "memberAvatar": "image/86/d8/86d8b0b172a99952ddc0309f4349179f.png",
+                "content": "随便写点什么内容&5u:1f603&5u:1f603&5u:1f603&5u:1f603&5u:1f603&5u:1f603"
+              },
+              {
+                "postId": 2000,
+                "title": "飛機養殖場",
+                "coverImage": "image/ce/f9/cef9b4aee7981448c89e0f92933dc765.jpg",
+                "postLike": 0,
+                "memberName": "u_001315344758",
+                "nickName": "Sky",
+                "memberAvatar": "image/8e/a6/8ea64a907653781f35ff1a51c68a1728.jpg",
+                "content": "測試看看咯[換行]"
+              }
+            ]
+          },
+          {
+            "type": "最新",
+            "dataList": [
+              {
+                "postId": 1999,
+                "title": "高达",
+                "coverImage": "image/15/e2/15e2f8a4f073a57e782f01834c69f480.jpg",
+                "postLike": 1,
+                "memberName": "u_024615562560",
+                "nickName": "zwm672",
+                "memberAvatar": "image/10/55/1055e83585dd56d3d28c80e7b4f4fcb5.png",
+                "content": "gundam"
+              },
+              {
+                "postId": 1234,
+                "title": "iOS手速测试",
+                "coverImage": "image/93/a2/93a2316f40eed67107a129292b6f9c45.png",
+                "postLike": 1,
+                "memberName": "u_001315344758",
+                "nickName": "Sky",
+                "memberAvatar": "image/8e/a6/8ea64a907653781f35ff1a51c68a1728.jpg",
+                "content": "只要你够快，没什么不可以！！！！！！"
+              },
+              {
+                "postId": 1111,
+                "title": "新品更新",
+                "coverImage": "",
+                "postLike": 0,
+                "memberName": "u_001315344758",
+                "nickName": "Sky",
+                "memberAvatar": "image/8e/a6/8ea64a907653781f35ff1a51c68a1728.jpg",
+                "content": "{\"storeId\":14,\"commonId\":3622}"
+              },
+              {
+                "postId": 666,
+                "title": "test",
+                "coverImage": "image/c6/87/c687118b7662fbdeaf6157cdec74a625.jpg",
+                "postLike": 1,
+                "memberName": "u_007615414781",
+                "nickName": "內測店",
+                "memberAvatar": "image/d4/68/d4687146fdffc9b3400a3d1ac3e9a99e.jpg",
+                "content": "測試一個長數據測試一個長數據測試一個長數據測試一個長數據測試一個長數據測試一個長數據測試一個長數據測試一個長數據測試一個長數據測試一個長數據測試一個長數據測試一個長數據測試一個長數據測試一個長數據測試一個長數據測試一個長數據測試一個長數據測試一個長數據測試一個長數據測試一個長數據測試一個長數據測試一個長數據測試一個長數據"
+              }
+            ]
+          },
+          {
+            "type": "人氣",
+            "dataList": [
+              {
+                "postId": 2710,
+                "title": "测试测试",
+                "coverImage": "image/c7/de/c7de170262d674dcd86b4145ed5a3aef.jpg",
+                "postLike": 2,
+                "memberName": "u_026715581730",
+                "nickName": "是天意啊",
+                "memberAvatar": "image/ac/46/ac46431d8bb24579d7152ec007a5d26d.png",
+                "content": "1111～～～～～22222～～～～[換行]3333～～～～～[換行]44/***"
+              },
+              {
+                "postId": 2709,
+                "title": "查韦斯",
+                "coverImage": null,
+                "postLike": 2,
+                "memberName": "u_032615705239",
+                "nickName": "oorz",
+                "memberAvatar": "image/86/d8/86d8b0b172a99952ddc0309f4349179f.png",
+                "content": "是世界上经济数据时&5u:1f601&5u:1f601&5u:1f601&5u:1f601"
+              }
+            ]
+          }
+        ],
+        "floorMapValue": {},
+        "floorSort": 7,
+        "floorRegion": 0
+      },
+      {
+        "floorId": 17,
+        "floorType": "member",
+        "hotZoneType": false,
+        "floorListValue": [
+          {
+            "type": "達人",
+            "dataList": [
+              {
+                "memberId": 268,
+                "memberName": "u_026715581730",
+                "avatar": "image/ac/46/ac46431d8bb24579d7152ec007a5d26d.png",
+                "nickName": "是天意啊",
+                "mobileAreaCode": "0086",
+                "mobile": "15919295432"
+              },
+              {
+                "memberId": 1018,
+                "memberName": "u_101716062149",
+                "avatar": "",
+                "nickName": "城友_SEEeRx",
+                "mobileAreaCode": "0086",
+                "mobile": "15500001129"
+              },
+              {
+                "memberId": 1004,
+                "memberName": "u_100316061961",
+                "avatar": "",
+                "nickName": "城友_dmZhKo",
+                "mobileAreaCode": "0086",
+                "mobile": "15500001120"
+              },
+              {
+                "memberId": 1005,
+                "memberName": "u_100416061912",
+                "avatar": "",
+                "nickName": "城友_XZyBRs",
+                "mobileAreaCode": "0086",
+                "mobile": "15500001121"
+              },
+              {
+                "memberId": 1006,
+                "memberName": "u_100516062042",
+                "avatar": "",
+                "nickName": "城友_nWEehm",
+                "mobileAreaCode": "0086",
+                "mobile": "15500001123"
+              },
+              {
+                "memberId": 1007,
+                "memberName": "u_100616062031",
+                "avatar": "",
+                "nickName": "城友_StBVsv",
+                "mobileAreaCode": "0086",
+                "mobile": "15500001124"
+              },
+              {
+                "memberId": 1020,
+                "memberName": "u_101916062860",
+                "avatar": "",
+                "nickName": "城友_MjrpVl",
+                "mobileAreaCode": "0086",
+                "mobile": "15500001130"
+              }
+            ]
+          },
+          {
+            "type": "人氣",
+            "dataList": [
+              {
+                "memberId": 935,
+                "memberName": "u_093416057704",
+                "avatar": "",
+                "nickName": "城友_bvlbcZ",
+                "mobileAreaCode": "0086",
+                "mobile": "13073011102"
+              },
+              {
+                "memberId": 934,
+                "memberName": "u_093316057624",
+                "avatar": "",
+                "nickName": "城友_ANwBoQ",
+                "mobileAreaCode": "0086",
+                "mobile": "13025111646"
+              },
+              {
+                "memberId": 988,
+                "memberName": "u_098716061162",
+                "avatar": "",
+                "nickName": "itzy",
+                "mobileAreaCode": "0086",
+                "mobile": "15500001112"
+              }
+            ]
+          },
+          {
+            "type": "最新",
+            "dataList": []
+          }
+        ],
+        "floorMapValue": {},
+        "floorSort": 8,
+        "floorRegion": 0
+      },
+      {
+        "floorId": 18,
+        "floorType": "firm",
+        "hotZoneType": false,
+        "floorListValue": [],
+        "floorMapValue": {
+          "firmImage": "image/41/30/4130ddfbe7d96fc6b4e4ced35c575ae8.png",
+          "firmUrl": "https://www.twant.com/mobile/incubator/",
+          "firmStoreList": []
+        },
+        "floorSort": 9,
+        "floorRegion": 0
+      },
+      {
+        "floorId": 32,
+        "floorType": "group",
+        "hotZoneType": false,
+        "floorListValue": [
+          {
+            "commonId": 3793,
+            "bottomPrice": 300.00,
+            "goodsPrice": 100.00,
+            "goodsName": null,
+            "imageSrc": "https://ftofs-editor.oss-cn-shenzhen.aliyuncs.com/image/98/93/9893d5168187967758925f92dec8d194.jpg"
+          },
+          {
+            "commonId": 3850,
+            "bottomPrice": 97.00,
+            "goodsPrice": 50.00,
+            "goodsName": null,
+            "imageSrc": "https://ftofs-editor.oss-cn-shenzhen.aliyuncs.com/image/4c/52/4c521eee10b805546248130e56a0a15e.jpg"
+          }
+        ],
+        "floorMapValue": {},
+        "floorSort": 12,
+        "floorRegion": 0
+      },
+      {
+        "floorId": 38,
+        "floorType": "news",
+        "hotZoneType": false,
+        "floorListValue": [
+          {
+            "type": "最新",
+            "dataList": [
+              {
+                "newsId": 1000,
+                "title": "動態標題",
+                "url": "https://www.twant.com/mobile/news/1000",
+                "cover": "https://ftofs-editor.oss-cn-shenzhen.aliyuncs.com/image/93/27/9327c7f5bb08599f3c12aa2b46cd4009.jpg",
+                "description": "動態描述動態描述動態描述",
+                "createTime": "2020-12-04 12:22"
+              }
+            ]
+          },
+          {
+            "type": "重要",
+            "dataList": [
+              {
+                "newsId": 1001,
+                "title": "221",
+                "url": "https://www.twant.com/mobile/news/1001",
+                "cover": "https://ftofs-editor.oss-cn-shenzhen.aliyuncs.com/image/18/d0/18d0e3b700cfb88c31c9304bea0f29d4.png",
+                "description": "12345678909",
+                "createTime": "2020-12-04 12:18"
+              }
+            ]
+          },
+          {
+            "type": "版本",
+            "dataList": [
+              {
+                "newsId": 1000,
+                "title": "動態標題",
+                "url": "https://www.twant.com/mobile/news/1000",
+                "cover": "https://ftofs-editor.oss-cn-shenzhen.aliyuncs.com/image/93/27/9327c7f5bb08599f3c12aa2b46cd4009.jpg",
+                "description": "動態描述動態描述動態描述",
+                "createTime": "2020-12-04 12:22"
+              }
+            ]
+          }
+        ],
+        "floorMapValue": {},
+        "floorSort": 13,
+        "floorRegion": 0
+      },
+      {
+        "floorId": 34,
+        "floorType": "job",
+        "hotZoneType": false,
+        "floorListValue": [
+          {
+            "type": "人氣",
+            "dataList": [
+              {
+                "postId": 211,
+                "postTitle": "測試職位1",
+                "postType": "全職",
+                "postArea": "路環",
+                "workLocation": "氫氣球券",
+                "salaryType": "月薪",
+                "salaryRange": "20k-25k",
+                "currency": "葡幣",
+                "customizeLow": 0,
+                "customizeHigh": 0,
+                "storeVo": {
+                  "storeId": 444,
+                  "state": 1,
+                  "storeName": "天意的店",
+                  "storeAvatar": "",
+                  "storeFigureImage": "",
+                  "sellerName": "u_045515758849",
+                  "chainPhone": "15919295432",
+                  "className": null
+                },
+                "memberVo": {
+                  "memberId": 456,
+                  "memberName": "u_045515758849",
+                  "avatar": "image/60/fd/60fde1ba3b103f4d5a5638032a3d8faf.png",
+                  "nickName": "天了嚕啊",
+                  "mobileAreaCode": "00853",
+                  "mobile": "69100000"
+                }
+              },
+              {
+                "postId": 210,
+                "postTitle": "副武器",
+                "postType": "兼職",
+                "postArea": "氹仔",
+                "workLocation": "噠噠噠噠噠噠",
+                "salaryType": "月薪",
+                "salaryRange": "5k-10k",
+                "currency": "葡幣",
+                "customizeLow": 0,
+                "customizeHigh": 0,
+                "storeVo": {
+                  "storeId": 451,
+                  "state": 1,
+                  "storeName": "獨領風騷",
+                  "storeAvatar": "image/a5/9e/a59ea91988641ff7242d185a04c0efa7.jpg",
+                  "storeFigureImage": "image/compress/te/st/0fbc90f3651865f1e0437273cff45971.png",
+                  "sellerName": "u_075315959970",
+                  "chainPhone": "15325555",
+                  "className": null
+                },
+                "memberVo": {
+                  "memberId": 754,
+                  "memberName": "u_075315959970",
+                  "avatar": "image/62/4a/624a58d282299fd47db09013cf138d2d.png",
+                  "nickName": "陶文",
+                  "mobileAreaCode": "0086",
+                  "mobile": "17520257512"
+                }
+              }
+            ]
+          },
+          {
+            "type": "星級",
+            "dataList": [
+              {
+                "postId": 211,
+                "postTitle": "測試職位1",
+                "postType": "全職",
+                "postArea": "路環",
+                "workLocation": "氫氣球券",
+                "salaryType": "月薪",
+                "salaryRange": "20k-25k",
+                "currency": "葡幣",
+                "customizeLow": 0,
+                "customizeHigh": 0,
+                "storeVo": {
+                  "storeId": 444,
+                  "state": 1,
+                  "storeName": "天意的店",
+                  "storeAvatar": "",
+                  "storeFigureImage": "",
+                  "sellerName": "u_045515758849",
+                  "chainPhone": "15919295432",
+                  "className": null
+                },
+                "memberVo": {
+                  "memberId": 456,
+                  "memberName": "u_045515758849",
+                  "avatar": "image/60/fd/60fde1ba3b103f4d5a5638032a3d8faf.png",
+                  "nickName": "天了嚕啊",
+                  "mobileAreaCode": "00853",
+                  "mobile": "69100000"
+                }
+              },
+              {
+                "postId": 210,
+                "postTitle": "副武器",
+                "postType": "兼職",
+                "postArea": "氹仔",
+                "workLocation": "噠噠噠噠噠噠",
+                "salaryType": "月薪",
+                "salaryRange": "5k-10k",
+                "currency": "葡幣",
+                "customizeLow": 0,
+                "customizeHigh": 0,
+                "storeVo": {
+                  "storeId": 451,
+                  "state": 1,
+                  "storeName": "獨領風騷",
+                  "storeAvatar": "image/a5/9e/a59ea91988641ff7242d185a04c0efa7.jpg",
+                  "storeFigureImage": "image/compress/te/st/0fbc90f3651865f1e0437273cff45971.png",
+                  "sellerName": "u_075315959970",
+                  "chainPhone": "15325555",
+                  "className": null
+                },
+                "memberVo": {
+                  "memberId": 754,
+                  "memberName": "u_075315959970",
+                  "avatar": "image/62/4a/624a58d282299fd47db09013cf138d2d.png",
+                  "nickName": "陶文",
+                  "mobileAreaCode": "0086",
+                  "mobile": "17520257512"
+                }
+              }
+            ]
+          },
+          {
+            "type": "好工",
+            "dataList": [
+              {
+                "postId": 211,
+                "postTitle": "測試職位1",
+                "postType": "全職",
+                "postArea": "路環",
+                "workLocation": "氫氣球券",
+                "salaryType": "月薪",
+                "salaryRange": "20k-25k",
+                "currency": "葡幣",
+                "customizeLow": 0,
+                "customizeHigh": 0,
+                "storeVo": {
+                  "storeId": 444,
+                  "state": 1,
+                  "storeName": "天意的店",
+                  "storeAvatar": "",
+                  "storeFigureImage": "",
+                  "sellerName": "u_045515758849",
+                  "chainPhone": "15919295432",
+                  "className": null
+                },
+                "memberVo": {
+                  "memberId": 456,
+                  "memberName": "u_045515758849",
+                  "avatar": "image/60/fd/60fde1ba3b103f4d5a5638032a3d8faf.png",
+                  "nickName": "天了嚕啊",
+                  "mobileAreaCode": "00853",
+                  "mobile": "69100000"
+                }
+              },
+              {
+                "postId": 210,
+                "postTitle": "副武器",
+                "postType": "兼職",
+                "postArea": "氹仔",
+                "workLocation": "噠噠噠噠噠噠",
+                "salaryType": "月薪",
+                "salaryRange": "5k-10k",
+                "currency": "葡幣",
+                "customizeLow": 0,
+                "customizeHigh": 0,
+                "storeVo": {
+                  "storeId": 451,
+                  "state": 1,
+                  "storeName": "獨領風騷",
+                  "storeAvatar": "image/a5/9e/a59ea91988641ff7242d185a04c0efa7.jpg",
+                  "storeFigureImage": "image/compress/te/st/0fbc90f3651865f1e0437273cff45971.png",
+                  "sellerName": "u_075315959970",
+                  "chainPhone": "15325555",
+                  "className": null
+                },
+                "memberVo": {
+                  "memberId": 754,
+                  "memberName": "u_075315959970",
+                  "avatar": "image/62/4a/624a58d282299fd47db09013cf138d2d.png",
+                  "nickName": "陶文",
+                  "mobileAreaCode": "0086",
+                  "mobile": "17520257512"
+                }
+              }
+            ]
+          },
+          {
+            "type": "急聘",
+            "dataList": [
+              {
+                "postId": 211,
+                "postTitle": "測試職位1",
+                "postType": "全職",
+                "postArea": "路環",
+                "workLocation": "氫氣球券",
+                "salaryType": "月薪",
+                "salaryRange": "20k-25k",
+                "currency": "葡幣",
+                "customizeLow": 0,
+                "customizeHigh": 0,
+                "storeVo": {
+                  "storeId": 444,
+                  "state": 1,
+                  "storeName": "天意的店",
+                  "storeAvatar": "",
+                  "storeFigureImage": "",
+                  "sellerName": "u_045515758849",
+                  "chainPhone": "15919295432",
+                  "className": null
+                },
+                "memberVo": {
+                  "memberId": 456,
+                  "memberName": "u_045515758849",
+                  "avatar": "image/60/fd/60fde1ba3b103f4d5a5638032a3d8faf.png",
+                  "nickName": "天了嚕啊",
+                  "mobileAreaCode": "00853",
+                  "mobile": "69100000"
+                }
+              },
+              {
+                "postId": 210,
+                "postTitle": "副武器",
+                "postType": "兼職",
+                "postArea": "氹仔",
+                "workLocation": "噠噠噠噠噠噠",
+                "salaryType": "月薪",
+                "salaryRange": "5k-10k",
+                "currency": "葡幣",
+                "customizeLow": 0,
+                "customizeHigh": 0,
+                "storeVo": {
+                  "storeId": 451,
+                  "state": 1,
+                  "storeName": "獨領風騷",
+                  "storeAvatar": "image/a5/9e/a59ea91988641ff7242d185a04c0efa7.jpg",
+                  "storeFigureImage": "image/compress/te/st/0fbc90f3651865f1e0437273cff45971.png",
+                  "sellerName": "u_075315959970",
+                  "chainPhone": "15325555",
+                  "className": null
+                },
+                "memberVo": {
+                  "memberId": 754,
+                  "memberName": "u_075315959970",
+                  "avatar": "image/62/4a/624a58d282299fd47db09013cf138d2d.png",
+                  "nickName": "陶文",
+                  "mobileAreaCode": "0086",
+                  "mobile": "17520257512"
+                }
+              }
+            ]
+          }
+        ],
+        "floorMapValue": {},
+        "floorSort": 222,
+        "floorRegion": 0
+      }
+    ]
+  }
+}

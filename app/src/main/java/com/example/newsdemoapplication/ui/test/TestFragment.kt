@@ -11,9 +11,11 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.newsdemoapplication.R
+import com.example.newsdemoapplication.databinding.TestFragmentBinding
 import com.google.android.material.navigation.NavigationView
+import com.gzp.baselib.base.MvvmBaseFragment
 
-class TestFragment : Fragment() {
+class TestFragment : MvvmBaseFragment<TestViewModel,TestFragmentBinding>() {
 
     var flag = false
     var suo_textView: TextView? = null
@@ -30,15 +32,20 @@ class TestFragment : Fragment() {
 
     private lateinit var viewModel: TestViewModel
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.test_fragment, container, false)
-    }
+    override fun getLayoutResId()=R.layout.test_fragment
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(TestViewModel::class.java)
-
+    override fun doCreateView(savedInstanceState: Bundle?) {
+        binding.btnCloseRight.apply {
+            setOnClickListener { showLoading() }
+        }
+        binding.frameLayout.apply {
+            cyImagebuttonId.setOnClickListener {
+                binding.drawerLayout.openDrawer(binding.linearLayout1Id)
+            }
+            szImagebuttonId.setOnClickListener{
+                binding.drawerLayout.openDrawer(binding.leftNavView)
+            }
+        }
     }
 
 }
