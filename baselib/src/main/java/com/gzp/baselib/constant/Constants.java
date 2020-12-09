@@ -1,5 +1,7 @@
 package com.gzp.baselib.constant;
 
+import org.jetbrains.annotations.Nullable;
+
 public class Constants {
 
 
@@ -86,4 +88,6 @@ public class Constants {
     public static final String PERMISSIONS_START_PATH="/app/permissions";
 
     public static final String REGISTERSOURCE="test";
+    @Nullable
+    public static final String IsEdit="isedit";
 }

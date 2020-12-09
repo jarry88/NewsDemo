@@ -87,4 +87,7 @@ public class ListDragAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         notifyItemChanged(old);
         notifyItemChanged(currSelectPosition);
     }
+    public int getCurrSelectPosition(){
+        return currSelectPosition;
+    }
 }

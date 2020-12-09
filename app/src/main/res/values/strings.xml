@@ -29,5 +29,6 @@
     <string name="ts1_textView">提示1</string>
     <string name="xnty_textView">虚拟体验︾</string>
     <string name="title_test">测试页面</string>
+    <string name="title_Add">add</string>
 
 </resources>

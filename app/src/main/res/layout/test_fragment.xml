@@ -8,20 +8,24 @@
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
         tools:openDrawer="start">
-
-        <include
-            layout="@layout/main1"
-            android:id="@+id/frameLayout"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/dp_48">
+            <include
+                layout="@layout/main1"
+                android:id="@+id/frameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </RelativeLayout>
 
         <com.google.android.material.navigation.NavigationView
             android:id="@+id/left_nav_view"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/dp_48"
             android:layout_gravity="start"
             android:fitsSystemWindows="true"
-            app:headerLayout="@layout/nav_header_main"
             >
             <LinearLayout
                 android:layout_width="match_parent"
@@ -30,10 +34,11 @@
                 android:layout_marginTop="@dimen/leftHeadHeight"
                 android:orientation="vertical">
 
-                <androidx.recyclerview.widget.RecyclerView
+                <com.example.newsdemoapplication.view.DragRecycleView
                     android:id="@+id/rv_left"
                     android:padding="@dimen/dp_8"
                     android:layout_width="match_parent"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     android:layout_height="0dp"
                     android:layout_weight="1"/>
                 <LinearLayout

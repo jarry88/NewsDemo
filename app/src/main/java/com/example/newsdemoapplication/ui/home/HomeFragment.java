@@ -94,7 +94,7 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         titleMaxHeight=CommonUtils.dp2px(getActivity(),200);
         singleLineHeight=CommonUtils.dp2px(getActivity(),40);
-        list =getData(47);
+        list =Util.getData(47);
         initTopContainer();
         initTitleRecycleView();
         initContentRecycleView();

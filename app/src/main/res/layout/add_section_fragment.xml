@@ -1,91 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
-        tools:openDrawer="start"
-        android:orientation="vertical">
-
+        android:orientation="vertical"
+        android:background="@color/gray_eeeeee">
         <include
-            layout="@layout/main1"
-            android:id="@+id/frameLayout"
+            android:id="@+id/title_bar"
+            layout="@layout/view_navigation_bar" />
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <com.google.android.material.navigation.NavigationView
-            android:id="@+id/left_nav_view"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="start"
-            android:fitsSystemWindows="true"
-            app:headerLayout="@layout/nav_header_main"
-            >
+            android:layout_height="match_parent">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-
-                android:layout_marginTop="@dimen/leftHeadHeight"
-                android:orientation="vertical">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_left"
-                    android:padding="@dimen/dp_8"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"/>
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/dp_12"
+                >
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:orientation="horizontal"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ll_group_1"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="20dp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ll_group_2"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="20dp"/>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
                     android:gravity="center">
-                    <TextView
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/dp_8"
-                        android:text="添加"
-                        android:id="@+id/btn_add"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/dp_8"
-                        android:text="收回"
-                        android:id="@+id/btn_close"/>
+                        android:gravity="center_vertical"
+                        android:id="@+id/btn_add">
+                        <ImageView
+                            android:layout_width="@dimen/dp_24"
+                            android:layout_height="@dimen/dp_24"
+                            android:src="@drawable/ic_baseline_add_circle_24"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="添加新标题"/>
+                    </LinearLayout>
+                </RelativeLayout>
 
-                </LinearLayout>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:layout_marginBottom="@dimen/dp_24"
+                    android:id="@+id/rv_pre_view"/>
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:text="保存"
+                    android:gravity="center"
+                    android:layout_marginStart="@dimen/dp_24"
+                    android:layout_marginEnd="@dimen/dp_24"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/bg_button_green"
+                    android:id="@+id/btn_save"/>
             </LinearLayout>
-        </com.google.android.material.navigation.NavigationView>
-
-        <!-- 右边菜单 -->
-        <LinearLayout
-            android:id="@+id/linearLayout1_id"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="end"
-            android:background="@color/black"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="20dp"
-                android:text="待用1"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/btn_close_right"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="关闭" />
-
-        </LinearLayout>
-
+        </ScrollView>
 
 
     </LinearLayout>
