@@ -13,7 +13,9 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.newsdemoapplication.R;
+import com.example.newsdemoapplication.Util;
 import com.example.newsdemoapplication.callback.OnItemClickListener;
+import com.example.newsdemoapplication.view.DragView;
 
 import java.util.List;
 
@@ -37,6 +39,7 @@ public class NewsContentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         NewsContentViewHolder viewHolder =(NewsContentViewHolder) holder;
         viewHolder.tvTitle.setText(list.get(position));
         viewHolder.tvContent.setText("内容"+list.get(position)+list.get(position));
+        viewHolder.dragView.addAll(Util.getData(7),true);
     }
 
     @Override
@@ -48,11 +51,13 @@ public class NewsContentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         private TextView tvTitle;
         private TextView tvContent;
+        private DragView dragView;
 
         public NewsContentViewHolder(View itemView) {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.tv_title);
             tvContent = itemView.findViewById(R.id.tv_content);
+            dragView = itemView.findViewById(R.id.drag_view);
         }
 
         public void setSelected(Boolean selected) {

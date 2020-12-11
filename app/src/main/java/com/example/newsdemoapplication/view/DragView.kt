@@ -11,6 +11,7 @@ import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
 import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsdemoapplication.Util
 import com.example.newsdemoapplication.adapter.ListDragAdapter
@@ -49,6 +50,9 @@ class DragView @JvmOverloads constructor(context: Context, attributes: Attribute
             }
         }
     }
+    private val mImageLayoutManager by lazy {
+        GridLayoutManager(context, 2)
+    }
     private val mAdapter by lazy {  ListDragAdapter(context, list).apply {
         setOnItemClickListener(
                 object : OnItemClickListener {
@@ -61,7 +65,12 @@ class DragView @JvmOverloads constructor(context: Context, attributes: Attribute
                 })
     }
     }
-    fun addAll(l: List<String>){
+    @JvmOverloads
+    fun addAll(l: List<String>?,showImage:Boolean=false){
+        l?:return
+        mAdapter.setImageView(showImage)
+        if(showImage)
+            setImageLayoutManager()
         mAdapter.setmDatas(l)
     }
     @SuppressLint("ClickableViewAccessibility")
@@ -94,22 +103,18 @@ class DragView @JvmOverloads constructor(context: Context, attributes: Attribute
                 MotionEvent.ACTION_UP -> {
                     Util.Loge("ACTION_UP")
                     reset()
-//                    if(count>0){
-//                        count=0
-//                        mCallBack?.onLongPress()
-//                    }
-//                    reset()
                 }
                 else ->{}
             }
             return@setOnTouchListener false
         }
     }
+    //拖动按压事件回调接口
     interface DragAndPressCallBack{
         fun onLongPress()
         fun onAfterPressMove()
     }
-
+    //重置开始按压的时间
     private fun reset() {
         beginTime =System.currentTimeMillis().apply { Log.e("TAG", "reset: rese") }
     }
@@ -142,6 +147,9 @@ class DragView @JvmOverloads constructor(context: Context, attributes: Attribute
                 Util.Loge("move")
                 //交换变换位置的集合数据
                 Collections.swap(mAdapter.getData(), oldPosition, newPosition)
+                mAdapter.urlData?.let {
+                    Collections.swap(it, oldPosition, newPosition)
+                }
                 mAdapter.notifyItemMoved(oldPosition, newPosition)
 //                currSelectedPosition = newPosition
                 //                titleAdapter.setCurrSelectPosition(currSelectedPosition);
@@ -163,10 +171,13 @@ class DragView @JvmOverloads constructor(context: Context, attributes: Attribute
                 if (position < 0) return
                 count = 1
                 if (position != mAdapter.currSelectPosition) {
-                    (findViewHolderForAdapterPosition(mAdapter.currSelectPosition) as MyDragViewHolder).setSelected(false)
+//                    (layoutManager as? LinearLayoutManager)?.let {
+//                        (findViewHolderForAdapterPosition(position) as MyDragViewHolder)
+//                    }
+                    findViewHolderForAdapterPosition(mAdapter.currSelectPosition)?.let { (it as MyDragViewHolder).setSelected(false)}
                     mAdapter.currSelectPosition = position
                 }
-                val vib = getContext().getSystemService(Service.VIBRATOR_SERVICE) as Vibrator
+                val vib = context.getSystemService(Service.VIBRATOR_SERVICE) as Vibrator
                 vib.vibrate(150)
                 //                 记录弹窗信息
 //                longPress = true
@@ -176,7 +187,12 @@ class DragView @JvmOverloads constructor(context: Context, attributes: Attribute
         layoutManager=mLayoutManager
 
     }
-    fun setLayoutManager(){
+
+    fun setImageLayoutManager() {
+        layoutManager =mImageLayoutManager
+    }
+    fun setLineLayoutManager() {
+        layoutManager =LinearLayoutManager(context)
     }
 }
 

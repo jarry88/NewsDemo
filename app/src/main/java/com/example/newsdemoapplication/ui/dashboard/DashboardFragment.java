@@ -93,13 +93,12 @@ public class DashboardFragment extends Fragment  {
         titleMaxHeight= CommonUtils.dp2px(getActivity(),200);
         list =getData(47);
         dragView =view.findViewById(R.id.rv_drag);
-        dragView.setLayoutManager();
         dragView.addAll(getData(47));
         initTitleRecycleView();
         initBottomSheetDiaLog();
     }
 
-
+    //初始化顶部标题栏
     private void initTitleRecycleView() {
         mTitleRecycleView =getView().findViewById(R.id.rv_title);
         titleLayoutManager =new GridLayoutManager(requireContext(),ColumnNum*3);
@@ -187,7 +186,7 @@ public class DashboardFragment extends Fragment  {
 
 
     }
-
+    //
     private void initBottomSheetDiaLog() {
         bottomSheetDialog =new BottomSheetDialog(getContext());
         bottomSheetDialog.setContentView(R.layout.botton_dialog);

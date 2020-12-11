@@ -96,6 +96,7 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>() {
            setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
                val linearLayoutManager = layoutManager as LinearLayoutManager
                val topPosition = linearLayoutManager.findFirstVisibleItemPosition()
+               //设置滚动监听 当使显示的第一个item 是标题栏的第一个
                if (topPosition >= 0 && topPosition != currSelectedPosition) {
                    currSelectedPosition = topPosition
                    titleAdapter.currSelectPosition = currSelectedPosition
@@ -128,6 +129,12 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>() {
             dismiss()
         }
     } }
+    //左侧弹窗列表
+    private val LeftDrawerPopupView by lazy {
+        LeftDrawerPopupView(requireContext()).apply {
+            setData(list)
+        }
+    }
 
     //标题栏是否支持局部展开
     private var supportHalfExpand = false
@@ -160,7 +167,7 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>() {
             setOnClickListener { showLoading() }
         }
         binding.frameLayout.apply {
-            cyImagebuttonId.setOnClickListener {
+            cyImagebuttonId.setOnClickListener {//左侧弹窗按钮
 //                binding.drawerLayout.openDrawer(binding.linearLayout1Id)
                 leftPopup?.let {
                     it.show()
@@ -169,7 +176,7 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>() {
                         .isDestroyOnDismiss(false) //对于只使用一次的弹窗，推荐设置这个
                         .popupPosition(PopupPosition.Left)//左边
                         .hasStatusBarShadow(true) //启用状态栏阴影
-                        .asCustom(LeftDrawerPopupView(requireContext()))
+                        .asCustom(LeftDrawerPopupView)
                         .show().also {
                             leftPopup = it
                         }
@@ -198,30 +205,13 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>() {
                 putBoolean(Constants.IsEdit, false)
             })
         }
-        initLeftRv()
         initTitleRecycleView()
         mContentRecycleView.invalidate()
     }
-    fun initLeftRv(){
-        binding.rvLeft.adapter=
-                leftAdapter.apply {
-                    object :OnItemClickListener{
-                        override fun onItemClick(view: View?, position: Int) {
-                            currSelectPosition = position
-                        }
-                        override fun onItemLongClick(view: View?, position: Int) {
-//                            TODO("Not yet implemented")
-                        }
-                    }
-        }
-        binding.rvLeft.setOnClickListener {
-            Log.e("TAG", "initLeftRv: ")
-        }
-    }
+
 
 
     private fun initTitleRecycleView() {
-
         val itemTouchHelper = ItemTouchHelper(ItemDragHelperCallBack(object : ItemHelper {
             override fun itemMoved(oldPosition: Int, newPosition: Int) {
                 Util.Loge("move")
@@ -239,7 +229,6 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>() {
                 if (longPress) {
                     bottomSheetDialog.show()
                 }
-                //                }
             }
 
             override fun itemSelected(position: Int) { //选中title 后的响应操作
@@ -331,7 +320,5 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>() {
             }
         }
     }
-
-
 
 }

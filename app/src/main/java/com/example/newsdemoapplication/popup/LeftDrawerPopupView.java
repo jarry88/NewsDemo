@@ -1,6 +1,7 @@
 package com.example.newsdemoapplication.popup;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -8,18 +9,23 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.newsdemoapplication.R;
+import com.example.newsdemoapplication.view.DragView;
 import com.lxj.easyadapter.EasyAdapter;
 import com.lxj.easyadapter.ViewHolder;
 import com.lxj.xpopup.core.DrawerPopupView;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Description: 自定义带列表的Drawer弹窗
  * Create by dance, at 2019/1/9
  */
 public class LeftDrawerPopupView extends DrawerPopupView {
-    RecyclerView recyclerView;
+    DragView dragView;
+    private List<String> list;
     public LeftDrawerPopupView(@NonNull Context context) {
         super(context);
     }
@@ -31,21 +37,9 @@ public class LeftDrawerPopupView extends DrawerPopupView {
     final ArrayList<String> data = new ArrayList<>();
     @Override
     protected void onCreate() {
-        recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        for (int i = 0; i < 50; i++) {
-            data.add(""+i);
-        }
-
-        final EasyAdapter<String> commonAdapter = new EasyAdapter<String>(data, android.R.layout.simple_list_item_1) {
-            @Override
-            protected void bind(@NonNull ViewHolder holder, @NonNull String s, int position) {
-                holder.setText(android.R.id.text1, s);
-            }
-        };
-
-        recyclerView.setAdapter(commonAdapter);
+        dragView =findViewById(R.id.drag_view);
+        dragView.setLineLayoutManager();
+        dragView.addAll(list);
         findViewById(R.id.btn).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,5 +50,10 @@ public class LeftDrawerPopupView extends DrawerPopupView {
             }
         });
 
+    }
+
+
+    public void setData(@NotNull List<String> list) {
+        this.list=list;
     }
 }
