@@ -90,4 +90,12 @@ public class ListDragAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public int getCurrSelectPosition(){
         return currSelectPosition;
     }
+    public void setmDatas(List<String> datas) {
+        if (list != null) {
+            list.clear();
+            this.notifyDataSetChanged();
+        }
+        list.addAll(datas);
+        this.notifyDataSetChanged();
+    }
 }

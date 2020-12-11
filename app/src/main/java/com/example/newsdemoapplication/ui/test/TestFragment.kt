@@ -20,6 +20,7 @@ import com.example.newsdemoapplication.adapter.NewsContentAdapter
 import com.example.newsdemoapplication.callback.ItemDragHelperCallBack
 import com.example.newsdemoapplication.callback.OnItemClickListener
 import com.example.newsdemoapplication.databinding.TestFragmentBinding
+import com.example.newsdemoapplication.popup.LeftDrawerPopupView
 import com.example.newsdemoapplication.popup.ListDrawerPopupView
 import com.example.newsdemoapplication.ui.dashboard.ItemHelper
 import com.example.newsdemoapplication.util.CommonUtils
@@ -28,6 +29,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.gzp.baselib.base.MvvmBaseFragment
 import com.gzp.baselib.constant.Constants
 import com.lxj.xpopup.XPopup
+import com.lxj.xpopup.core.BasePopupView
 import com.lxj.xpopup.enums.PopupPosition
 import java.util.*
 
@@ -36,6 +38,7 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>() {
         fun newInstance() = TestFragment()
     }
 
+    private var leftPopup: BasePopupView?=null
     private val SINGLE_LINE = 0
     private val HALF_EXPANDED = 1
     private val COMPLETE_EXPANDED = 2
@@ -158,11 +161,22 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>() {
         }
         binding.frameLayout.apply {
             cyImagebuttonId.setOnClickListener {
-                binding.drawerLayout.openDrawer(binding.linearLayout1Id)
+//                binding.drawerLayout.openDrawer(binding.linearLayout1Id)
+                leftPopup?.let {
+                    it.show()
+                }?:XPopup.Builder(getContext())
+                        .dismissOnTouchOutside(false)
+                        .isDestroyOnDismiss(false) //对于只使用一次的弹窗，推荐设置这个
+                        .popupPosition(PopupPosition.Left)//左边
+                        .hasStatusBarShadow(true) //启用状态栏阴影
+                        .asCustom(LeftDrawerPopupView(requireContext()))
+                        .show().also {
+                            leftPopup = it
+                        }
             }
             szImagebuttonId.setOnClickListener{
 //                binding.drawerLayout.openDrawer(binding.leftNavView)
-                XPopup.Builder(getContext())
+                XPopup.Builder(context)
                         .dismissOnTouchOutside(false)
                         .isDestroyOnDismiss(true) //对于只使用一次的弹窗，推荐设置这个
                         .popupPosition(PopupPosition.Right)//右边

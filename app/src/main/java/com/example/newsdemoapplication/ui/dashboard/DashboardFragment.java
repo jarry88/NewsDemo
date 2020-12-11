@@ -33,6 +33,7 @@ import com.example.newsdemoapplication.callback.OnItemClickListener;
 import com.example.newsdemoapplication.ui.home.HomeViewModel;
 import com.example.newsdemoapplication.util.CommonUtils;
 import com.example.newsdemoapplication.view.DragRecycleView;
+import com.example.newsdemoapplication.view.DragView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.lxj.xpopup.XPopup;
 
@@ -69,6 +70,7 @@ public class DashboardFragment extends Fragment  {
     List<Integer> refreshList =new ArrayList<>();
     private DashboardViewModel dashboardViewModel;
     ItemTouchHelper mTouchHelper ;
+    DragView dragView;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         dashboardViewModel =
@@ -90,6 +92,9 @@ public class DashboardFragment extends Fragment  {
 
         titleMaxHeight= CommonUtils.dp2px(getActivity(),200);
         list =getData(47);
+        dragView =view.findViewById(R.id.rv_drag);
+        dragView.setLayoutManager();
+        dragView.addAll(getData(47));
         initTitleRecycleView();
         initBottomSheetDiaLog();
     }
