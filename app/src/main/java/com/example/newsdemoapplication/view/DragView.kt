@@ -57,7 +57,7 @@ class DragView @JvmOverloads constructor(context: Context, attributes: Attribute
         setOnItemClickListener(
                 object : OnItemClickListener {
                     override fun onItemClick(view: View, position: Int) {
-                        currSelectPosition = position
+//                        currSelectPosition = position
 //                        contentScrollToPosition(position)
                     }
 
@@ -75,10 +75,10 @@ class DragView @JvmOverloads constructor(context: Context, attributes: Attribute
     }
     @SuppressLint("ClickableViewAccessibility")
     private fun addTouch() {
-        Log.e("TAG", "addTouch: ")
         setOnTouchListener { v, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
+                    Log.e("TAG", "ACTION_DOWN: ")
                     startX = event.rawX
                     startY = event.rawY
                     reset()
@@ -145,6 +145,7 @@ class DragView @JvmOverloads constructor(context: Context, attributes: Attribute
         val itemTouchHelper = ItemTouchHelper(ItemDragHelperCallBack(object : ItemHelper {
             override fun itemMoved(oldPosition: Int, newPosition: Int) {
                 Util.Loge("move")
+
                 //交换变换位置的集合数据
                 Collections.swap(mAdapter.getData(), oldPosition, newPosition)
                 mAdapter.urlData?.let {
@@ -168,17 +169,16 @@ class DragView @JvmOverloads constructor(context: Context, attributes: Attribute
             }
 
             override fun itemSelected(position: Int) { //选中title 后的响应操作
+                Log.e("TAG", "itemSelected: $position")
                 if (position < 0) return
                 count = 1
                 if (position != mAdapter.currSelectPosition) {
-//                    (layoutManager as? LinearLayoutManager)?.let {
-//                        (findViewHolderForAdapterPosition(position) as MyDragViewHolder)
-//                    }
-                    findViewHolderForAdapterPosition(mAdapter.currSelectPosition)?.let { (it as MyDragViewHolder).setSelected(false)}
-                    mAdapter.currSelectPosition = position
+                    findViewHolderForAdapterPosition(mAdapter.currSelectPosition)?.
+                    let { (it as MyDragViewHolder).setSelected(false)}
+//                    mAdapter.currSelectPosition = position
                 }
                 val vib = context.getSystemService(Service.VIBRATOR_SERVICE) as Vibrator
-                vib.vibrate(150)
+                vib.vibrate(100)
                 //                 记录弹窗信息
 //                longPress = true
             }

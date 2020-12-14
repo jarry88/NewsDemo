@@ -9,6 +9,7 @@ import com.example.newsdemoapplication.databinding.AddSectionFragmentBinding
 import com.gzp.baselib.base.MvvmBaseFragment
 import com.gzp.baselib.constant.Constants
 import com.gzp.baselib.widget.NavigationBar
+import com.lxj.xpopup.XPopup
 
 class AddSectionFragment :MvvmBaseFragment<AddViewModel,AddSectionFragmentBinding>() {
     override fun getLayoutResId()= R.layout.add_section_fragment
@@ -19,12 +20,16 @@ class AddSectionFragment :MvvmBaseFragment<AddViewModel,AddSectionFragmentBindin
             setTitle("${if (isEdit) "管理" else "添加"}章节")
             setBackOnClickListener{
                 NavHostFragment.findNavController(this@AddSectionFragment)
-                        .popBackStack()
+                        .navigate(R.id.navigation_test)
             }
+        }
+        binding.btnAdd.setOnClickListener {
+            XPopup.Builder(context).asInputConfirm("输入内容",""){}.show()
+
         }
         binding.btnSave.setOnClickListener {
             NavHostFragment.findNavController(this@AddSectionFragment)
-                    .popBackStack()
+                    .navigate(R.id.navigation_test)
         }
 
     }

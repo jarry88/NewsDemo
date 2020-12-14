@@ -97,9 +97,19 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="56dp"
+            android:text="室外环境 阴有小雨，无风，气温25.。。。。。             未读消息"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
         <include
             layout="@layout/fragment_home"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="76dp"
             android:layout_marginBottom="40dp"
             android:id="@+id/frameLayout"
             android:layout_width="match_parent"

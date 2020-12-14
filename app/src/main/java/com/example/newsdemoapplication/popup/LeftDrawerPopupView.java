@@ -29,7 +29,7 @@ public class LeftDrawerPopupView extends DrawerPopupView {
     public LeftDrawerPopupView(@NonNull Context context) {
         super(context);
     }
-
+    private OnClickListener mOnClickListener;
     @Override
     protected int getImplLayoutId() {
         return R.layout.left_list_drawer;
@@ -40,13 +40,25 @@ public class LeftDrawerPopupView extends DrawerPopupView {
         dragView =findViewById(R.id.drag_view);
         dragView.setLineLayoutManager();
         dragView.addAll(list);
-        findViewById(R.id.btn).setOnClickListener(new OnClickListener() {
+        findViewById(R.id.textView).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if(data.size()==0)return;
-//                data.remove(0);
-//                commonAdapter.notifyDataSetChanged();
+                if(mOnClickListener!=null)
+                    mOnClickListener.onClick(v);
+            }
+        });
+        findViewById(R.id.btn_close_left).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 dismiss();
+            }
+        });
+        findViewById(R.id.btn_add).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+                if(mOnClickListener!=null)
+                    mOnClickListener.onClick(v);
             }
         });
 
@@ -55,5 +67,8 @@ public class LeftDrawerPopupView extends DrawerPopupView {
 
     public void setData(@NotNull List<String> list) {
         this.list=list;
+    }
+    public void setmOnClickListener(OnClickListener onClickListener){
+        mOnClickListener=onClickListener;
     }
 }

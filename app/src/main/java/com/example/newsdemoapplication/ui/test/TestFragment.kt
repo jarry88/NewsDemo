@@ -63,6 +63,7 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>() {
         }
 
     }
+    //收起左侧弹窗按钮
     val btnFold by lazy { binding.frameLayout.frameLayout.btnFold.apply { setOnClickListener { showSingLine() } } }
 
 
@@ -133,6 +134,12 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>() {
     private val LeftDrawerPopupView by lazy {
         LeftDrawerPopupView(requireContext()).apply {
             setData(list)
+            setmOnClickListener {
+                dismiss()
+                NavHostFragment.findNavController(this@TestFragment).navigate(R.id.action_navigation_test_to_navigation_add_section, Bundle().apply {
+                    putBoolean(Constants.IsEdit, true)
+                })
+            }
         }
     }
 
@@ -183,13 +190,10 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>() {
             }
             szImagebuttonId.setOnClickListener{
 //                binding.drawerLayout.openDrawer(binding.leftNavView)
-                XPopup.Builder(context)
-                        .dismissOnTouchOutside(false)
-                        .isDestroyOnDismiss(true) //对于只使用一次的弹窗，推荐设置这个
-                        .popupPosition(PopupPosition.Right)//右边
-                        .hasStatusBarShadow(true) //启用状态栏阴影
-                        .asCustom(ListDrawerPopupView(requireContext()))
-                        .show();
+
+                NavHostFragment.findNavController(this@TestFragment).navigate(R.id.action_navigation_test_to_navigation_add_section, Bundle().apply {
+                    putBoolean(Constants.IsEdit, true)
+                })
             }
         }
         binding.leftNavView.inflateHeaderView(R.layout.nav_header_main).apply {
