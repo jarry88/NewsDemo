@@ -7,6 +7,7 @@ import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.os.Process
+import android.util.Log
 import android.webkit.WebView
 import com.gzp.baselib.constant.Constants
 import com.gzp.baselib.utils.DevUtils
@@ -20,7 +21,6 @@ import java.util.*
 
 open class BaseApplication : Application(), Application.ActivityLifecycleCallbacks {
     private var activityMap = HashMap<String, Activity>()
-
     override fun onCreate() {
         super.onCreate()
 //        MultiDex.install(applicationContext)
@@ -99,6 +99,7 @@ open class BaseApplication : Application(), Application.ActivityLifecycleCallbac
 //        })
 //
 //    }
+    fun init(){}
 
     open fun getProcessName(context: Context): String? {
          var manager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager

@@ -1,6 +1,7 @@
 package com.example.newsdemoapplication.ui.test
 
 import android.app.Service
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Vibrator
 import android.util.Log
@@ -20,24 +21,104 @@ import com.example.newsdemoapplication.adapter.NewsContentAdapter
 import com.example.newsdemoapplication.callback.ItemDragHelperCallBack
 import com.example.newsdemoapplication.callback.OnItemClickListener
 import com.example.newsdemoapplication.databinding.TestFragmentBinding
+import com.example.newsdemoapplication.model.test.NewsDatabase
+import com.example.newsdemoapplication.popup.ChapterPopupView
 import com.example.newsdemoapplication.popup.LeftDrawerPopupView
-import com.example.newsdemoapplication.popup.ListDrawerPopupView
 import com.example.newsdemoapplication.ui.dashboard.ItemHelper
 import com.example.newsdemoapplication.util.CommonUtils
+import com.example.newsdemoapplication.view.ChapterDragView
 import com.example.newsdemoapplication.view.DragRecycleView.DragAndPressCallBack
+import com.example.newsdemoapplication.vo.ChapterVo
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.gzp.baselib.base.MvvmBaseFragment
 import com.gzp.baselib.constant.Constants
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.core.BasePopupView
 import com.lxj.xpopup.enums.PopupPosition
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.util.*
+import kotlin.coroutines.CoroutineContext
 
-class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>() {
+class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),CoroutineScope by MainScope() {
     companion object {
         fun newInstance() = TestFragment()
     }
+    override fun getLayoutResId()=R.layout.test_fragment
+    var chapterDragView:ChapterDragView?=null
 
+    override fun doCreateView(savedInstanceState: Bundle?) {
+        binding.btnCloseRight.apply {
+            setOnClickListener { showLoading() }
+        }
+        initFrameLayout()
+
+        initTitleRecycleView()
+        mContentRecycleView.invalidate()
+        initObserverbal()
+        loadData()
+        launch {
+            delay(5000)
+//            chapterDragView?.log()
+        }
+    }
+
+    private fun loadData() {
+        val list= mutableListOf<ChapterVo>()
+        for (i in 0..10) {
+            list.add(ChapterVo("章节$i"))
+        }
+        vm.listChapter.postValue(list)
+    }
+
+    private fun initObserverbal() {
+    }
+
+    private fun initFrameLayout() {
+        binding.frameLayout.apply {
+            cyImagebuttonId.setOnClickListener {//左侧弹窗按钮
+//                binding.drawerLayout.openDrawer(binding.linearLayout1Id)
+                leftPopup?.let {
+                    it.show()
+                }?:XPopup.Builder(context)
+                        .dismissOnTouchOutside(false)
+                        .isDestroyOnDismiss(false) //对于只使用一次的弹窗，推荐设置这个
+                        .popupPosition(PopupPosition.Left)//左边
+                        .hasStatusBarShadow(true) //启用状态栏阴影
+                        .asCustom(leftDrawerPopupView)
+                        .show().also {
+                            leftPopup = it
+                        }
+            }
+            szImagebuttonId.setOnClickListener{
+                NavHostFragment.findNavController(this@TestFragment).navigate(R.id.action_navigation_test_to_navigation_add_section, Bundle().apply {
+                    putBoolean(Constants.IsEdit, true)
+                })
+            }
+        }
+        binding.leftNavView.inflateHeaderView(R.layout.nav_header_main).apply {
+            findViewById<TextView>(R.id.textView).apply {
+                setOnClickListener {   binding.drawerLayout.closeDrawer(binding.leftNavView) }
+            }
+        }
+        binding.btnClose.setOnClickListener {
+            it.setOnClickListener { binding.drawerLayout.closeDrawer(binding.leftNavView) }
+        }
+        binding.btnAdd.setOnClickListener {
+            NavHostFragment.findNavController(this).navigate(R.id.action_navigation_test_to_navigation_add_section, Bundle().apply {
+                putBoolean(Constants.IsEdit, false)
+            })
+        }
+    }
+
+    private val newsDatabase by lazy {
+        NewsDatabase.getInstance(requireContext())
+    }
+    private val newsDao by lazy {
+        newsDatabase.getNewsDao()
+    }
     private var leftPopup: BasePopupView?=null
     private val SINGLE_LINE = 0
     private val HALF_EXPANDED = 1
@@ -45,6 +126,8 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>() {
 
     val ColumnNum = 4
 
+
+    //顶部 抽屉展开按钮
     val btnExpand by lazy { binding.frameLayout.frameLayout.btnExpand.apply {
         setOnClickListener {
             if (currTitleState == COMPLETE_EXPANDED) {
@@ -131,14 +214,26 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>() {
         }
     } }
     //左侧弹窗列表
-    private val LeftDrawerPopupView by lazy {
-        LeftDrawerPopupView(requireContext()).apply {
-            setData(list)
-            setmOnClickListener {
-                dismiss()
-                NavHostFragment.findNavController(this@TestFragment).navigate(R.id.action_navigation_test_to_navigation_add_section, Bundle().apply {
-                    putBoolean(Constants.IsEdit, true)
-                })
+    private val leftDrawerPopupView by lazy {
+//        LeftDrawerPopupView(requireContext()).apply {
+////            setData(newsDao.getAll().map { it.title })
+//            setData(vm.listChapter.value?: listOf())
+//            setmOnClickListener {
+//                dismiss()
+//                NavHostFragment.findNavController(this@TestFragment).navigate(R.id.action_navigation_test_to_navigation_add_section, Bundle().apply {
+//                    putBoolean(Constants.IsEdit, true)
+//                })
+//            }
+//            setmOnDismissListener {id ->
+////                vm.currChapter.postValue(vm.listChapter.value?.firstOrNull{it.id==id})
+//            }
+//        }
+        ChapterPopupView(requireContext()).apply {
+            llContainer.apply {
+                chapterDragView=ChapterDragView(context).apply {
+                    layoutParams=LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT)
+                    setBackgroundColor(Color.parseColor("#234567"))
+                }.also { addView(it) }
             }
         }
     }
@@ -163,54 +258,6 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>() {
     private var longPress = false
     private val mList by lazy {
         Util.getData(47)
-    }
-    private val leftAdapter by lazy {
-        ListDragAdapter(context, mList)
-    }
-    override fun getLayoutResId()=R.layout.test_fragment
-
-    override fun doCreateView(savedInstanceState: Bundle?) {
-        binding.btnCloseRight.apply {
-            setOnClickListener { showLoading() }
-        }
-        binding.frameLayout.apply {
-            cyImagebuttonId.setOnClickListener {//左侧弹窗按钮
-//                binding.drawerLayout.openDrawer(binding.linearLayout1Id)
-                leftPopup?.let {
-                    it.show()
-                }?:XPopup.Builder(getContext())
-                        .dismissOnTouchOutside(false)
-                        .isDestroyOnDismiss(false) //对于只使用一次的弹窗，推荐设置这个
-                        .popupPosition(PopupPosition.Left)//左边
-                        .hasStatusBarShadow(true) //启用状态栏阴影
-                        .asCustom(LeftDrawerPopupView)
-                        .show().also {
-                            leftPopup = it
-                        }
-            }
-            szImagebuttonId.setOnClickListener{
-//                binding.drawerLayout.openDrawer(binding.leftNavView)
-
-                NavHostFragment.findNavController(this@TestFragment).navigate(R.id.action_navigation_test_to_navigation_add_section, Bundle().apply {
-                    putBoolean(Constants.IsEdit, true)
-                })
-            }
-        }
-        binding.leftNavView.inflateHeaderView(R.layout.nav_header_main).apply {
-            findViewById<TextView>(R.id.textView).apply {
-                setOnClickListener {   binding.drawerLayout.closeDrawer(binding.leftNavView) }
-            }
-        }
-        binding.btnClose.setOnClickListener {
-            it.setOnClickListener { binding.drawerLayout.closeDrawer(binding.leftNavView) }
-        }
-        binding.btnAdd.setOnClickListener {
-            NavHostFragment.findNavController(this).navigate(R.id.action_navigation_test_to_navigation_add_section, Bundle().apply {
-                putBoolean(Constants.IsEdit, false)
-            })
-        }
-        initTitleRecycleView()
-        mContentRecycleView.invalidate()
     }
 
 
@@ -239,7 +286,7 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>() {
                 if (position < 0) return
                 mTitleRecycleView.count = 1
                 if (position != currSelectedPosition) {
-                    (mTitleRecycleView.findViewHolderForAdapterPosition(currSelectedPosition) as MyDragViewHolder).setSelected(false)
+                    (mTitleRecycleView.findViewHolderForAdapterPosition(currSelectedPosition) as? MyDragViewHolder)?.setSelected(false)
                     currSelectedPosition = position
                 }
                 val vib = context!!.getSystemService(Service.VIBRATOR_SERVICE) as Vibrator
@@ -289,7 +336,7 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>() {
 
     private fun showHalfExpand() {
         currTitleState = HALF_EXPANDED
-        val layoutParams = mTitleRecycleView.getLayoutParams() as LinearLayout.LayoutParams
+        val layoutParams = mTitleRecycleView.layoutParams as LinearLayout.LayoutParams
         layoutParams.height = titleMaxHeight
         mTitleRecycleView.layoutParams = layoutParams
         showExpandFoldBtns()
@@ -297,7 +344,7 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>() {
 
     private fun showCompleteExpand() {
         currTitleState = COMPLETE_EXPANDED
-        val layoutParams = mTitleRecycleView.getLayoutParams() as LinearLayout.LayoutParams
+        val layoutParams = mTitleRecycleView.layoutParams as LinearLayout.LayoutParams
         layoutParams.height = LinearLayout.LayoutParams.WRAP_CONTENT
         mTitleRecycleView.layoutParams = layoutParams
         showExpandFoldBtns()

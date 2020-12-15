@@ -5,3 +5,4 @@ public class NewsVo {
     public String content;
     public String  coverUrl;
 }
+

@@ -14,18 +14,22 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsdemoapplication.Util
+import com.example.newsdemoapplication.adapter.ChapterDragAdapter
+import com.example.newsdemoapplication.adapter.List2DragAdapter
 import com.example.newsdemoapplication.adapter.ListDragAdapter
 import com.example.newsdemoapplication.adapter.ListDragAdapter.MyDragViewHolder
+import com.example.newsdemoapplication.adapter.TitleAdapter
 import com.example.newsdemoapplication.callback.ItemDragHelperCallBack
 import com.example.newsdemoapplication.callback.OnItemClickListener
 import com.example.newsdemoapplication.ui.dashboard.ItemHelper
+import com.example.newsdemoapplication.vo.ChapterVo
 import okhttp3.internal.notify
 import java.lang.Math.*
 import java.util.*
 import kotlin.math.abs
 
 
-open class DragView @JvmOverloads constructor(context: Context, attributes: AttributeSet? = null, def: Int = 0) :RecyclerView(context, attributes, def) {
+open class TitleDragView @JvmOverloads constructor(context: Context, attributes: AttributeSet? = null, def: Int = 0) :RecyclerView(context, attributes, def) {
     var count =0;
     var moveCount =0
     var ColumnNum =4
@@ -42,25 +46,14 @@ open class DragView @JvmOverloads constructor(context: Context, attributes: Attr
     var beginTime =System.currentTimeMillis()
     var bottomShowTime =System.currentTimeMillis()
     private val list by lazy { mutableListOf<String>() }
-//    private val listData by lazy { mutableListOf<T>() }
-    private val mLayoutManager by lazy {
-        GridLayoutManager(context, ColumnNum * 3).apply {
-            spanSizeLookup = object : SpanSizeLookup() {
-                override fun getSpanSize(position: Int): Int {
-                    val end: Int = list.size % ColumnNum
-                    return if (list.size - position <= end) ColumnNum * 3 / end else 3
-                }
-            }
-        }
-    }
     private val mImageLayoutManager by lazy {
         GridLayoutManager(context, 2)
     }
-    private val mAdapter by lazy {  ListDragAdapter(context, list).apply {
+    private val mAdapter by lazy {  ListDragAdapter(context, listOf("1","2","3")).apply {
         setOnItemClickListener(
                 object : OnItemClickListener {
                     override fun onItemClick(view: View, position: Int) {
-                        currSelectPosition = position
+                        setCurrSelectPosition(position)
 //                        contentScrollToPosition(position)
                     }
 
@@ -69,12 +62,9 @@ open class DragView @JvmOverloads constructor(context: Context, attributes: Attr
     }
     }
     @JvmOverloads
-    fun addAll(l: List<String>?,showImage:Boolean=false){
+    fun setData(l: List<ChapterVo>?,showImage:Boolean=false){
         l?:return
-        mAdapter.setImageView(showImage)
-        if(showImage)
-            setImageLayoutManager()
-        mAdapter.setmDatas(l)
+//        mAdapter.add
     }
     @SuppressLint("ClickableViewAccessibility")
     private fun addTouch() {
@@ -147,19 +137,16 @@ open class DragView @JvmOverloads constructor(context: Context, attributes: Attr
         val itemTouchHelper = ItemTouchHelper(ItemDragHelperCallBack(object : ItemHelper {
             override fun itemMoved(oldPosition: Int, newPosition: Int) {
                 Util.Loge("move")
-
-                //交换变换位置的集合数据
-                Collections.swap(mAdapter.data, oldPosition, newPosition)
-                Collections.swap(list, oldPosition, newPosition)
-                mAdapter.urlData?.let {
+                mAdapter.data?.let {
                     Collections.swap(it, oldPosition, newPosition)
+
                 }
                 mAdapter.notifyItemMoved(oldPosition, newPosition)
             }
 
             override fun itemDismiss(position: Int) {}
             override fun itemClear(position: Int) {
-                mAdapter.currSelectPosition = position
+//                mAdapter.getCurrSelectPosition() = position
                 mAdapter.notifyDataSetChanged()
 //                if (longPress) {
 //                    bottomSheetDialog.show()
@@ -171,28 +158,18 @@ open class DragView @JvmOverloads constructor(context: Context, attributes: Attr
                 Log.e("TAG", "itemSelected: $position")
                 if (position < 0) return
                 count = 1
-                if (position != mAdapter.currSelectPosition) {
-                    findViewHolderForAdapterPosition(mAdapter.currSelectPosition)?.
+                if (position != mAdapter.getCurrSelectPosition()) {
+                    findViewHolderForAdapterPosition(mAdapter.getCurrSelectPosition())?.
                     let { (it as MyDragViewHolder).setSelected(false)}
 //                    mAdapter.currSelectPosition = position
                 }
                 val vib = context.getSystemService(Service.VIBRATOR_SERVICE) as Vibrator
                 vib.vibrate(100)
-                //                 记录弹窗信息
-//                longPress = true
             }
         }))
         itemTouchHelper.attachToRecyclerView(this)
-        layoutManager=mLayoutManager
+        layoutManager=LinearLayoutManager(context)
 
     }
-
-    private fun setImageLayoutManager() {
-        layoutManager =mImageLayoutManager
-    }
-    fun setLineLayoutManager() {
-        layoutManager =LinearLayoutManager(context)
-    }
-    fun getSelectedPosition()=mAdapter.currSelectPosition
 }
 

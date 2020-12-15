@@ -2,7 +2,6 @@ package com.example.newsdemoapplication.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,19 +23,13 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListDragAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class List2DragAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context mContext;
     private List<String> list;
-//    private List<T> listData;
     private OnItemClickListener mOnItemClickListener;
-    private ConvertView mConvertView;
     private int currSelectPosition;
-//    public ListDragAdapter(Context context, List<String> list) {
-//        this.mContext = context;
-//        this.list = list;
-//    }
-    public ListDragAdapter(Context context, List<String> list) {
+    public List2DragAdapter(Context context, List<String> list) {
         this.mContext = context;
         this.list = list;
     }
@@ -69,34 +62,17 @@ public class ListDragAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHold
                 mOnItemClickListener.onItemClick(mHolder.itemView, holder.getAdapterPosition());
             });
         }
-        if(showImage){
-            if(mHolder.imageItem!=null){
-                mHolder.tvTag.setText(list.get(position));
-                KUtilKt.loadUrl(mHolder.imageItem,listUrl.get(position));
-            }
-        }else {
             mHolder.tvTag.setText(list.get(position));
-        }
-        if(mConvertView!=null){
-            mConvertView.convert(mHolder,list.get(position));
-        }
     }
 
     @Override
     public int getItemCount() {
         return list.size();
-//        if(!showImage) return list.size() ;else if(listUrl==null){ return 0;} else return listUrl.size();
     }
 
     public List<String> getData() {
         return list;
     }
-    public List<String> getUrlData() {
-        return listUrl;
-    }
-//    public List<T> getListData() {
-//        return listData;
-//    }
 
     public static class MyDragViewHolder extends RecyclerView.ViewHolder {
 
@@ -138,9 +114,6 @@ public class ListDragAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHold
         }
         list.addAll(datas);
         this.notifyDataSetChanged();
-    }
-    interface ConvertView{
-        void  convert(MyDragViewHolder holder,Object item);
     }
 
 }
