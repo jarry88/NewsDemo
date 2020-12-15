@@ -281,7 +281,7 @@ public class HomeFragment extends Fragment {
 
     private void initContentRecycleView() {
         mContentRecycleView = getView().findViewById(R.id.rv_content_list);
-        mContenAdapter =new NewsContentAdapter(getContext(),list);
+        mContenAdapter =new NewsContentAdapter(getContext(),new ArrayList<>());
         mContentRecycleView.setAdapter(mContenAdapter);
         mContentRecycleView.setOnScrollChangeListener((v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
             LinearLayoutManager linearLayoutManager = (LinearLayoutManager) mContentRecycleView.getLayoutManager();

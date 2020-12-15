@@ -8,6 +8,8 @@ import androidx.navigation.fragment.NavHostFragment
 import com.example.newsdemoapplication.R
 import com.example.newsdemoapplication.databinding.AddSectionFragmentBinding
 import com.example.newsdemoapplication.vo.ChapterVo
+import com.example.newsdemoapplication.vo.ContentVo
+import com.example.newsdemoapplication.vo.NewsVo
 import com.gzp.baselib.base.MvvmBaseFragment
 import com.gzp.baselib.constant.Constants
 import com.gzp.baselib.widget.NavigationBar
@@ -24,8 +26,7 @@ class AddSectionFragment :MvvmBaseFragment<AddViewModel,AddSectionFragmentBindin
             (binding.titleBar as NavigationBar).apply {
                 "${if (isEdit) "管理".apply {
                     chapterVo=arguments?.getSerializable(Constants.ChapterVo)?.let { it as ChapterVo }
-                    chapterVo?.let {
-                        loadData(it)}
+                    chapterVo?.let { loadData(it)}
                 } else "添加"}章节".let {
                     setTitle(it)
                 }
@@ -34,9 +35,46 @@ class AddSectionFragment :MvvmBaseFragment<AddViewModel,AddSectionFragmentBindin
                             .navigate(R.id.navigation_test)
                 }
             }
+            if(chapterVo==null)(binding.titleBar as NavigationBar).apply {
+                "添加章节".let {
+                    setTitle(it)
+                }}
             binding.btnAdd.setOnClickListener {
-                XPopup.Builder(context).asInputConfirm("输入内容",""){}.show()
+                binding.etChapterTitle.text?.let {
+                    if(it.isNullOrEmpty()) Toast.makeText(context, "先输入标题", Toast.LENGTH_SHORT).show()
+                    else{
+                        Toast.makeText(context, "${it} 添加成功", Toast.LENGTH_SHORT).show()
+                        if(chapterVo==null) chapterVo= ChapterVo("")
+                        val list = mutableListOf<NewsVo>().apply { chapterVo?.listNews?.forEach{add(it) } }
+                        list.add(NewsVo(it.toString()))
+                        chapterVo?.let {
+                            it.listNews =list.toList()
+                        }
+                    }
+                }
+//                XPopup.Builder(context).asInputConfirm("输入内容",""){}.show()
+            }
+            binding.btnAddContent.setOnClickListener {
+                binding.etContentTitle.text?.let {content ->
+                    if(binding.etChapterTitle.text.isNullOrEmpty())Toast.makeText(context, "先输入标题", Toast.LENGTH_SHORT).show().also { return@setOnClickListener }
+                    binding.etChapterTitle.text?.let {ed ->
+                        if(chapterVo==null) chapterVo= ChapterVo("")
+                        val list = mutableListOf<NewsVo>().apply { chapterVo?.listNews?.forEach{add(it) } }
+                        list.firstOrNull { it.title==ed.toString() }?.let {
+                            if(content.isNullOrEmpty()) Toast.makeText(context, "先输入内容", Toast.LENGTH_SHORT).show()
+                            else{
+                                Toast.makeText(context, "${content} 添加成功", Toast.LENGTH_SHORT).show()
+                                val listContent = mutableListOf<ContentVo>().apply { it.listContent?.forEach{add(it) } }
+                                listContent.add(ContentVo(content.toString(),content = content.toString()))
+                                it.listContent=listContent.toList()
+                                chapterVo?.let {
+                                    it.listNews =list.toList()
+                                }
+                            }
+                        }?:Toast.makeText(context, "先选择标题", Toast.LENGTH_SHORT).show()
+                    }
 
+                }
             }
             binding.btnSave.setOnClickListener {
                 binding.etChapterName.text.let {ed->

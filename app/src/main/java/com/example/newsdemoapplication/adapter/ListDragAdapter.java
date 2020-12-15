@@ -135,8 +135,12 @@ public class ListDragAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHold
         if (list != null) {
             list.clear();
             this.notifyDataSetChanged();
+        }else {
+            list.clear();
         }
-        list.addAll(datas);
+        if(datas!=null){
+            list.addAll(datas);
+        }
         this.notifyDataSetChanged();
     }
     interface ConvertView{

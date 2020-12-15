@@ -32,11 +32,12 @@ class ChapterDragView  @JvmOverloads constructor(context: Context, val liveDate 
     var currX= 0f
     var currY=0f
     var maxDistance =30
-    var mCallBack : DragAndPressCallBack?=null
+    var mCallBack : DragRecycleView.DragAndPressCallBack?=null
         set(value) {
             field= value
             addTouch()
         }
+    private var longPress =false
     var beginTime =System.currentTimeMillis()
     var bottomShowTime =System.currentTimeMillis()
     var clickCallBack:ClickCallBack?=null
@@ -86,10 +87,6 @@ class ChapterDragView  @JvmOverloads constructor(context: Context, val liveDate 
             return@setOnTouchListener false
         }
     }
-    //拖动按压事件回调接口
-    interface DragAndPressCallBack{
-        fun onAfterPressMove()
-    }
     //重置开始按压的时间
     fun reset() {
         beginTime =System.currentTimeMillis().apply { Log.e("TAG", "reset: rese") }
@@ -101,19 +98,6 @@ class ChapterDragView  @JvmOverloads constructor(context: Context, val liveDate 
     private fun shortShow() =System.currentTimeMillis()-bottomShowTime<200
     init {
         initView()
-//        mCallBack = object :  DragAndPressCallBack {
-//            //设置移动监听回调
-//            override fun onLongPress() {
-////                bottomSheetDialog.show()
-////                mTitleRecycleView.bottomShowTime = System.currentTimeMillis()
-//            }
-//
-//            override fun onAfterPressMove() {
-////                longPress = false
-////                bottomSheetDialog.dismiss()
-//            }
-//        }
-
     }
     private fun initView(){
         adapter =mAdapter
@@ -133,10 +117,10 @@ class ChapterDragView  @JvmOverloads constructor(context: Context, val liveDate 
                 updatePosition(position)
 
                 mAdapter.notifyDataSetChanged()
-//                if (longPress) {
-//                    bottomSheetDialog.show()
-//                }
-                //                }
+                if (longPress) {
+                    longPress=false
+                    mCallBack?.onLongPress()
+                }
             }
 
             override fun itemSelected(position: Int) { //选中title 后的响应操作
@@ -150,6 +134,7 @@ class ChapterDragView  @JvmOverloads constructor(context: Context, val liveDate 
                 val vib = context.getSystemService(Service.VIBRATOR_SERVICE) as Vibrator
                 vib.vibrate(100)
                 //                 记录弹窗信息
+                longPress=true
             }
         }))
         itemTouchHelper.attachToRecyclerView(this)

@@ -56,7 +56,7 @@
             <ImageButton
                 android:id="@+id/sz_imagebutton_id"
                 android:layout_width="40dp"
-                android:layout_height="30dp"
+                android:layout_height="24dp"
                 android:background="#FFFFFF"
                 android:contentDescription="@string/sz_imagebutton"
                 android:scaleType="fitCenter"

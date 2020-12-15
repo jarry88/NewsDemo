@@ -52,11 +52,13 @@ class DragRecycleView @JvmOverloads constructor(context: Context, attributes: At
                             startX =currX
                             startY =currY
 
-                            if(moveCount++>0){
+
+                            count--
+                            if(moveCount++>0&&count<=0){
                                 mCallBack?.onAfterPressMove()
                                 reset()
+                                Util.Loge("移动了")
                             }
-                            Util.Loge("移动了")
                         }
                     }
                 }

@@ -12,7 +12,7 @@ public class Util {
     public static List<String> getData(int size){
         List<String> data=new ArrayList<>();
         for(int i=0;i<size;i++){
-            data.add("标题"+i);
+            data.add("内容"+i);
         }
         return data;
     }

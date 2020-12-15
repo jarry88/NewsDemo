@@ -14,6 +14,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.newsdemoapplication.MainActivity
 import com.example.newsdemoapplication.NewsVo
 import com.example.newsdemoapplication.R
 import com.example.newsdemoapplication.Util
@@ -25,7 +26,6 @@ import com.example.newsdemoapplication.callback.OnItemClickListener
 import com.example.newsdemoapplication.databinding.TestFragmentBinding
 import com.example.newsdemoapplication.model.test.NewsDatabase
 import com.example.newsdemoapplication.popup.ChapterPopupView
-import com.example.newsdemoapplication.popup.LeftDrawerPopupView
 import com.example.newsdemoapplication.ui.dashboard.ItemHelper
 import com.example.newsdemoapplication.util.CommonUtils
 import com.example.newsdemoapplication.view.ChapterDragView
@@ -48,6 +48,7 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
         fun newInstance() = TestFragment()
     }
     override fun getLayoutResId()=R.layout.test_fragment
+    private var editChapter: Boolean=false
     var chapterDragView:ChapterDragView?=null
     override fun onResume() {
         super.onResume()
@@ -95,7 +96,8 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
 
     private fun loadData() {
         val list= mutableListOf<ChapterVo>()
-        for (i in 0..10) {
+        Toast.makeText(context, "初始化生成了一些3 条假数据", Toast.LENGTH_SHORT).show()
+        for (i in 0..3) {
             list.add(ChapterVo("章节$i",index = i))
         }
         vm.listChapter.postValue(list)
@@ -109,6 +111,8 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
                     ddTextViewId.text=it.chapterName
                     txTextViewId.text=it.description
                 }
+                titleAdapter.setmDatas(it.listNews?.map { it.title })
+                mContentAdapter.setData(it.listNews)
             }
         }
     }
@@ -129,13 +133,7 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
                             leftPopup = it
                         }
             }
-            szImagebuttonId.setOnClickListener{
-                NavHostFragment.findNavController(this@TestFragment).navigate(R.id.action_navigation_test_to_navigation_add_section, Bundle().apply {
-                    putBoolean(Constants.IsEdit, true)
-                    Log.e("TAG", "initFrameLayout: true", )
-                    putSerializable(Constants.ChapterVo, vm.currChapter.value)
-                })
-            }
+            szImagebuttonId.setOnClickListener{navigationEdit()}
         }
         binding.leftNavView.inflateHeaderView(R.layout.nav_header_main).apply {
             findViewById<TextView>(R.id.textView).apply {
@@ -150,6 +148,19 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
                 putBoolean(Constants.IsEdit, false)
             })
         }
+    }
+
+    private fun navigationEdit() {
+        try {
+            leftDrawerPopupView.dismiss()
+        }catch (e:Exception){
+            Log.e("TAG", "navigationEdit:$e ", )
+        }
+        NavHostFragment.findNavController(this@TestFragment).navigate(R.id.action_navigation_test_to_navigation_add_section, Bundle().apply {
+            putBoolean(Constants.IsEdit, true)
+            Log.e("TAG", "initFrameLayout: true", )
+            putSerializable(Constants.ChapterVo, vm.currChapter.value)
+        })
     }
 
     private val newsDatabase by lazy {
@@ -236,23 +247,36 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
         findViewById<View>(R.id.tv_rename)?.setOnClickListener {
             Log.e("TAG", "initBottomSheetDiaLog: $currSelectedPosition")
             dismiss()
-            XPopup.Builder(context).asInputConfirm("重命名", "请输入内容。"
-            ) { text: String? ->
-                list.set(currSelectedPosition, text)
-                titleAdapter.notifyItemChanged(currSelectedPosition)
-                mContentAdapter.notifyItemChanged(currSelectedPosition)
+            if(editChapter){
+                editChapter=false
+                navigationEdit()
+            }else
+            XPopup.Builder(activity).asInputConfirm("重命名", "请输入内容。") { text: String? ->
+                    list.set(currSelectedPosition, text)
+                    titleAdapter.notifyItemChanged(currSelectedPosition)
+                    mContentAdapter.notifyItemChanged(currSelectedPosition)
             } .show()
         }
         findViewById<View>(R.id.tv_delete)?.setOnClickListener { v: View? ->
-            Log.e("TAG", "initBottomSheetDiaLog: $currSelectedPosition")
-            list.removeAt(currSelectedPosition)
-            titleAdapter.notifyItemRemoved(currSelectedPosition)
-            mContentAdapter.notifyItemRemoved(currSelectedPosition)
+            if(editChapter){
+                editChapter=false
+                vm.listChapter.apply {
+                    val index =value?.indexOf(vm.currChapter.value)
+                    val list =value?.also { it.removeAt(index?:0) }
+                    postValue(list)
+                }
+            }else{
+                Log.e("TAG", "initBottomSheetDiaLog: $currSelectedPosition")
+                list.removeAt(currSelectedPosition)
+                titleAdapter.notifyItemRemoved(currSelectedPosition)
+                mContentAdapter.notifyItemRemoved(currSelectedPosition)
+            }
             dismiss()
+
         }
     } }
     //左侧弹窗列表
-    private val leftDrawerPopupView by lazy {
+    val leftDrawerPopupView by lazy {
         ChapterPopupView(requireContext()).apply {
             llContainer.apply {
                 chapterDragView=ChapterDragView(context,vm.listChapter).apply {
@@ -263,6 +287,17 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
                            vm.currChapter.postValue(chapterVo)
                         }
                     }
+                    mCallBack=object: DragAndPressCallBack {
+                            //设置移动监听回调
+                            override fun onLongPress() {
+                                editChapter =true
+                                bottomSheetDialog.show()
+                            }
+                            override fun onAfterPressMove() {
+                                longPress = false
+                                bottomSheetDialog.dismiss()
+                            }
+                        }
                 }.also { addView(it) }
             }
             mOnClickListener= View.OnClickListener {
@@ -289,14 +324,11 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
     private var currTitleState = 0
     var mData: List<NewsVo> = ArrayList()
     val list=
-         Util.getData(47)
+         Util.getData(17)
     private val mContentAdapter by lazy {
-        NewsContentAdapter(context, list)
+        NewsContentAdapter(context, listOf())
     }
     private var longPress = false
-    private val mList by lazy {
-        Util.getData(47)
-    }
 
 
 
@@ -317,12 +349,13 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
                 titleAdapter.notifyDataSetChanged()
                 if (longPress) {
                     bottomSheetDialog.show()
+                    longPress=false
                 }
             }
 
             override fun itemSelected(position: Int) { //选中title 后的响应操作
                 if (position < 0) return
-                mTitleRecycleView.count = 1
+                mTitleRecycleView.count = 2
                 if (position != currSelectedPosition) {
                     (mTitleRecycleView.findViewHolderForAdapterPosition(currSelectedPosition) as? MyDragViewHolder)?.setSelected(false)
                     currSelectedPosition = position
@@ -342,6 +375,7 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
             }
 
             override fun onAfterPressMove() {
+
                 longPress = false
                 bottomSheetDialog.dismiss()
             }
