@@ -40,7 +40,6 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.*
-import kotlin.coroutines.CoroutineContext
 
 class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),CoroutineScope by MainScope() {
     companion object {
@@ -74,6 +73,15 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
     }
 
     private fun initObserverbal() {
+        vm.apply {
+            currChapter.observe(this@TestFragment){
+                binding.frameLayout.apply {
+                    suoTextViewId.text=it.getLockStr()
+                    ddTextViewId.text=it.chapterName
+                    txTextViewId.text=it.description
+                }
+            }
+        }
     }
 
     private fun initFrameLayout() {
@@ -220,6 +228,11 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
                 chapterDragView=ChapterDragView(context,vm.listChapter).apply {
                     layoutParams=LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT)
                     setBackgroundColor(Color.parseColor("#234567"))
+                    clickCallBack=object :ChapterDragView.ClickCallBack{
+                        override fun onChapterClicked(chapterVo: ChapterVo) {
+                           vm.currChapter.postValue(chapterVo)
+                        }
+                    }
                 }.also { addView(it) }
             }
         }

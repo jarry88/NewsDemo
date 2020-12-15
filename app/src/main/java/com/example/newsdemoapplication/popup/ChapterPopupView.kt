@@ -22,21 +22,6 @@ class ChapterPopupView(context: Context):DrawerPopupView(context) {
         }
     }
 
-    override fun onDismiss() {
-        super.onDismiss()
-        if (mOnDismissListener != null ) {
-//            mOnDismissListener?.dismiss(list.get(dragView.getSelectedPosition()).id)
-        }
-    }
-
-
-    fun setmOnDismissListener(onClickListener: OnDismissListener) {
-        mOnDismissListener = onClickListener
-    }
-
-    fun setmOnClickListener(onClickListener: OnClickListener) {
-        mOnClickListener = onClickListener
-    }
 
     interface OnDismissListener {
         fun dismiss(position: Int)

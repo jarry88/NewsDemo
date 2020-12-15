@@ -23,7 +23,8 @@ import com.example.newsdemoapplication.vo.ChapterVo
 import java.util.*
 import kotlin.math.abs
 
-class ChapterDragView  @JvmOverloads constructor(context: Context, val liveDate :LiveData<MutableList<ChapterVo>>,attributes: AttributeSet? = null, def: Int = 0) : RecyclerView(context, attributes, def)  {
+@SuppressLint("ViewConstructor")
+class ChapterDragView  @JvmOverloads constructor(context: Context, val liveDate :LiveData<MutableList<ChapterVo>>, attributes: AttributeSet? = null, def: Int = 0) : RecyclerView(context, attributes, def)  {
     var count =0;
     var moveCount =0
     var startX =0f
@@ -38,11 +39,12 @@ class ChapterDragView  @JvmOverloads constructor(context: Context, val liveDate 
         }
     var beginTime =System.currentTimeMillis()
     var bottomShowTime =System.currentTimeMillis()
+    var clickCallBack:ClickCallBack?=null
     val mAdapter by lazy {  ChapterDragAdapter(context ,liveDate.value ).apply {
         setOnItemClickListener(
                 object : OnItemClickListener {
                     override fun onItemClick(view: View, position: Int) {
-                        currSelectPosition = position
+                        updatePosition(position)
                     }
                     override fun onItemLongClick(view: View, position: Int) {}
                 })
@@ -128,8 +130,8 @@ class ChapterDragView  @JvmOverloads constructor(context: Context, val liveDate 
             override fun itemDismiss(position: Int) {}
             override fun itemClear(position: Int) {
                 Util.Loge("itemClear")
+                updatePosition(position)
 
-                mAdapter.currSelectPosition = position
                 mAdapter.notifyDataSetChanged()
 //                if (longPress) {
 //                    bottomSheetDialog.show()
@@ -144,7 +146,6 @@ class ChapterDragView  @JvmOverloads constructor(context: Context, val liveDate 
                 if (position != mAdapter.currSelectPosition) {
                     findViewHolderForAdapterPosition(mAdapter.currSelectPosition)?.
                     let { (it as ListDragAdapter.MyDragViewHolder).setSelected(false)}
-//                    mAdapter.currSelectPosition = position
                 }
                 val vib = context.getSystemService(Service.VIBRATOR_SERVICE) as Vibrator
                 vib.vibrate(100)
@@ -160,5 +161,19 @@ class ChapterDragView  @JvmOverloads constructor(context: Context, val liveDate 
 
     }
 
+    private fun updatePosition(position: Int) {
+        if(mAdapter.currSelectPosition!=position){
+            mAdapter.currSelectPosition = position
+            clickCallBack?.let {callBack ->
+                mAdapter.getData()?.get(position)?.let {
+                    callBack.onChapterClicked(it)
+                }
+            }
+        }
+    }
+
     fun getSelectedPosition()=mAdapter.currSelectPosition
+    interface ClickCallBack{
+        fun onChapterClicked(chapterVo: ChapterVo)
+    }
 }

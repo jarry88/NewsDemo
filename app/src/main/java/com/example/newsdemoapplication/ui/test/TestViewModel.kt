@@ -14,7 +14,7 @@ class TestViewModel : BaseViewModel() {
     val listChapter by lazy {
         MutableLiveData<MutableList<ChapterVo>>()
     }
-//    val currChapter by lazy {
-//        MutableLiveData<ChapterVo>()
-//    }
+    val currChapter by lazy {
+        MutableLiveData<ChapterVo>()
+    }
 }
