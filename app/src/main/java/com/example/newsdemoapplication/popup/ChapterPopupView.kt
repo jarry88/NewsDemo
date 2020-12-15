@@ -9,9 +9,7 @@ import java.util.*
 
 class ChapterPopupView(context: Context):DrawerPopupView(context) {
     override fun getImplLayoutId()= R.layout.left_list_drawer
-    private var mOnClickListener: OnClickListener? = null
-    private var mOnDismissListener: OnDismissListener? = null
-    //    final ArrayList<String> data = new ArrayList<>();
+    var mOnClickListener: OnClickListener? = null
     val llContainer: LinearLayout by  lazy { findViewById(R.id.ll_container) }
     override fun onCreate() {
         findViewById<View>(R.id.textView).setOnClickListener { v: View? -> if (mOnClickListener != null) mOnClickListener?.onClick(v) }
@@ -22,8 +20,4 @@ class ChapterPopupView(context: Context):DrawerPopupView(context) {
         }
     }
 
-
-    interface OnDismissListener {
-        fun dismiss(position: Int)
-    }
 }

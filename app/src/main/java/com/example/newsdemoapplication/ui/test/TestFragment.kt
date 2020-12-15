@@ -4,10 +4,12 @@ import android.app.Service
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Vibrator
+import android.provider.SyncStateContract.Helpers.update
 import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -47,6 +49,33 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
     }
     override fun getLayoutResId()=R.layout.test_fragment
     var chapterDragView:ChapterDragView?=null
+    override fun onResume() {
+        super.onResume()
+        arguments?.getSerializable(Constants.ChapterVo)?.let {
+            saveChapter(it as ChapterVo)
+        }
+    }
+
+    private fun saveChapter(chapterVo: ChapterVo) {
+        vm.listChapter.apply {
+            var find =false
+            var index=-1
+            value?.forEachIndexed { i ,it->
+                if(it.id==chapterVo.id) index =i }
+            val newlist =if(index<0)value else {value?.removeAt(index)
+                value
+            }
+
+            newlist?.also {
+                val index =if(chapterVo.index<0) 0 else if(chapterVo.index>=newlist.size) newlist.size else chapterVo.index
+                if(chapterVo.index!=index){ chapterVo.index=index }
+                it.add(chapterVo.index,chapterVo)
+            }?.let {
+                Toast.makeText(context, "${if(find)"更新" else "新增"} 了-《${chapterVo.chapterName}》", Toast.LENGTH_SHORT).show()
+                postValue(it)
+            }
+        }
+    }
 
     override fun doCreateView(savedInstanceState: Bundle?) {
         binding.btnCloseRight.apply {
@@ -67,7 +96,7 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
     private fun loadData() {
         val list= mutableListOf<ChapterVo>()
         for (i in 0..10) {
-            list.add(ChapterVo("章节$i"))
+            list.add(ChapterVo("章节$i",index = i))
         }
         vm.listChapter.postValue(list)
     }
@@ -103,6 +132,8 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
             szImagebuttonId.setOnClickListener{
                 NavHostFragment.findNavController(this@TestFragment).navigate(R.id.action_navigation_test_to_navigation_add_section, Bundle().apply {
                     putBoolean(Constants.IsEdit, true)
+                    Log.e("TAG", "initFrameLayout: true", )
+                    putSerializable(Constants.ChapterVo, vm.currChapter.value)
                 })
             }
         }
@@ -210,8 +241,7 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
                 list.set(currSelectedPosition, text)
                 titleAdapter.notifyItemChanged(currSelectedPosition)
                 mContentAdapter.notifyItemChanged(currSelectedPosition)
-            }
-                    .show()
+            } .show()
         }
         findViewById<View>(R.id.tv_delete)?.setOnClickListener { v: View? ->
             Log.e("TAG", "initBottomSheetDiaLog: $currSelectedPosition")
@@ -234,6 +264,14 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
                         }
                     }
                 }.also { addView(it) }
+            }
+            mOnClickListener= View.OnClickListener {
+                NavHostFragment.findNavController(this@TestFragment)
+                        .navigate(R.id.action_navigation_test_to_navigation_add_section
+                                , Bundle().apply {
+                            putBoolean(Constants.IsEdit, false)
+                            }
+                        )
             }
         }
     }

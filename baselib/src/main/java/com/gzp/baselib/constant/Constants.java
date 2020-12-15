@@ -90,4 +90,5 @@ public class Constants {
     public static final String REGISTERSOURCE="test";
     @Nullable
     public static final String IsEdit="isedit";
+    public static final String ChapterVo="chapterVo";
 }

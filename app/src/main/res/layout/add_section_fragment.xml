@@ -46,6 +46,7 @@
                                 android:layout_height="0dp"
                                 android:layout_weight="1"/>
                             <EditText
+                                android:id="@+id/et_chapter_name"
                                 android:layout_width="200dp"
                                 android:layout_height="wrap_content"
                                 android:hint="请输入章节名称"/>
@@ -84,6 +85,7 @@
                                 android:layout_height="0dp"
                                 android:layout_weight="1"/>
                             <EditText
+                                android:id="@+id/et_chapter_position"
                                 android:layout_width="200dp"
                                 android:layout_height="wrap_content"
                                 android:hint="请输入章节位置"/>
@@ -112,6 +114,7 @@
                             android:paddingStart="@dimen/dp_12"
                             android:paddingEnd="@dimen/dp_12"
                             android:background="@color/white"
+                            android:layout_gravity="center_vertical"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
                             <TextView
@@ -123,9 +126,43 @@
                                 android:layout_height="0dp"
                                 android:layout_weight="1"/>
                             <EditText
+                                android:id="@+id/et_chapter_title"
                                 android:layout_width="200dp"
                                 android:layout_height="wrap_content"
                                 android:hint="请输入标题名称"/>
+                            <ImageView
+                                android:layout_gravity="center_vertical"
+                                android:layout_width="@dimen/dp_24"
+                                android:layout_height="@dimen/dp_24"
+                                android:src="@drawable/ic_baseline_close_24"
+                                android:id="@+id/btn_delete_title"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:paddingStart="@dimen/dp_12"
+                            android:paddingEnd="@dimen/dp_12"
+                            android:background="@color/white"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="内容名称"/>
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"/>
+                            <EditText
+                                android:id="@+id/et_content_title"
+                                android:layout_width="200dp"
+                                android:layout_height="wrap_content"
+                                android:hint="请输入内容名称"/>
+                            <ImageView
+                                android:layout_gravity="center_vertical"
+                                android:layout_width="@dimen/dp_24"
+                                android:layout_height="@dimen/dp_24"
+                                android:src="@drawable/ic_baseline_close_24"
+                                android:id="@+id/btn_delete_content"/>
                         </LinearLayout>
                     </LinearLayout>
                     <View
@@ -158,6 +195,24 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="添加新标题"/>
+                    </LinearLayout>
+                </RelativeLayout> <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:gravity="center">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:id="@+id/btn_add_content">
+                        <ImageView
+                            android:layout_width="@dimen/dp_24"
+                            android:layout_height="@dimen/dp_24"
+                            android:src="@drawable/ic_baseline_add_circle_24"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="添加新内容"/>
                     </LinearLayout>
                 </RelativeLayout>
 
