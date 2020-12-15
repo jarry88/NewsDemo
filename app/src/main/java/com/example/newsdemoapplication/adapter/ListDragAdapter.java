@@ -100,10 +100,10 @@ public class ListDragAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     public static class MyDragViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView tvTag;
-        private LinearLayout llItem;
-        private ConstraintLayout clItem;
-        private ImageView imageItem;
+         TextView tvTag;
+         LinearLayout llItem;
+         ConstraintLayout clItem;
+         ImageView imageItem;
 
         public MyDragViewHolder(View itemView) {
             super(itemView);

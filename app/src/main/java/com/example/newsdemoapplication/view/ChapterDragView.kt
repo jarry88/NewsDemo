@@ -8,6 +8,7 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,12 +19,11 @@ import com.example.newsdemoapplication.adapter.ListDragAdapter
 import com.example.newsdemoapplication.callback.ItemDragHelperCallBack
 import com.example.newsdemoapplication.callback.OnItemClickListener
 import com.example.newsdemoapplication.ui.dashboard.ItemHelper
-import com.example.newsdemoapplication.ui.test.TestViewModel
 import com.example.newsdemoapplication.vo.ChapterVo
 import java.util.*
 import kotlin.math.abs
 
-class ChapterDragView  @JvmOverloads constructor(context: Context, attributes: AttributeSet? = null, def: Int = 0) : RecyclerView(context, attributes, def)  {
+class ChapterDragView  @JvmOverloads constructor(context: Context, val liveDate :LiveData<MutableList<ChapterVo>>,attributes: AttributeSet? = null, def: Int = 0) : RecyclerView(context, attributes, def)  {
     var count =0;
     var moveCount =0
     var startX =0f
@@ -38,7 +38,7 @@ class ChapterDragView  @JvmOverloads constructor(context: Context, attributes: A
         }
     var beginTime =System.currentTimeMillis()
     var bottomShowTime =System.currentTimeMillis()
-    private val mAdapter by lazy {  ChapterDragAdapter(context ,(0..10).map { ChapterVo(it.toString()) }.toMutableList()).apply {
+    val mAdapter by lazy {  ChapterDragAdapter(context ,liveDate.value ).apply {
         setOnItemClickListener(
                 object : OnItemClickListener {
                     override fun onItemClick(view: View, position: Int) {

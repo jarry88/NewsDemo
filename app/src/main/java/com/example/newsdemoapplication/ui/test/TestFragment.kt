@@ -215,22 +215,9 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
     } }
     //左侧弹窗列表
     private val leftDrawerPopupView by lazy {
-//        LeftDrawerPopupView(requireContext()).apply {
-////            setData(newsDao.getAll().map { it.title })
-//            setData(vm.listChapter.value?: listOf())
-//            setmOnClickListener {
-//                dismiss()
-//                NavHostFragment.findNavController(this@TestFragment).navigate(R.id.action_navigation_test_to_navigation_add_section, Bundle().apply {
-//                    putBoolean(Constants.IsEdit, true)
-//                })
-//            }
-//            setmOnDismissListener {id ->
-////                vm.currChapter.postValue(vm.listChapter.value?.firstOrNull{it.id==id})
-//            }
-//        }
         ChapterPopupView(requireContext()).apply {
             llContainer.apply {
-                chapterDragView=ChapterDragView(context).apply {
+                chapterDragView=ChapterDragView(context,vm.listChapter).apply {
                     layoutParams=LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT)
                     setBackgroundColor(Color.parseColor("#234567"))
                 }.also { addView(it) }
