@@ -101,6 +101,9 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
             list.add(ChapterVo("章节$i",index = i))
         }
         vm.listChapter.postValue(list)
+        newsDao.getAll().let{
+            Log.e("TAG", "loadData: ", )
+        }
     }
 
     private fun initObserverbal() {

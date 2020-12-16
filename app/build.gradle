@@ -67,7 +67,14 @@ dependencies {
     api "com.github.bumptech.glide:glide:4.11.0"
     kapt "com.github.bumptech.glide:compiler:4.11.0"
     kapt 'com.alibaba:arouter-compiler:1.1.4'
+    def room_version = "2.2.5"
 
-    implementation 'androidx.room:room-runtime:2.2.5'
-    annotationProcessor "androidx.room:room-compiler:2.2.5"
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+
+    // optional - Kotlin Extensions and Coroutines support for Room
+    implementation "androidx.room:room-ktx:$room_version"
+
+    // optional - Test helpers
+    testImplementation "androidx.room:room-testing:$room_version"
 }
