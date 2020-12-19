@@ -6,16 +6,16 @@ import android.os.Bundle
 import android.os.Vibrator
 import android.provider.SyncStateContract.Helpers.update
 import android.util.Log
+import android.view.DragEvent
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.newsdemoapplication.MainActivity
-import com.example.newsdemoapplication.NewsVo
 import com.example.newsdemoapplication.R
 import com.example.newsdemoapplication.Util
 import com.example.newsdemoapplication.adapter.ListDragAdapter
@@ -31,6 +31,8 @@ import com.example.newsdemoapplication.util.CommonUtils
 import com.example.newsdemoapplication.view.ChapterDragView
 import com.example.newsdemoapplication.view.DragRecycleView.DragAndPressCallBack
 import com.example.newsdemoapplication.vo.ChapterVo
+import com.example.newsdemoapplication.vo.ContentVo
+import com.example.newsdemoapplication.vo.NewsVo
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.gzp.baselib.base.MvvmBaseFragment
 import com.gzp.baselib.constant.Constants
@@ -42,6 +44,11 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.*
+
+private val Int.rad: Int
+    get() {
+       return Math.round(Math.random()*this).toInt()
+    }
 
 class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),CoroutineScope by MainScope() {
     companion object {
@@ -97,15 +104,28 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
 
     private fun loadData() {
         val list= mutableListOf<ChapterVo>()
-        Toast.makeText(context, "初始化生成了一些3 条假数据", Toast.LENGTH_SHORT).show()
-        for (i in 0..3) {
-            list.add(ChapterVo("章节$i",index = i))
+        Toast.makeText(context, "初始化生成了一些7 条假数据", Toast.LENGTH_SHORT).show()
+        for (i in 0..7) {
+            list.add(ChapterVo("章节$i",locked = radom(),index = i).apply {
+                val l = mutableListOf<NewsVo>()
+                for(j in 0.. 20.rad){
+                    l.add(NewsVo("随机$j").apply {
+                        val ll = mutableListOf<ContentVo>()
+                        for(m in 0.. 20.rad){
+                            ll.add(ContentVo("随机$m","sss"))
+                        }
+                        listContent=ll.toList()
+                    })
+                }
+                listNews=l.toList()
+            })
         }
         vm.listChapter.postValue(list)
-//        newsDao.getAll().let{
-//            Log.e("TAG", "loadData: ", )
 //        }
     }
+
+    private fun radom()=
+        Math.random()>0.5
 
     private fun initObserverbal() {
         vm.apply {
@@ -128,7 +148,6 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
                 leftPopup?.let {
                     it.show()
                 }?:XPopup.Builder(context)
-                        .dismissOnTouchOutside(false)
                         .isDestroyOnDismiss(false) //对于只使用一次的弹窗，推荐设置这个
                         .popupPosition(PopupPosition.Left)//左边
                         .hasStatusBarShadow(true) //启用状态栏阴影
@@ -147,14 +166,24 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
                 setOnClickListener {   binding.drawerLayout.closeDrawer(binding.leftNavView) }
             }
         }
-        binding.btnClose.setOnClickListener {
-            it.setOnClickListener { binding.drawerLayout.closeDrawer(binding.leftNavView) }
-        }
-        binding.btnAdd.setOnClickListener {
-            NavHostFragment.findNavController(this).navigate(R.id.action_navigation_test_to_navigation_add_section, Bundle().apply {
-                putBoolean(Constants.IsEdit, false)
-            })
-        }
+        binding.drawerLayout.setDrawerListener(object :DrawerLayout.DrawerListener{
+            override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
+            }
+
+            override fun onDrawerOpened(drawerView: View) {
+                if(binding.drawerLayout.isDrawerOpen(binding.leftNavView)){
+                    binding.drawerLayout.closeDrawer(binding.leftNavView)
+                    leftDrawerPopupView.show()
+                }
+            }
+
+            override fun onDrawerClosed(drawerView: View) {
+            }
+
+            override fun onDrawerStateChanged(newState: Int) {
+            }
+
+        })
     }
 
     private fun navigationEdit() {
