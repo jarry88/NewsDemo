@@ -7,13 +7,13 @@ import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.os.Process
-import android.util.Log
 import android.webkit.WebView
 import com.gzp.baselib.constant.Constants
 import com.gzp.baselib.utils.DevUtils
-import com.lishuaihua.toast.ToastUtils
-import okhttp3.OkHttpClient
 import com.gzp.baselib.utils.UtilsApp
+import com.lishuaihua.toast.ToastUtils
+import com.tencent.mmkv.MMKV
+import okhttp3.OkHttpClient
 import org.tianguang.baselib.utils.device.DeviceIdUtil
 import org.tianguang.baselib.utils.device.MD5Util
 import java.util.*
@@ -26,14 +26,10 @@ open class BaseApplication : Application(), Application.ActivityLifecycleCallbac
 //        MultiDex.install(applicationContext)
 //        Bugly.init(applicationContext, Constants.BUGLY_APP_ID, BuildConfig.DEBUG)
 //        //获取fcm pushtoken
-//        getFcmPushToken()
-//        //初始化风控SDK
-//        HttpContext.setContext(this)
-//        YunContext.setContext(this.applicationContext)
-//        YunHttpManager.setInterfaceAddress("https://test-sdk-data-colleciton.cashok.in/")
-//        YunMain.setDebug(BuildConfig.DEBUG)
 
         instance = this
+        val rootDir = MMKV.initialize(this)
+        println("mmkv root: $rootDir")
         UtilsApp.init(this)
         ToastUtils.init(this)
         //数据库初始化
@@ -82,23 +78,6 @@ open class BaseApplication : Application(), Application.ActivityLifecycleCallbac
         }
     }
 
-//    private fun getFcmPushToken() {
-//        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-//            if (!task.isSuccessful) {
-//                Log.w("TAG", "Fetching FCM registration token failed", task.exception)
-//                return@OnCompleteListener
-//            }
-//
-//            // Get new FCM registration token
-//            val token = task.result
-//            // Log and toast
-//            Log.d("TAG", "pushtoken --->$token")
-//
-//            SharedPreferencesManager.getInstance().saveString(SharedPreferencesManager.PUSH_TOKEN, token)
-//
-//        })
-//
-//    }
     fun init(){}
 
     open fun getProcessName(context: Context): String? {
@@ -155,14 +134,6 @@ open class BaseApplication : Application(), Application.ActivityLifecycleCallbac
 
         //static 代码段可以防止内存泄露
         init {
-//            //设置全局的Header构建器
-//            SmartRefreshLayout.setDefaultRefreshHeaderCreator { context, layout ->
-//                ClassicsHeader(context)
-//            }
-//            //设置全局的Footer构建器
-//            SmartRefreshLayout.setDefaultRefreshFooterCreator { context, layout ->
-//                ClassicsFooter(context)
-//            }
         }
     }
 

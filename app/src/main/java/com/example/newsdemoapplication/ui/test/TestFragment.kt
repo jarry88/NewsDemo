@@ -85,12 +85,13 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
         initFrameLayout()
 
         initTitleRecycleView()
+        leftDrawerPopupView
+        chapterDragView?.parent=leftDrawerPopupView
         mContentRecycleView.invalidate()
         initObserverbal()
         loadData()
         launch {
             delay(5000)
-//            chapterDragView?.log()
         }
     }
 
@@ -101,9 +102,9 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
             list.add(ChapterVo("章节$i",index = i))
         }
         vm.listChapter.postValue(list)
-        newsDao.getAll().let{
-            Log.e("TAG", "loadData: ", )
-        }
+//        newsDao.getAll().let{
+//            Log.e("TAG", "loadData: ", )
+//        }
     }
 
     private fun initObserverbal() {
@@ -131,6 +132,9 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
                         .isDestroyOnDismiss(false) //对于只使用一次的弹窗，推荐设置这个
                         .popupPosition(PopupPosition.Left)//左边
                         .hasStatusBarShadow(true) //启用状态栏阴影
+                        .autoDismiss(true)
+                        .dismissOnBackPressed(true)
+                        .dismissOnTouchOutside(true)
                         .asCustom(leftDrawerPopupView)
                         .show().also {
                             leftPopup = it
@@ -169,9 +173,9 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
     private val newsDatabase by lazy {
         NewsDatabase.getInstance(requireContext())
     }
-    private val newsDao by lazy {
-        newsDatabase.getNewsDao()
-    }
+//    private val newsDao by lazy {
+//        newsDatabase.getNewsDao()
+//    }
     private var leftPopup: BasePopupView?=null
     private val SINGLE_LINE = 0
     private val HALF_EXPANDED = 1
@@ -279,7 +283,7 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
         }
     } }
     //左侧弹窗列表
-    val leftDrawerPopupView by lazy {
+    private val leftDrawerPopupView by lazy {
         ChapterPopupView(requireContext()).apply {
             llContainer.apply {
                 chapterDragView=ChapterDragView(context,vm.listChapter).apply {

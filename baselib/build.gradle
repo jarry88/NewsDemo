@@ -98,4 +98,5 @@ dependencies {
 
     api "com.lxj:easyadapter:1.2.3"
     api 'com.google.code.gson:gson:2.8.6'
+    api 'com.tencent:mmkv-static:1.1.2'
 }

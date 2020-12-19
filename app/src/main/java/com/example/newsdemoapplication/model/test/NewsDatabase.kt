@@ -25,6 +25,6 @@ abstract class NewsDatabase :RoomDatabase(){
             }
         }
     }
-    abstract fun getNewsDao():ChapterDao
+//    abstract fun getNewsDao():ChapterDao
 }
 //数据库的创建是一件非常消耗资源的工作，所以我们将数据库设计为单例，避免创建多个数据库对象。另外对数据库的操作都不能放在 UI 线程中完成，否则会出现异常：

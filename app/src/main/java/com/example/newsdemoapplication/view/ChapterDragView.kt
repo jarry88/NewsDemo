@@ -20,6 +20,7 @@ import com.example.newsdemoapplication.callback.ItemDragHelperCallBack
 import com.example.newsdemoapplication.callback.OnItemClickListener
 import com.example.newsdemoapplication.ui.dashboard.ItemHelper
 import com.example.newsdemoapplication.vo.ChapterVo
+import com.lxj.xpopup.core.BasePopupView
 import java.util.*
 import kotlin.math.abs
 
@@ -32,6 +33,7 @@ class ChapterDragView  @JvmOverloads constructor(context: Context, val liveDate 
     var currX= 0f
     var currY=0f
     var maxDistance =30
+    var parent:BasePopupView?=null
     var mCallBack : DragRecycleView.DragAndPressCallBack?=null
         set(value) {
             field= value
@@ -46,6 +48,7 @@ class ChapterDragView  @JvmOverloads constructor(context: Context, val liveDate 
                 object : OnItemClickListener {
                     override fun onItemClick(view: View, position: Int) {
                         updatePosition(position)
+                        parent?.dismiss()
                     }
                     override fun onItemLongClick(view: View, position: Int) {}
                 })
