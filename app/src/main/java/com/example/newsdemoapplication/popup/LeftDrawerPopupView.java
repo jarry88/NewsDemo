@@ -30,7 +30,6 @@ import java.util.List;
 public class LeftDrawerPopupView extends DrawerPopupView {
     DragView dragView;
     private List<ChapterVo> list;
-    private ChapterDragView chapterDragView;
     public LeftDrawerPopupView(@NonNull Context context) {
         super(context);
     }

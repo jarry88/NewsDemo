@@ -4,9 +4,7 @@ import android.app.Service
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Vibrator
-import android.provider.SyncStateContract.Helpers.update
 import android.util.Log
-import android.view.DragEvent
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -47,13 +45,14 @@ import java.util.*
 
 private val Int.rad: Int
     get() {
-       return Math.round(Math.random()*this).toInt()
+       return Math.round(Math.random() * this).toInt()
     }
 
 class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),CoroutineScope by MainScope() {
     companion object {
         fun newInstance() = TestFragment()
     }
+    private val TAG =this::class.java.simpleName
     override fun getLayoutResId()=R.layout.test_fragment
     private var editChapter: Boolean=false
     var chapterDragView:ChapterDragView?=null
@@ -68,7 +67,7 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
         vm.listChapter.apply {
             var find =false
             var index=-1
-            value?.forEachIndexed { i ,it->
+            value?.forEachIndexed { i, it->
                 if(it.id==chapterVo.id) index =i }
             val newlist =if(index<0)value else {value?.removeAt(index)
                 value
@@ -77,9 +76,9 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
             newlist?.also {
                 val index =if(chapterVo.index<0) 0 else if(chapterVo.index>=newlist.size) newlist.size else chapterVo.index
                 if(chapterVo.index!=index){ chapterVo.index=index }
-                it.add(chapterVo.index,chapterVo)
+                it.add(chapterVo.index, chapterVo)
             }?.let {
-                Toast.makeText(context, "${if(find)"更新" else "新增"} 了-《${chapterVo.chapterName}》", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "${if (find) "更新" else "新增"} 了-《${chapterVo.chapterName}》", Toast.LENGTH_SHORT).show()
                 postValue(it)
             }
         }
@@ -89,39 +88,47 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
         binding.btnCloseRight.apply {
             setOnClickListener { showLoading() }
         }
+        btnFold
+        btnExpand
         initFrameLayout()
-
         initTitleRecycleView()
         leftDrawerPopupView
         chapterDragView?.parent=leftDrawerPopupView
         mContentRecycleView.invalidate()
         initObserverbal()
-        loadData()
         launch {
-            delay(5000)
+            delay(1000)
+            loadData()
         }
     }
 
     private fun loadData() {
+        var needLoad=true
+        vm.listChapter.value?.takeIf { it.size>3 }?.let {
+            needLoad=false
+        }
+        if(needLoad)randomData()
+    }
+    private fun randomData(){
         val list= mutableListOf<ChapterVo>()
         Toast.makeText(context, "初始化生成了一些7 条假数据", Toast.LENGTH_SHORT).show()
         for (i in 0..7) {
-            list.add(ChapterVo("章节$i",locked = radom(),index = i).apply {
+            list.add(ChapterVo("章节$i", locked = radom(), index = i).apply {
                 val l = mutableListOf<NewsVo>()
-                for(j in 0.. 20.rad){
+                for (j in 0..20.rad) {
                     l.add(NewsVo("随机$j").apply {
                         val ll = mutableListOf<ContentVo>()
-                        for(m in 0.. 20.rad){
-                            ll.add(ContentVo("随机$m","sss"))
+                        for (m in 0..20.rad) {
+                            ll.add(ContentVo("随机$m", "sss"))
                         }
-                        listContent=ll.toList()
+                        listContent = ll.toList()
                     })
                 }
-                listNews=l.toList()
+                listNews = l.toList()
             })
         }
         vm.listChapter.postValue(list)
-//        }
+        vm.currChapter.postValue(list.first())
     }
 
     private fun radom()=
@@ -129,6 +136,9 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
 
     private fun initObserverbal() {
         vm.apply {
+            listChapter.observe(this@TestFragment){
+                chapterDragView?.adapter
+            }
             currChapter.observe(this@TestFragment){
                 binding.frameLayout.apply {
                     suoTextViewId.text=it.getLockStr()
@@ -166,14 +176,14 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
                 setOnClickListener {   binding.drawerLayout.closeDrawer(binding.leftNavView) }
             }
         }
-        binding.drawerLayout.setDrawerListener(object :DrawerLayout.DrawerListener{
+        binding.drawerLayout.setDrawerListener(object : DrawerLayout.DrawerListener {
             override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
             }
 
             override fun onDrawerOpened(drawerView: View) {
-                if(binding.drawerLayout.isDrawerOpen(binding.leftNavView)){
+                if (binding.drawerLayout.isDrawerOpen(binding.leftNavView)) {
                     binding.drawerLayout.closeDrawer(binding.leftNavView)
-                    leftDrawerPopupView.show()
+                    leftPopup?.show()
                 }
             }
 
@@ -189,12 +199,12 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
     private fun navigationEdit() {
         try {
             leftDrawerPopupView.dismiss()
-        }catch (e:Exception){
-            Log.e("TAG", "navigationEdit:$e ", )
+        }catch (e: Exception){
+            Log.e("TAG", "navigationEdit:$e ")
         }
         NavHostFragment.findNavController(this@TestFragment).navigate(R.id.action_navigation_test_to_navigation_add_section, Bundle().apply {
             putBoolean(Constants.IsEdit, true)
-            Log.e("TAG", "initFrameLayout: true", )
+            Log.e("TAG", "initFrameLayout: true")
             putSerializable(Constants.ChapterVo, vm.currChapter.value)
         })
     }
@@ -202,9 +212,6 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
     private val newsDatabase by lazy {
         NewsDatabase.getInstance(requireContext())
     }
-//    private val newsDao by lazy {
-//        newsDatabase.getNewsDao()
-//    }
     private var leftPopup: BasePopupView?=null
     private val SINGLE_LINE = 0
     private val HALF_EXPANDED = 1
@@ -215,6 +222,7 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
 
     //顶部 抽屉展开按钮
     val btnExpand by lazy { binding.frameLayout.frameLayout.btnExpand.apply {
+        Log.e(TAG, ": 抽屉展开按钮", )
         setOnClickListener {
             if (currTitleState == COMPLETE_EXPANDED) {
                 if (supportHalfExpand) showHalfExpand() else showSingLine()
@@ -225,6 +233,7 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
             }
         }
     } }
+
     private val mTitleRecycleView by lazy {
         binding.frameLayout.frameLayout.rvTitle.apply {
             layoutManager = titleLayoutManager
@@ -233,7 +242,9 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
 
     }
     //收起左侧弹窗按钮
-    val btnFold by lazy { binding.frameLayout.frameLayout.btnFold.apply { setOnClickListener { showSingLine() } } }
+    val btnFold by lazy {
+        Log.e(TAG, ": 合上展开按钮", )
+        binding.frameLayout.frameLayout.btnFold.apply { setOnClickListener { showSingLine() } } }
 
 
     private val titleLayoutManager by lazy {
@@ -249,15 +260,15 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
     val titleAdapter by lazy {
         ListDragAdapter(activity, list).apply {
             setOnItemClickListener(
-                object : OnItemClickListener {
-                    override fun onItemClick(view: View, position: Int) {
-                        currSelectedPosition = position
-                        currSelectPosition = position
-                        contentScrollToPosition(position)
-                    }
+                    object : OnItemClickListener {
+                        override fun onItemClick(view: View, position: Int) {
+                            currSelectedPosition = position
+                            currSelectPosition = position
+                            contentScrollToPosition(position)
+                        }
 
-                    override fun onItemLongClick(view: View, position: Int) {}
-                })
+                        override fun onItemLongClick(view: View, position: Int) {}
+                    })
         }
     }
     private val mContentRecycleView by lazy {
@@ -298,8 +309,10 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
                 editChapter=false
                 vm.listChapter.apply {
                     val index =value?.indexOf(vm.currChapter.value)
-                    val list =value?.also { it.removeAt(index?:0) }
-                    postValue(list)
+                    index?.takeIf { it>=0 }?.let {
+                        val list =value?.also { it.removeAt(index ?: 0) }
+                        postValue(list)
+                    }
                 }
             }else{
                 Log.e("TAG", "initBottomSheetDiaLog: $currSelectedPosition")
@@ -315,8 +328,8 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
     private val leftDrawerPopupView by lazy {
         ChapterPopupView(requireContext()).apply {
             llContainer.apply {
-                chapterDragView=ChapterDragView(context,vm.listChapter).apply {
-                    layoutParams=LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT)
+                chapterDragView=ChapterDragView(context, vm.listChapter).apply {
+                    layoutParams=LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)
                     setBackgroundColor(Color.parseColor("#234567"))
                     clickCallBack=object :ChapterDragView.ClickCallBack{
                         override fun onChapterClicked(chapterVo: ChapterVo) {
@@ -330,18 +343,21 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
                                 bottomSheetDialog.show()
                             }
                             override fun onAfterPressMove() {
+                                Log.e(TAG, "onAfterPressMove: ", )
                                 longPress = false
                                 bottomSheetDialog.dismiss()
                             }
                         }
+                    liveDate.observe(this@TestFragment){
+                        mAdapter.setData(it)
+                    }
                 }.also { addView(it) }
             }
             mOnClickListener= View.OnClickListener {
                 NavHostFragment.findNavController(this@TestFragment)
-                        .navigate(R.id.action_navigation_test_to_navigation_add_section
-                                , Bundle().apply {
+                        .navigate(R.id.action_navigation_test_to_navigation_add_section, Bundle().apply {
                             putBoolean(Constants.IsEdit, false)
-                            }
+                        }
                         )
             }
         }
@@ -385,7 +401,7 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
                 titleAdapter.notifyDataSetChanged()
                 if (longPress) {
                     bottomSheetDialog.show()
-                    longPress=false
+                    longPress = false
                 }
             }
 

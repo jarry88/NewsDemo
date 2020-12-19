@@ -72,7 +72,7 @@ public class ListDragAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHold
         if(showImage){
             if(mHolder.imageItem!=null){
                 mHolder.tvTag.setText(list.get(position));
-                KUtilKt.loadUrl(mHolder.imageItem,listUrl.get(position));
+                KUtilKt.loadUrl(mHolder.imageItem,listUrl.get(position%7));
             }
         }else {
             mHolder.tvTag.setText(list.get(position));

@@ -74,10 +74,12 @@ class ChapterDragView  @JvmOverloads constructor(context: Context, val liveDate 
                             startY = currY
 
                             if (moveCount++ > 0) {
+                                Util.Loge("onAfterPressMove")
+                                longPress=false
                                 mCallBack?.onAfterPressMove()
                                 reset()
                             }
-                            Util.Loge("移动了")
+                            Util.Loge("移动了$moveCount")
                         }
                     }
                 }
@@ -104,7 +106,6 @@ class ChapterDragView  @JvmOverloads constructor(context: Context, val liveDate 
     }
     private fun initView(){
         adapter =mAdapter
-
         val itemTouchHelper = ItemTouchHelper(ItemDragHelperCallBack(object : ItemHelper {
             override fun itemMoved(oldPosition: Int, newPosition: Int) {
 //                Util.Loge("move")
@@ -118,7 +119,7 @@ class ChapterDragView  @JvmOverloads constructor(context: Context, val liveDate 
             override fun itemClear(position: Int) {
                 Util.Loge("itemClear")
                 updatePosition(position)
-
+                moveCount=0
                 mAdapter.notifyDataSetChanged()
                 if (longPress) {
                     longPress=false

@@ -151,9 +151,6 @@ open class DragView @JvmOverloads constructor(context: Context, attributes: Attr
                 //交换变换位置的集合数据
                 Collections.swap(mAdapter.data, oldPosition, newPosition)
                 Collections.swap(list, oldPosition, newPosition)
-                mAdapter.urlData?.let {
-                    Collections.swap(it, oldPosition, newPosition)
-                }
                 mAdapter.notifyItemMoved(oldPosition, newPosition)
             }
 
