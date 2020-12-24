@@ -49,9 +49,6 @@ private val Int.rad: Int
     }
 
 class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),CoroutineScope by MainScope() {
-    companion object {
-        fun newInstance() = TestFragment()
-    }
     private val TAG =this::class.java.simpleName
     override fun getLayoutResId()=R.layout.test_fragment
     private var editChapter: Boolean=false
@@ -65,20 +62,18 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
 
     private fun saveChapter(chapterVo: ChapterVo) {
         vm.listChapter.apply {
-            var find =false
             var index=-1
             value?.forEachIndexed { i, it->
                 if(it.id==chapterVo.id) index =i }
             val newlist =if(index<0)value else {value?.removeAt(index)
                 value
             }
-
             newlist?.also {
-                val index =if(chapterVo.index<0) 0 else if(chapterVo.index>=newlist.size) newlist.size else chapterVo.index
-                if(chapterVo.index!=index){ chapterVo.index=index }
+                val chapterVoIndex =if(chapterVo.index<0) 0 else if(chapterVo.index>=newlist.size) newlist.size else chapterVo.index
+                if(chapterVo.index!=index){ chapterVo.index=chapterVoIndex }
                 it.add(chapterVo.index, chapterVo)
             }?.let {
-                Toast.makeText(context, "${if (find) "更新" else "新增"} 了-《${chapterVo.chapterName}》", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "${if (index>=0) "更新" else "新增"} 了-《${chapterVo.chapterName}》", Toast.LENGTH_SHORT).show()
                 postValue(it)
             }
         }
@@ -145,7 +140,9 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
                     ddTextViewId.text=it.chapterName
                     txTextViewId.text=it.description
                 }
-                titleAdapter.setmDatas(it.listNews?.map { it.title })
+                titleAdapter.setmDatas(it.listNews?.map { it.title }?.apply {
+                    if(size<=ColumnNum){ btnFold.visibility=View.GONE}
+                })
                 mContentAdapter.setData(it.listNews)
             }
         }

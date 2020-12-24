@@ -32,10 +32,6 @@ public class ListDragAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHold
     private OnItemClickListener mOnItemClickListener;
     private ConvertView mConvertView;
     private int currSelectPosition;
-//    public ListDragAdapter(Context context, List<String> list) {
-//        this.mContext = context;
-//        this.list = list;
-//    }
     public ListDragAdapter(Context context, List<String> list) {
         this.mContext = context;
         this.list = list;
@@ -46,7 +42,7 @@ public class ListDragAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHold
         showImage=show;
         if(show){
             listUrl =new ArrayList<String >();
-            for (int i=0;i<7;i++){
+            for (int i=0;i<list.size();i++){
                 listUrl.add(KUtilKt.randomUrl());
             }
         }
@@ -140,6 +136,7 @@ public class ListDragAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHold
         }
         if(datas!=null){
             list.addAll(datas);
+            if(showImage) setImageView(true);
         }
         this.notifyDataSetChanged();
     }

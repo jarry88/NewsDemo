@@ -42,7 +42,6 @@ open class DragView @JvmOverloads constructor(context: Context, attributes: Attr
     var beginTime =System.currentTimeMillis()
     var bottomShowTime =System.currentTimeMillis()
     private val list by lazy { mutableListOf<String>() }
-//    private val listData by lazy { mutableListOf<T>() }
     private val mLayoutManager by lazy {
         GridLayoutManager(context, ColumnNum * 3).apply {
             spanSizeLookup = object : SpanSizeLookup() {
@@ -90,6 +89,9 @@ open class DragView @JvmOverloads constructor(context: Context, attributes: Attr
                     if (count > 0) {
                         currX = event.rawX
                         currY = event.rawY
+
+                        if(currY>bottom){Log.e("TAG", "ACTION_DOWN:已阅下界 $bottom ") }
+                        if(currY<top){Log.e("TAG", "ACTION_DOWN:已阅上界 $bottom ") }
                         if (abs(startX - currX) >= maxDistance ||
                                 abs(startY - currY) > maxDistance) {
                             startX = currX
@@ -143,13 +145,13 @@ open class DragView @JvmOverloads constructor(context: Context, attributes: Attr
     }
     private fun initView(){
         adapter =mAdapter
-
         val itemTouchHelper = ItemTouchHelper(ItemDragHelperCallBack(object : ItemHelper {
             override fun itemMoved(oldPosition: Int, newPosition: Int) {
-                Util.Loge("move")
+                Util.Loge("DragView ------>oldPosition $oldPosition move  newPosition $newPosition"  )
 
                 //交换变换位置的集合数据
                 Collections.swap(mAdapter.data, oldPosition, newPosition)
+                Collections.swap(mAdapter.urlData,oldPosition,newPosition)
                 Collections.swap(list, oldPosition, newPosition)
                 mAdapter.notifyItemMoved(oldPosition, newPosition)
             }
@@ -157,10 +159,6 @@ open class DragView @JvmOverloads constructor(context: Context, attributes: Attr
             override fun itemDismiss(position: Int) {}
             override fun itemClear(position: Int) {
                 mAdapter.currSelectPosition = position
-                mAdapter.notifyDataSetChanged()
-//                if (longPress) {
-//                    bottomSheetDialog.show()
-//                }
                 //                }
             }
 
