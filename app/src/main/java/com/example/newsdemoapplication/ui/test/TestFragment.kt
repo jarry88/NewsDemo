@@ -1,10 +1,12 @@
 package com.example.newsdemoapplication.ui.test
 
+import android.annotation.SuppressLint
 import android.app.Service
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Vibrator
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -34,21 +36,29 @@ import com.example.newsdemoapplication.vo.NewsVo
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.gzp.baselib.base.MvvmBaseFragment
 import com.gzp.baselib.constant.Constants
+import com.lishuaihua.toast.ToastUtils.show
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.core.BasePopupView
 import com.lxj.xpopup.enums.PopupPosition
+import com.lxj.xpopup.interfaces.XPopupCallback
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.*
+import kotlin.math.abs
+import kotlin.math.roundToInt
 
 private val Int.rad: Int
     get() {
-       return Math.round(Math.random() * this).toInt()
+       return (Math.random() * this).roundToInt().toInt()
     }
 
 class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),CoroutineScope by MainScope() {
+    private var mPosX: Float=0f
+    private var mPosY: Float=0f
+    private var mCurPosX: Float=0f
+    private var mCurPosY: Float=0f
     private val TAG =this::class.java.simpleName
     override fun getLayoutResId()=R.layout.test_fragment
     private var editChapter: Boolean=false
@@ -148,39 +158,22 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun initFrameLayout() {
         binding.frameLayout.apply {
             cyImagebuttonId.setOnClickListener {//左侧弹窗按钮
-//                binding.drawerLayout.openDrawer(binding.linearLayout1Id)
-                leftPopup?.let {
-                    it.show()
-                }?:XPopup.Builder(context)
-                        .isDestroyOnDismiss(false) //对于只使用一次的弹窗，推荐设置这个
-                        .popupPosition(PopupPosition.Left)//左边
-                        .hasStatusBarShadow(true) //启用状态栏阴影
-                        .autoDismiss(true)
-                        .dismissOnBackPressed(true)
-                        .dismissOnTouchOutside(true)
-                        .asCustom(leftDrawerPopupView)
-                        .show().also {
-                            leftPopup = it
-                        }
-            }
-            szImagebuttonId.setOnClickListener{navigationEdit()}
+                    showLeftPopup() }
+            szImagebuttonId.setOnClickListener {navigationEdit() }
         }
-        binding.leftNavView.inflateHeaderView(R.layout.nav_header_main).apply {
-            findViewById<TextView>(R.id.textView).apply {
-                setOnClickListener {   binding.drawerLayout.closeDrawer(binding.leftNavView) }
-            }
-        }
+
         binding.drawerLayout.setDrawerListener(object : DrawerLayout.DrawerListener {
             override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
             }
 
             override fun onDrawerOpened(drawerView: View) {
-                if (binding.drawerLayout.isDrawerOpen(binding.leftNavView)) {
-                    binding.drawerLayout.closeDrawer(binding.leftNavView)
-                    leftPopup?.show()
+                Log.e(TAG, "onDrawerOpened: 滑动", )
+                if(binding.drawerLayout.isDrawerOpen(binding.leftId)){
+                    showLeftPopup()
                 }
             }
 
@@ -191,6 +184,40 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
             }
 
         })
+    }
+
+    private fun showLeftPopup() {
+        leftPopup?.show() ?:XPopup.Builder(context)
+                .isDestroyOnDismiss(false) //对于只使用一次的弹窗，推荐设置这个
+                .popupPosition(PopupPosition.Left)//左边
+                .hasStatusBarShadow(true) //启用状态栏阴影
+                .autoDismiss(true)
+                .dismissOnBackPressed(true)
+                .dismissOnTouchOutside(true)
+                .setPopupCallback(object :XPopupCallback{
+                    override fun onCreated(popupView: BasePopupView?) {}
+
+                    override fun beforeShow(popupView: BasePopupView?) { }
+
+                    override fun onShow(popupView: BasePopupView?) {}
+
+                    override fun onDismiss(popupView: BasePopupView?) { binding.drawerLayout.closeDrawer(binding.leftId)}
+
+                    override fun beforeDismiss(popupView: BasePopupView?) {}
+
+                    override fun onBackPressed(popupView: BasePopupView?): Boolean {
+                        return true
+                    }
+
+                    override fun onKeyBoardStateChanged(popupView: BasePopupView?, height: Int) {}
+
+                    override fun onDrag(popupView: BasePopupView?, value: Int, percent: Float, upOrLeft: Boolean) {}
+                })
+
+                .asCustom(leftDrawerPopupView)
+                .show().also {
+                    leftPopup = it
+                }
     }
 
     private fun navigationEdit() {
@@ -221,6 +248,10 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
     val btnExpand by lazy { binding.frameLayout.frameLayout.btnExpand.apply {
         Log.e(TAG, ": 抽屉展开按钮", )
         setOnClickListener {
+            if(vm.currChapter?.value?.listNews?.size?:0<=ColumnNum){
+                show("没有更多了")
+                return@setOnClickListener
+            }
             if (currTitleState == COMPLETE_EXPANDED) {
                 if (supportHalfExpand) showHalfExpand() else showSingLine()
             } else if (currTitleState == HALF_EXPANDED) {
@@ -299,7 +330,7 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
                     list.set(currSelectedPosition, text)
                     titleAdapter.notifyItemChanged(currSelectedPosition)
                     mContentAdapter.notifyItemChanged(currSelectedPosition)
-            } .show()
+            }.show()
         }
         findViewById<View>(R.id.tv_delete)?.setOnClickListener { v: View? ->
             if(editChapter){
