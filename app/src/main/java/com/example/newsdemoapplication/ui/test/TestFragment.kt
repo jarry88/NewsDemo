@@ -11,6 +11,7 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -24,6 +25,8 @@ import com.example.newsdemoapplication.adapter.NewsContentAdapter
 import com.example.newsdemoapplication.callback.ItemDragHelperCallBack
 import com.example.newsdemoapplication.callback.OnItemClickListener
 import com.example.newsdemoapplication.databinding.TestFragmentBinding
+import com.example.newsdemoapplication.dsl.LinearLayout
+import com.example.newsdemoapplication.dsl.bgShape
 import com.example.newsdemoapplication.model.test.NewsDatabase
 import com.example.newsdemoapplication.popup.ChapterPopupView
 import com.example.newsdemoapplication.ui.dashboard.ItemHelper
@@ -39,8 +42,6 @@ import com.gzp.baselib.constant.Constants
 import com.lishuaihua.toast.ToastUtils.show
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.core.BasePopupView
-import com.lxj.xpopup.enums.PopupPosition
-import com.lxj.xpopup.interfaces.XPopupCallback
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
@@ -93,11 +94,47 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
         binding.btnCloseRight.apply {
             setOnClickListener { showLoading() }
         }
+        binding.frameLayout.btnXnty.setOnClickListener {
+            XPopup.Builder(context).asBottomList("点虚拟体验打开抽屉，页面拼接在主页面下面，长高由内容决定",emptyArray<String>()){_,_->}.show()
+        }
         btnFold
         btnExpand
         initFrameLayout()
         initTitleRecycleView()
-        leftDrawerPopupView
+        binding.leftId.apply {
+           LinearLayout(80,80){
+               bgShape(10,R.color.black)
+           }
+            ChapterPopupView(context).apply {
+                llContainer.apply {
+                    chapterDragView=ChapterDragView(context, vm.listChapter).apply {
+                        layoutParams=LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)
+                        setBackgroundColor(Color.parseColor("#234567"))
+                        clickCallBack=object :ChapterDragView.ClickCallBack{
+                            override fun onChapterClicked(chapterVo: ChapterVo) {
+                                vm.currChapter.postValue(chapterVo)
+                            }
+                        }
+                        mCallBack=object: DragAndPressCallBack {
+                            //设置移动监听回调
+                            override fun onLongPress() {
+                                editChapter =true
+                                bottomSheetDialog.show()
+                            }
+                            override fun onAfterPressMove() {
+                                Log.e(TAG, "onAfterPressMove: ", )
+                                longPress = false
+                                bottomSheetDialog.dismiss()
+                            }
+                        }
+                        liveDate.observe(this@TestFragment){
+                            mAdapter.setData(it)
+                        }
+                    }.also { addView(it) }
+                }
+            }
+        }
+
         chapterDragView?.parent=leftDrawerPopupView
         mContentRecycleView.invalidate()
         initObserverbal()
@@ -162,7 +199,8 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
     private fun initFrameLayout() {
         binding.frameLayout.apply {
             cyImagebuttonId.setOnClickListener {//左侧弹窗按钮
-                    showLeftPopup() }
+                    showLeftPopup()
+            }
             szImagebuttonId.setOnClickListener {navigationEdit() }
         }
 
@@ -187,37 +225,37 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
     }
 
     private fun showLeftPopup() {
-        leftPopup?.show() ?:XPopup.Builder(context)
-                .isDestroyOnDismiss(false) //对于只使用一次的弹窗，推荐设置这个
-                .popupPosition(PopupPosition.Left)//左边
-                .hasStatusBarShadow(true) //启用状态栏阴影
-                .autoDismiss(true)
-                .dismissOnBackPressed(true)
-                .dismissOnTouchOutside(true)
-                .setPopupCallback(object :XPopupCallback{
-                    override fun onCreated(popupView: BasePopupView?) {}
-
-                    override fun beforeShow(popupView: BasePopupView?) { }
-
-                    override fun onShow(popupView: BasePopupView?) {}
-
-                    override fun onDismiss(popupView: BasePopupView?) { binding.drawerLayout.closeDrawer(binding.leftId)}
-
-                    override fun beforeDismiss(popupView: BasePopupView?) {}
-
-                    override fun onBackPressed(popupView: BasePopupView?): Boolean {
-                        return true
-                    }
-
-                    override fun onKeyBoardStateChanged(popupView: BasePopupView?, height: Int) {}
-
-                    override fun onDrag(popupView: BasePopupView?, value: Int, percent: Float, upOrLeft: Boolean) {}
-                })
-
-                .asCustom(leftDrawerPopupView)
-                .show().also {
-                    leftPopup = it
-                }
+//        leftPopup?.show() ?:XPopup.Builder(context)
+//                .isDestroyOnDismiss(false) //对于只使用一次的弹窗，推荐设置这个
+//                .popupPosition(PopupPosition.Left)//左边
+//                .hasStatusBarShadow(true) //启用状态栏阴影
+//                .autoDismiss(true)
+//                .dismissOnBackPressed(true)
+//                .dismissOnTouchOutside(true)
+//                .setPopupCallback(object :XPopupCallback{
+//                    override fun onCreated(popupView: BasePopupView?) {}
+//
+//                    override fun beforeShow(popupView: BasePopupView?) { }
+//
+//                    override fun onShow(popupView: BasePopupView?) {}
+//
+//                    override fun onDismiss(popupView: BasePopupView?) { binding.drawerLayout.closeDrawer(binding.leftId)}
+//
+//                    override fun beforeDismiss(popupView: BasePopupView?) {}
+//
+//                    override fun onBackPressed(popupView: BasePopupView?): Boolean {
+//                        return true
+//                    }
+//
+//                    override fun onKeyBoardStateChanged(popupView: BasePopupView?, height: Int) {}
+//
+//                    override fun onDrag(popupView: BasePopupView?, value: Int, percent: Float, upOrLeft: Boolean) {}
+//                })
+//
+//                .asCustom(leftDrawerPopupView)
+//                .show().also {
+//                    leftPopup = it
+//                }
     }
 
     private fun navigationEdit() {
@@ -248,7 +286,7 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
     val btnExpand by lazy { binding.frameLayout.frameLayout.btnExpand.apply {
         Log.e(TAG, ": 抽屉展开按钮", )
         setOnClickListener {
-            if(vm.currChapter?.value?.listNews?.size?:0<=ColumnNum){
+            if(vm.currChapter.value?.listNews?.size?:0<=ColumnNum){
                 show("没有更多了")
                 return@setOnClickListener
             }

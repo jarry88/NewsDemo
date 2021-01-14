@@ -89,12 +89,10 @@
             app:layout_constraintTop_toBottomOf="@id/ll_top_container"/>
 
         <TextView
-            android:id="@+id/xnty_textView_id"
+            android:id="@+id/btn_xnty"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="187dp"
-            android:layout_marginEnd="154dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="66dp"
             android:text="@string/xnty_textView"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -113,7 +111,7 @@
         <include
             layout="@layout/fragment_home"
             android:layout_marginTop="76dp"
-            android:layout_marginBottom="40dp"
+            android:layout_marginBottom="120dp"
             android:id="@+id/frameLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
