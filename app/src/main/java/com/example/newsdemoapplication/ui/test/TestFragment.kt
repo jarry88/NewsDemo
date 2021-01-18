@@ -101,13 +101,8 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
         btnExpand
         initFrameLayout()
         initTitleRecycleView()
-        binding.leftId.apply {
-           LinearLayout(80,80){
-               bgShape(10,R.color.black)
-           }
-            ChapterPopupView(context).apply {
-                llContainer.apply {
-                    chapterDragView=ChapterDragView(context, vm.listChapter).apply {
+        binding.leftId.llContainer.apply {
+            ChapterDragView(context, vm.listChapter).apply {
                         layoutParams=LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)
                         setBackgroundColor(Color.parseColor("#234567"))
                         clickCallBack=object :ChapterDragView.ClickCallBack{
@@ -131,8 +126,7 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
                             mAdapter.setData(it)
                         }
                     }.also { addView(it) }
-                }
-            }
+
         }
 
         chapterDragView?.parent=leftDrawerPopupView
@@ -365,7 +359,7 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
                 navigationEdit()
             }else
             XPopup.Builder(activity).asInputConfirm("重命名", "请输入内容。") { text: String? ->
-                    list.set(currSelectedPosition, text)
+                    list[currSelectedPosition] = text
                     titleAdapter.notifyItemChanged(currSelectedPosition)
                     mContentAdapter.notifyItemChanged(currSelectedPosition)
             }.show()

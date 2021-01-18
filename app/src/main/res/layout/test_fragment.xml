@@ -18,16 +18,13 @@
         </RelativeLayout>
 
         <!-- 左边菜单 -->
-        <LinearLayout
-            android:id="@+id/left_id"
+        <com.example.newsdemoapplication.popup.LeftChapterDrawerView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:id="@+id/left_id"
             android:layout_gravity="start"
-            android:background="@color/black"
             android:gravity="center"
-            android:orientation="vertical">
-
-        </LinearLayout>
+            android:orientation="vertical"/>
         <!-- 右边菜单 -->
         <LinearLayout
             android:id="@+id/linearLayout1_id"
@@ -52,7 +49,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="关闭" />
-
         </LinearLayout>
 
 
