@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Process
 import android.webkit.WebView
+import androidx.room.Room
 import com.gzp.baselib.constant.Constants
 import com.gzp.baselib.utils.DevUtils
 import com.gzp.baselib.utils.UtilsApp
@@ -21,6 +22,7 @@ import java.util.*
 
 open class BaseApplication : Application(), Application.ActivityLifecycleCallbacks {
     private var activityMap = HashMap<String, Activity>()
+
     override fun onCreate() {
         super.onCreate()
 //        MultiDex.install(applicationContext)
@@ -32,6 +34,7 @@ open class BaseApplication : Application(), Application.ActivityLifecycleCallbac
         println("mmkv root: $rootDir")
         UtilsApp.init(this)
         ToastUtils.init(this)
+
         //数据库初始化
 //        DataManager.init(this)
 //        //活体检测SDK 初始化

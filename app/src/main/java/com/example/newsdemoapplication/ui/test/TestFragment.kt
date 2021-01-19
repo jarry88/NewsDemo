@@ -205,6 +205,8 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
                 binding.drawerLayout.openDrawer(binding.leftId)
             }
             btnTopRight.addOnClick {navigationEdit() }
+            btnTitle.addOnClick { NavHostFragment.findNavController(this@TestFragment)
+                    .navigate(R.id.action_navigation_test_to_roomFragment) }
         }
 
         binding.drawerLayout.addDrawerListener(object : DrawerLayout.DrawerListener {

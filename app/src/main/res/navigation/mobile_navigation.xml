@@ -15,6 +15,9 @@
         <action
             android:id="@+id/action_navigation_test_to_photoViewPagerFragment"
             app:destination="@id/navigation_photoViewPagerFragment" />
+        <action
+            android:id="@+id/action_navigation_test_to_roomFragment"
+            app:destination="@id/roomFragment" />
     </fragment>
     <fragment
         android:id="@+id/navigation_home"
@@ -42,6 +45,10 @@
         android:id="@+id/navigation_photoViewPagerFragment"
         android:name="com.example.newsdemoapplication.ui.viewpager.PhotoViewPagerFragment"
         android:label="PhotoViewPagerFragment" />
+    <fragment
+        android:id="@+id/roomFragment"
+        android:name="com.example.newsdemoapplication.ui.RoomFragment"
+        android:label="RoomFragment" />
 
 
 </navigation>

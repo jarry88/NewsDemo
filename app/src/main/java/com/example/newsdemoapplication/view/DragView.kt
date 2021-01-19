@@ -27,6 +27,7 @@ import kotlin.math.abs
 
 open class DragView @JvmOverloads constructor(context: Context, attributes: AttributeSet? = null, def: Int = 0) :RecyclerView(context, attributes, def) {
     var count =0;
+    var movecount=0
     var moveCount =0
     var ColumnNum =4
     var startX =0f
@@ -86,8 +87,15 @@ open class DragView @JvmOverloads constructor(context: Context, attributes: Attr
                     startX = event.rawX
                     startY = event.rawY
                     reset()
+                    moveCount=0
                 }
                 MotionEvent.ACTION_MOVE -> {
+                    moveCount++
+//                    if(moveCount>1000){
+                        moveCount=0
+                        Log.e("TAG", "event rawX ${event.rawX} ")
+                        Log.e("TAG", "event rawY ${event.rawY} ")
+//                    }
                     if (count > 0) {
                         currX = event.rawX
                         currY = event.rawY

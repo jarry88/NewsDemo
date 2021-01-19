@@ -38,12 +38,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
-import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.channels.actor
-import kotlinx.coroutines.launch
 import kotlin.math.abs
 
 /**
@@ -51,185 +46,186 @@ import kotlin.math.abs
  * which has a better performance than xml files and more readable than normal java and kotlin code
  */
 //<editor-fold desc="widget creation function">
-inline fun ViewGroup.TextView(lheight :Int= wrap_content, lwidth:Int = wrap_content,autoAdd: Boolean = true,content:String="", init: TextView.() -> Unit={}) =
-    TextView(context).apply {
-        layout_height = lheight
-        layout_width = lwidth
-        gravity= gravity_center
-        text=content}.apply(init).also { if (autoAdd) addView(it) }
-inline fun ViewGroup.line(bgColor:Int,lheight :Int= 1, lwidth:Int = match_parent,autoAdd: Boolean = true, init: View.() -> Unit={}) =
-    View(context).apply {
-        layout_height = lheight
-        layout_width = lwidth
-        bg_color_id=bgColor}.apply(init).also { if (autoAdd) addView(it) }
+inline fun ViewGroup.TextView(lheight :Int= wrap_content, lwidth:Int = wrap_content, autoAdd: Boolean = true, content:String="", init: TextView.() -> Unit={}) =
+        TextView(context).apply {
+            layout_height = lheight
+            layout_width = lwidth
+            gravity= gravity_center
+            text=content}.apply(init).also { if (autoAdd) addView(it) }
+inline fun ViewGroup.line(bgColor:Int, lheight :Int= 1, lwidth:Int = match_parent, autoAdd: Boolean = true, init: View.() -> Unit={}) =
+        View(context).apply {
+            layout_height = lheight
+            layout_width = lwidth
+            bg_color_id=bgColor}.apply(init).also { if (autoAdd) addView(it) }
 
 inline fun ViewGroup.wraptTextView(autoAdd: Boolean = true, init: TextView.() -> Unit) =
-    TextView(context).apply(init).apply { layout_width = wrap_content
-        layout_height = wrap_content}.also { if (autoAdd) addView(it) }
-inline fun ViewGroup.ImageView(lheight :Int= wrap_content, lwidth:Int = wrap_content,autoAdd: Boolean = true, init: ImageView.() -> Unit={}) =
-    ImageView(context).apply {
-        layout_height = lheight
-        layout_width = lwidth }.apply(init).also { if (autoAdd) addView(it) }
+        TextView(context).apply(init).apply { layout_width = wrap_content
+            layout_height = wrap_content
+        }.also { if (autoAdd) addView(it) }
+inline fun ViewGroup.ImageView(lheight :Int= wrap_content, lwidth:Int = wrap_content, autoAdd: Boolean = true, init: ImageView.() -> Unit={}) =
+        ImageView(context).apply {
+            layout_height = lheight
+            layout_width = lwidth }.apply(init).also { if (autoAdd) addView(it) }
 fun View.square(length :Int= wrap_content) =this.also { layout_height =length
-layout_width =length}
+    layout_width =length}
 
 
 inline fun ViewGroup.Button(autoAdd: Boolean = true, init: Button.() -> Unit) =
-    Button(context).apply(init).also { if (autoAdd) addView(it) }
+        Button(context).apply(init).also { if (autoAdd) addView(it) }
 
-inline fun ViewGroup.View(lheight :Int= wrap_content, lwidth:Int = wrap_content,autoAdd: Boolean = true, init: View.() -> Unit): View =
-    View(context).apply {
-        layout_height = lheight
-        layout_width = lwidth }.apply(init).also { if (autoAdd) addView(it) }
+inline fun ViewGroup.View(lheight :Int= wrap_content, lwidth:Int = wrap_content, autoAdd: Boolean = true, init: View.() -> Unit): View =
+        View(context).apply {
+            layout_height = lheight
+            layout_width = lwidth }.apply(init).also { if (autoAdd) addView(it) }
 inline fun ViewGroup.weightView(autoAdd: Boolean = true, init: View.() -> Unit): View =
-    View(context).apply { layout_height=0
-    layout_width=0
-    weight=1f}.apply(init).also { if (autoAdd) addView(it) }
+        View(context).apply { layout_height=0
+            layout_width=0
+            weight=1f}.apply(init).also { if (autoAdd) addView(it) }
 
-inline fun ViewGroup.RelativeLayout(lwidth:Int = wrap_content, lheight :Int= wrap_content,autoAdd: Boolean = true, init: RelativeLayout.() -> Unit) =
-    RelativeLayout(context).apply {
-        layout_height = lheight
-        layout_width = lwidth }.apply(init).also { if (autoAdd) addView(it) }
+inline fun ViewGroup.RelativeLayout(lwidth:Int = wrap_content, lheight :Int= wrap_content, autoAdd: Boolean = true, init: RelativeLayout.() -> Unit) =
+        RelativeLayout(context).apply {
+            layout_height = lheight
+            layout_width = lwidth }.apply(init).also { if (autoAdd) addView(it) }
 fun ViewGroup.setBgId(id:Int)=this.also { it.setBackgroundResource(id) }
 inline fun ViewGroup.LinearLayout(lwidth:Int = wrap_content, lheight :Int= wrap_content,
-                autoAdd: Boolean = true, init: LinearLayout.() -> Unit={}) =
-    LinearLayout(context).apply {
-        layout_height = lheight
-        layout_width = lwidth }.apply(init).also { if (autoAdd) addView(it) }
+                                  autoAdd: Boolean = true, init: LinearLayout.() -> Unit={}) =
+        LinearLayout(context).apply {
+            layout_height = lheight
+            layout_width = lwidth }.apply(init).also { if (autoAdd) addView(it) }
 inline fun ViewGroup.TabLayout(lwidth:Int = match_parent, lheight :Int= wrap_content,
-                autoAdd: Boolean = true, init: TabLayout.() -> Unit) =
-    TabLayout(context).apply {
-        layout_height = lheight
-        layout_width = lwidth }.apply(init).also { if (autoAdd) addView(it) }
+                               autoAdd: Boolean = true, init: TabLayout.() -> Unit) =
+        TabLayout(context).apply {
+            layout_height = lheight
+            layout_width = lwidth }.apply(init).also { if (autoAdd) addView(it) }
 
 inline fun ViewGroup.NestedScrollView(autoAdd: Boolean = true, init: NestedScrollView.() -> Unit) =
-    NestedScrollView(context).apply(init).also { if (autoAdd) addView(it) }
+        NestedScrollView(context).apply(init).also { if (autoAdd) addView(it) }
 
-inline fun ViewGroup.RecyclerView(lwidth:Int = match_parent, lheight :Int= wrap_content,autoAdd: Boolean = true, init: RecyclerView.() -> Unit) =
-    RecyclerView(context).apply {  layout_width=lwidth
-    layout_height=lheight
-    layoutManager =LinearLayoutManager(context)}.apply(init).also { if (autoAdd) addView(it) }
+inline fun ViewGroup.RecyclerView(lwidth:Int = match_parent, lheight :Int= wrap_content, autoAdd: Boolean = true, init: RecyclerView.() -> Unit) =
+        RecyclerView(context).apply {  layout_width=lwidth
+            layout_height=lheight
+            layoutManager =LinearLayoutManager(context)}.apply(init).also { if (autoAdd) addView(it) }
 
 inline fun ViewGroup.ConstraintLayout(autoAdd: Boolean = true, init: ConstraintLayout.() -> Unit) =
-    ConstraintLayout(context).apply(init).also { if (autoAdd) addView(it) }
+        ConstraintLayout(context).apply(init).also { if (autoAdd) addView(it) }
 
 inline fun ViewGroup.FrameLayout(autoAdd: Boolean = true, init: FrameLayout.() -> Unit) =
-    FrameLayout(context).apply(init).also { if (autoAdd) addView(it) }
+        FrameLayout(context).apply(init).also { if (autoAdd) addView(it) }
 
 inline fun ViewGroup.ViewFlipper(autoAdd: Boolean = true, init: ViewFlipper.() -> Unit) =
-    ViewFlipper(context).apply(init).also { if (autoAdd) addView(it) }
+        ViewFlipper(context).apply(init).also { if (autoAdd) addView(it) }
 
-inline fun ViewGroup.EditText(lwidth:Int = wrap_content, lheight :Int= wrap_content,autoAdd: Boolean = true, init: EditText.() -> Unit) =
-    EditText(context).apply {
-        layout_height = lheight
-        layout_width = lwidth }.apply(init).also { if (autoAdd) addView(it) }
+inline fun ViewGroup.EditText(lwidth:Int = wrap_content, lheight :Int= wrap_content, autoAdd: Boolean = true, init: EditText.() -> Unit) =
+        EditText(context).apply {
+            layout_height = lheight
+            layout_width = lwidth }.apply(init).also { if (autoAdd) addView(it) }
 
 inline fun ViewGroup.HorizontalScrollView(
-    autoAdd: Boolean = true,
-    init: HorizontalScrollView.() -> Unit
+        autoAdd: Boolean = true,
+        init: HorizontalScrollView.() -> Unit
 ) =
-    HorizontalScrollView(context).apply{
-        layout_width = match_parent
-        layout_height = wrap_content
-    }.apply(init).also { if (autoAdd) addView(it) }
+        HorizontalScrollView(context).apply{
+            layout_width = match_parent
+            layout_height = wrap_content
+        }.apply(init).also { if (autoAdd) addView(it) }
 inline fun ViewGroup.ScrollView(lwidth:Int = wrap_content, lheight :Int= wrap_content,
-    autoAdd: Boolean = true,
-    init: ScrollView.() -> Unit
+                                autoAdd: Boolean = true,
+                                init: ScrollView.() -> Unit
 ) =
         ScrollView(context).apply{
-        layout_width = lwidth
-        layout_height = lheight
-    }.apply(init).also { if (autoAdd) addView(it) }
+            layout_width = lwidth
+            layout_height = lheight
+        }.apply(init).also { if (autoAdd) addView(it) }
 
 inline fun ViewGroup.ViewPager2(autoAdd: Boolean = true, init: ViewPager2.() -> Unit) =
-    ViewPager2(context).apply(init).also { if (autoAdd) addView(it) }
+        ViewPager2(context).apply(init).also { if (autoAdd) addView(it) }
 
 inline fun ConstraintLayout.Guideline(autoAdd: Boolean = true, init: Guideline.() -> Unit) =
-    Guideline(context).apply(init).also { if (autoAdd) addView(it) }
+        Guideline(context).apply(init).also { if (autoAdd) addView(it) }
 
 inline fun ConstraintLayout.Flow(autoAdd: Boolean = true, init: Flow.() -> Unit) =
-    Flow(context).apply(init).also { if (autoAdd) addView(it) }
+        Flow(context).apply(init).also { if (autoAdd) addView(it) }
 
 inline fun ConstraintLayout.Layer(autoAdd: Boolean = true, init: Layer.() -> Unit) =
-    Layer(context).apply(init).also { if (autoAdd) addView(it) }
+        Layer(context).apply(init).also { if (autoAdd) addView(it) }
 
 inline fun Context.ConstraintLayout(init: ConstraintLayout.() -> Unit): ConstraintLayout =
-    ConstraintLayout(this).apply(init)
+        ConstraintLayout(this).apply(init)
 
 inline fun Context.LinearLayout(init: LinearLayout.() -> Unit): LinearLayout =
-    LinearLayout(this).apply(init)
+        LinearLayout(this).apply(init)
 
 inline fun Context.FrameLayout(init: FrameLayout.() -> Unit) =
-    FrameLayout(this).apply(init)
+        FrameLayout(this).apply(init)
 
 inline fun Context.NestedScrollView(init: NestedScrollView.() -> Unit) =
-    NestedScrollView(this).apply(init)
+        NestedScrollView(this).apply(init)
 
 inline fun Context.TextView(init: TextView.() -> Unit) =
-    TextView(this).apply(init)
+        TextView(this).apply(init)
 
 inline fun Context.Button(init: Button.() -> Unit) =
-    Button(this).apply(init)
+        Button(this).apply(init)
 
 inline fun Context.ImageView(init: ImageView.() -> Unit) =
-    ImageView(this).apply(init)
+        ImageView(this).apply(init)
 
 inline fun Context.View(init: View.() -> Unit) =
-    View(this).apply(init)
+        View(this).apply(init)
 
 inline fun Context.EditText(init: EditText.() -> Unit) =
-    EditText(this).apply(init)
+        EditText(this).apply(init)
 
 inline fun Context.ViewFlipper(init: ViewFlipper.() -> Unit) =
-    ViewFlipper(this).apply(init)
+        ViewFlipper(this).apply(init)
 
 inline fun Context.HorizontalScrollView(init: HorizontalScrollView.() -> Unit) =
-    HorizontalScrollView(this).apply(init)
+        HorizontalScrollView(this).apply(init)
 
 inline fun Context.ViewPager2(init: ViewPager2.() -> Unit) =
-    ViewPager2(this).apply(init)
+        ViewPager2(this).apply(init)
 
 inline fun Context.RecyclerView(init: RecyclerView.() -> Unit) =
-    RecyclerView(this).apply(init)
+        RecyclerView(this).apply(init)
 
 inline fun Fragment.ConstraintLayout(init: ConstraintLayout.() -> Unit) =
-    context?.let { ConstraintLayout(it).apply(init) }
+        context?.let { ConstraintLayout(it).apply(init) }
 
 inline fun Fragment.LinearLayout(init: LinearLayout.() -> Unit) =
-    context?.let { LinearLayout(it).apply(init) }
+        context?.let { LinearLayout(it).apply(init) }
 
 inline fun Fragment.FrameLayout(init: FrameLayout.() -> Unit) =
-    context?.let { FrameLayout(it).apply(init) }
+        context?.let { FrameLayout(it).apply(init) }
 
 inline fun Fragment.NestedScrollView(init: NestedScrollView.() -> Unit) =
-    context?.let { NestedScrollView(it).apply(init) }
+        context?.let { NestedScrollView(it).apply(init) }
 
 inline fun Fragment.TextView(init: TextView.() -> Unit) =
-    context?.let { TextView(it).apply(init) }
+        context?.let { TextView(it).apply(init) }
 
 inline fun Fragment.Button(init: Button.() -> Unit) =
-    context?.let { Button(it).apply(init) }
+        context?.let { Button(it).apply(init) }
 
 inline fun Fragment.ImageView(init: ImageView.() -> Unit) =
-    context?.let { ImageView(it).apply(init) }
+        context?.let { ImageView(it).apply(init) }
 
 inline fun Fragment.View(init: View.() -> Unit) =
-    context?.let { View(it).apply(init) }
+        context?.let { View(it).apply(init) }
 
 inline fun Fragment.ViewFlipper(init: ViewFlipper.() -> Unit) =
-    context?.let { ViewFlipper(it).apply(init) }
+        context?.let { ViewFlipper(it).apply(init) }
 
 inline fun Fragment.EditText(init: EditText.() -> Unit) =
-    context?.let { EditText(it).apply(init) }
+        context?.let { EditText(it).apply(init) }
 
 inline fun Fragment.HorizontalScrollView(init: HorizontalScrollView.() -> Unit) =
-    context?.let { HorizontalScrollView(it).apply(init) }
+        context?.let { HorizontalScrollView(it).apply(init) }
 
 inline fun Fragment.ViewPager2(init: ViewPager2.() -> Unit) =
-    context?.let { ViewPager2(it).apply(init) }
+        context?.let { ViewPager2(it).apply(init) }
 
 inline fun Fragment.RecyclerView(init: RecyclerView.() -> Unit) =
-    context?.let { RecyclerView(it).apply(init) }
+        context?.let { RecyclerView(it).apply(init) }
 //</editor-fold>
 
 //<editor-fold desc="View extend field">
@@ -408,10 +404,10 @@ inline var View.weight: Float
     }
     set(value) {
         layoutParams =
-            LinearLayout.LayoutParams(layoutParams.width, layoutParams.height).also { it ->
-                it.gravity = (layoutParams as? LinearLayout.LayoutParams)?.gravity ?: -1
-                it.weight = value
-            }
+                LinearLayout.LayoutParams(layoutParams.width, layoutParams.height).also { it ->
+                    it.gravity = (layoutParams as? LinearLayout.LayoutParams)?.gravity ?: -1
+                    it.weight = value
+                }
     }
 inline var View.layout_gravity: Int
     get() {
@@ -733,14 +729,14 @@ fun View.margin(left:Int=marginStart,right:Int=marginEnd,top:Int=marginTop,botto
 }
 
 fun View.padding(left:Int=paddingStart,right:Int=paddingEnd,top:Int=paddingTop,bottom: Int=paddingBottom) {
-        if(paddingBottom!=bottom)
-            padding_bottom=bottom.dp
-        if(paddingStart!=left)
-            padding_start=left.dp
-        if(paddingTop!=top)
-            padding_top=top.dp
-        if(paddingEnd!=right)
-            padding_end=right.dp
+    if(paddingBottom!=bottom)
+        padding_bottom=bottom.dp
+    if(paddingStart!=left)
+        padding_start=left.dp
+    if(paddingTop!=top)
+        padding_top=top.dp
+    if(paddingEnd!=right)
+        padding_end=right.dp
 }
 fun <T : View> T.pad(left:Int=paddingStart,right:Int=paddingEnd,top:Int=paddingTop,bottom: Int=paddingBottom) =this.also {
     padding(left,right,top,bottom)
@@ -752,9 +748,11 @@ fun <T : View> T.addOnClick(onClickListener: (T)->Unit)=this.apply{
 fun View.bgShape(rad:Int=0,color:Int?=null)=this.apply {
     background= shape(rad) {
         color?.let {
-            bg_id= resources.getColor(it) }
+            bg_id= context.color(it) }
     }
 }
+
+private fun Context.color(id: Int)=resources.getColor(id,null)
 
 
 inline var View.margin_top_px: Int
@@ -1022,10 +1020,10 @@ inline var TextView.onTextChange: TextWatcher
             }
 
             override fun beforeTextChanged(
-                text: CharSequence?,
-                start: Int,
-                count: Int,
-                after: Int
+                    text: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
             ) {
                 value.beforeTextChanged.invoke(text, start, count, after)
             }
@@ -1102,15 +1100,15 @@ var View.onTouchEvent: (View,MotionEvent) -> Boolean
         setOnTouchListener { v,event  ->value(v,event) }
     }
 
-//var View.shakelessClick: (View) -> Unit
-//    get() {
-//        return {}
-//    }
-//    set(value) {
-//        setShakelessClickListener(1000) {
-//            value(it)
-//        }
-//    }
+var View.shakelessClick: (View) -> Unit
+    get() {
+        return {}
+    }
+    set(value) {
+        setShakelessClickListener(1000) {
+            value(it)
+        }
+    }
 
 var RecyclerView.onItemClick: (View, Int, Float, Float) -> Unit
     get() {
@@ -1214,32 +1212,32 @@ val parent_id = "0"
 val Int.dp: Int
     get() {
         return TypedValue.applyDimension(
-            TypedValue.COMPLEX_UNIT_DIP,
-            this.toFloat(),
-            Resources.getSystem().displayMetrics
+                TypedValue.COMPLEX_UNIT_DIP,
+                this.toFloat(),
+                Resources.getSystem().displayMetrics
         ).toInt()
     }
 
 val Float.dp: Float
     get() {
         return TypedValue.applyDimension(
-            TypedValue.COMPLEX_UNIT_DIP,
-            this.toFloat(),
-            Resources.getSystem().displayMetrics
+                TypedValue.COMPLEX_UNIT_DIP,
+                this.toFloat(),
+                Resources.getSystem().displayMetrics
         )
     }
 
 fun ViewGroup.MarginLayoutParams.toConstraintLayoutParam() =
-    ConstraintLayout.LayoutParams(width, height).also { it ->
-        it.topMargin = this.topMargin
-        it.bottomMargin = this.bottomMargin
-        it.marginStart = this.marginStart
-        it.marginEnd = this.marginEnd
-    }
+        ConstraintLayout.LayoutParams(width, height).also { it ->
+            it.topMargin = this.topMargin
+            it.bottomMargin = this.bottomMargin
+            it.marginStart = this.marginStart
+            it.marginEnd = this.marginEnd
+        }
 
 fun ViewGroup.LayoutParams.append(set: ConstraintLayout.LayoutParams.() -> Unit) =
-    (this as? ConstraintLayout.LayoutParams)?.apply(set)
-        ?: (this as? ViewGroup.MarginLayoutParams)?.toConstraintLayoutParam()?.apply(set)
+        (this as? ConstraintLayout.LayoutParams)?.apply(set)
+                ?: (this as? ViewGroup.MarginLayoutParams)?.toConstraintLayoutParam()?.apply(set)
 
 
 fun String.toLayoutId(): Int {
@@ -1268,10 +1266,10 @@ fun RecyclerView.setOnItemClickListener(listener: (View, Int, Float, Float) -> U
                 e?.let {
                     findChildViewUnder(it.x, it.y)?.let { child ->
                         listener(
-                            child,
-                            getChildAdapterPosition(child),
-                            it.x - child.left,
-                            it.y - child.top
+                                child,
+                                getChildAdapterPosition(child),
+                                it.x - child.left,
+                                it.y - child.top
                         )
                     }
                 }
@@ -1283,19 +1281,19 @@ fun RecyclerView.setOnItemClickListener(listener: (View, Int, Float, Float) -> U
             }
 
             override fun onFling(
-                e1: MotionEvent?,
-                e2: MotionEvent?,
-                velocityX: Float,
-                velocityY: Float
+                    e1: MotionEvent?,
+                    e2: MotionEvent?,
+                    velocityX: Float,
+                    velocityY: Float
             ): Boolean {
                 return false
             }
 
             override fun onScroll(
-                e1: MotionEvent?,
-                e2: MotionEvent?,
-                distanceX: Float,
-                distanceY: Float
+                    e1: MotionEvent?,
+                    e2: MotionEvent?,
+                    distanceX: Float,
+                    distanceY: Float
             ): Boolean {
                 return false
             }
@@ -1331,25 +1329,25 @@ fun View.getRelativeRectTo(otherView: View): Rect {
  *  listen click action for the child view of [RecyclerView]'s item
  */
 inline fun View.onChildViewClick(
-    vararg layoutId: String, // the id of the child view of RecyclerView's item
-    x: Float, // the x coordinate of click point
-    y: Float,// the y coordinate of click point,
-    clickAction: ((View?) -> Unit)
+        vararg layoutId: String, // the id of the child view of RecyclerView's item
+        x: Float, // the x coordinate of click point
+        y: Float,// the y coordinate of click point,
+        clickAction: ((View?) -> Unit)
 ) {
     var clickedView: View? = null
     layoutId
-        .map { id ->
-            find<View>(id)?.let { view ->
-                view.getRelativeRectTo(this).also { rect ->
-                    if (rect.contains(x.toInt(), y.toInt())) {
-                        clickedView = view
+            .map { id ->
+                find<View>(id)?.let { view ->
+                    view.getRelativeRectTo(this).also { rect ->
+                        if (rect.contains(x.toInt(), y.toInt())) {
+                            clickedView = view
+                        }
                     }
-                }
-            } ?: Rect()
-        }
-        .fold(Rect()) { init, rect -> init.apply { union(rect) } }
-        .takeIf { it.contains(x.toInt(), y.toInt()) }
-        ?.let { clickAction.invoke(clickedView) }
+                } ?: Rect()
+            }
+            .fold(Rect()) { init, rect -> init.apply { union(rect) } }
+            .takeIf { it.contains(x.toInt(), y.toInt()) }
+            ?.let { clickAction.invoke(clickedView) }
 }
 fun View.margins(s:Int=0,e:Int =0,top:Int=0,bottom:Int=0){
     margin_start= s
@@ -1360,14 +1358,14 @@ fun View.margins(s:Int=0,e:Int =0,top:Int=0,bottom:Int=0){
 /**
  * a new View.OnClickListener which prevents click shaking
  */
-//fun View.setShakelessClickListener(threshold: Long, onClick: (View) -> Unit) {
-//    class Click(
-//        var view: View? = null,
-//        var clickTime: Long = -1,
-//        var onClick: ((View?) -> Unit)? = null
-//    ) {
-//        fun isShake(click: Click) = abs(clickTime - click.clickTime) < threshold
-//    }
+fun View.setShakelessClickListener(threshold: Long, onClick: (View) -> Unit) {
+    class Click(
+            var view: View? = null,
+            var clickTime: Long = -1,
+            var onClick: ((View?) -> Unit)? = null
+    ) {
+        fun isShake(click: Click) = abs(clickTime - click.clickTime) < threshold
+    }
 //
 //    val mainScope = MainScope()
 //    val clickActor = mainScope.actor<Click>(capacity = Channel.UNLIMITED) {
@@ -1382,11 +1380,11 @@ fun View.margins(s:Int=0,e:Int =0,top:Int=0,bottom:Int=0){
 //    setOnClickListener { view ->
 //        mainScope.launch {
 //            clickActor.send(
-//                Click(view, System.currentTimeMillis()) { onClick(view) }
+//                    Click(view, System.currentTimeMillis()) { onClick(view) }
 //            )
 //        }.autoDispose(this)
 //    }
-//}
+}
 
 /**
  * get the relative rect of the [Rect] according to the [otherRect] ,considering the [otherRect]'s left and top is zero
@@ -1403,19 +1401,19 @@ fun Rect.relativeTo(otherRect: Rect): Rect {
 
 //<editor-fold desc="listener helper class">
 class TextWatcher(
-    var beforeTextChanged: (
-        text: CharSequence?,
-        start: Int,
-        count: Int,
-        after: Int
-    ) -> Unit = { _, _, _, _ -> },
-    var onTextChanged: (
-        text: CharSequence?,
-        start: Int,
-        count: Int,
-        after: Int
-    ) -> Unit = { _, _, _, _ -> },
-    var afterTextChanged: (text: Editable?) -> Unit = {}
+        var beforeTextChanged: (
+                text: CharSequence?,
+                start: Int,
+                count: Int,
+                after: Int
+        ) -> Unit = { _, _, _, _ -> },
+        var onTextChanged: (
+                text: CharSequence?,
+                start: Int,
+                count: Int,
+                after: Int
+        ) -> Unit = { _, _, _, _ -> },
+        var afterTextChanged: (text: Editable?) -> Unit = {}
 )
 
 fun textWatcher(init: TextWatcher.() -> Unit): TextWatcher = TextWatcher().apply(init)
@@ -1426,7 +1424,7 @@ fun textWatcher(init: TextWatcher.() -> Unit): TextWatcher = TextWatcher().apply
 class LiveDataBinder(var liveData: LiveData<*>? = null, var action: ((Any?) -> Unit)? = null)
 
 fun liveDataBinder(liveData: LiveData<*>?, init: LiveDataBinder.() -> Unit): LiveDataBinder =
-    LiveDataBinder(liveData).apply(init)
+        LiveDataBinder(liveData).apply(init)
 
 class Binder(var data: Any?, var action: ((View, Any?) -> Unit)? = null)
 //</editor-fold>
@@ -1560,18 +1558,18 @@ inline fun shape(rad:Int =0,init: GradientDrawable.() -> Unit={}) = GradientDraw
  */
 fun View.outLine(rad:Int =0) {
     outlineProvider = object : ViewOutlineProvider() {
-            override fun getOutline(view: View, outline: Outline) {
-                outline.setRoundRect(0, 0, view.width, view.height, rad.dp.toFloat())
-            }
+        override fun getOutline(view: View, outline: Outline) {
+            outline.setRoundRect(0, 0, view.width, view.height, rad.dp.toFloat())
         }
-     clipToOutline=true
+    }
+    clipToOutline=true
 }
 /**
  * helper class for set stroke for [GradientDrawable]
  */
 data class Stroke(
-    var width: Int = 0,
-    var color: String = "#000000",
-    var dashWidth: Float = 0f,
-    var dashGap: Float = 0f
+        var width: Int = 0,
+        var color: String = "#000000",
+        var dashWidth: Float = 0f,
+        var dashGap: Float = 0f
 )
