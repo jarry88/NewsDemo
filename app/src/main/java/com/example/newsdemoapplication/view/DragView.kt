@@ -41,6 +41,7 @@ open class DragView @JvmOverloads constructor(context: Context, attributes: Attr
         }
     var beginTime =System.currentTimeMillis()
     var bottomShowTime =System.currentTimeMillis()
+    var mOnItemClickListener:OnItemClickListener?=null
     private val list by lazy { mutableListOf<String>() }
     private val mLayoutManager by lazy {
         GridLayoutManager(context, ColumnNum * 3).apply {
@@ -61,6 +62,7 @@ open class DragView @JvmOverloads constructor(context: Context, attributes: Attr
                     override fun onItemClick(view: View, position: Int) {
                         currSelectPosition = position
 //                        contentScrollToPosition(position)
+                        mOnItemClickListener?.onItemClick(view,currSelectPosition)
                     }
 
                     override fun onItemLongClick(view: View, position: Int) {}

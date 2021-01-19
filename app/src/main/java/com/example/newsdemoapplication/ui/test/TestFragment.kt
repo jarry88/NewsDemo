@@ -6,12 +6,9 @@ import android.graphics.Color
 import android.os.Bundle
 import android.os.Vibrator
 import android.util.Log
-import android.view.MotionEvent
 import android.view.View
 import android.widget.LinearLayout
-import android.widget.TextView
 import android.widget.Toast
-import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -25,8 +22,7 @@ import com.example.newsdemoapplication.adapter.NewsContentAdapter
 import com.example.newsdemoapplication.callback.ItemDragHelperCallBack
 import com.example.newsdemoapplication.callback.OnItemClickListener
 import com.example.newsdemoapplication.databinding.TestFragmentBinding
-import com.example.newsdemoapplication.dsl.LinearLayout
-import com.example.newsdemoapplication.dsl.bgShape
+import com.example.newsdemoapplication.dsl.addOnClick
 import com.example.newsdemoapplication.model.test.NewsDatabase
 import com.example.newsdemoapplication.popup.ChapterPopupView
 import com.example.newsdemoapplication.ui.dashboard.ItemHelper
@@ -47,7 +43,6 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.*
-import kotlin.math.abs
 import kotlin.math.roundToInt
 
 private val Int.rad: Int
@@ -64,6 +59,21 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
     override fun getLayoutResId()=R.layout.test_fragment
     private var editChapter: Boolean=false
     var chapterDragView:ChapterDragView?=null
+    companion object{
+        fun newInstance():TestFragment {
+            val args = Bundle()
+            val fragment = TestFragment()
+            fragment.arguments = args
+            return fragment
+        }
+        lateinit var instance: TestFragment
+            private set
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        instance=this
+    }
     override fun onResume() {
         super.onResume()
         arguments?.getSerializable(Constants.ChapterVo)?.let {
@@ -91,12 +101,11 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
     }
 
     override fun doCreateView(savedInstanceState: Bundle?) {
-        binding.btnCloseRight.apply {
-            setOnClickListener { showLoading() }
-        }
-        binding.frameLayout.btnXnty.setOnClickListener {
-            XPopup.Builder(context).asBottomList("点虚拟体验打开抽屉，页面拼接在主页面下面，长高由内容决定",emptyArray<String>()){_,_->}.show()
-        }
+        binding.btnCloseRight.addOnClick { showLoading() }
+
+        binding.frameLayout.btnXnty.addOnClick {
+            XPopup.Builder(context)
+                    .asBottomList("点虚拟体验打开抽屉，页面拼接在主页面下面，长高由内容决定\n",emptyArray<String>()){_,_->}.show() }
         btnFold
         btnExpand
         initFrameLayout()
@@ -149,7 +158,7 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
         val list= mutableListOf<ChapterVo>()
         Toast.makeText(context, "初始化生成了一些7 条假数据", Toast.LENGTH_SHORT).show()
         for (i in 0..7) {
-            list.add(ChapterVo("章节$i", locked = radom(), index = i).apply {
+            list.add(ChapterVo("章节$i", locked = random(), index = i).apply {
                 val l = mutableListOf<NewsVo>()
                 for (j in 0..20.rad) {
                     l.add(NewsVo("随机$j").apply {
@@ -167,7 +176,7 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
         vm.currChapter.postValue(list.first())
     }
 
-    private fun radom()=
+    private fun random()=
         Math.random()>0.5
 
     private fun initObserverbal() {
@@ -192,20 +201,20 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
     @SuppressLint("ClickableViewAccessibility")
     private fun initFrameLayout() {
         binding.frameLayout.apply {
-            cyImagebuttonId.setOnClickListener {//左侧弹窗按钮
-                    showLeftPopup()
+            btnTopLeft.setOnClickListener {//左侧弹窗按钮
+                binding.drawerLayout.openDrawer(binding.leftId)
             }
-            szImagebuttonId.setOnClickListener {navigationEdit() }
+            btnTopRight.addOnClick {navigationEdit() }
         }
 
-        binding.drawerLayout.setDrawerListener(object : DrawerLayout.DrawerListener {
+        binding.drawerLayout.addDrawerListener(object : DrawerLayout.DrawerListener {
             override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
             }
 
             override fun onDrawerOpened(drawerView: View) {
                 Log.e(TAG, "onDrawerOpened: 滑动", )
                 if(binding.drawerLayout.isDrawerOpen(binding.leftId)){
-                    showLeftPopup()
+//                    showLeftPopup()
                 }
             }
 
@@ -218,46 +227,7 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
         })
     }
 
-    private fun showLeftPopup() {
-//        leftPopup?.show() ?:XPopup.Builder(context)
-//                .isDestroyOnDismiss(false) //对于只使用一次的弹窗，推荐设置这个
-//                .popupPosition(PopupPosition.Left)//左边
-//                .hasStatusBarShadow(true) //启用状态栏阴影
-//                .autoDismiss(true)
-//                .dismissOnBackPressed(true)
-//                .dismissOnTouchOutside(true)
-//                .setPopupCallback(object :XPopupCallback{
-//                    override fun onCreated(popupView: BasePopupView?) {}
-//
-//                    override fun beforeShow(popupView: BasePopupView?) { }
-//
-//                    override fun onShow(popupView: BasePopupView?) {}
-//
-//                    override fun onDismiss(popupView: BasePopupView?) { binding.drawerLayout.closeDrawer(binding.leftId)}
-//
-//                    override fun beforeDismiss(popupView: BasePopupView?) {}
-//
-//                    override fun onBackPressed(popupView: BasePopupView?): Boolean {
-//                        return true
-//                    }
-//
-//                    override fun onKeyBoardStateChanged(popupView: BasePopupView?, height: Int) {}
-//
-//                    override fun onDrag(popupView: BasePopupView?, value: Int, percent: Float, upOrLeft: Boolean) {}
-//                })
-//
-//                .asCustom(leftDrawerPopupView)
-//                .show().also {
-//                    leftPopup = it
-//                }
-    }
-
     private fun navigationEdit() {
-        try {
-            leftDrawerPopupView.dismiss()
-        }catch (e: Exception){
-            Log.e("TAG", "navigationEdit:$e ")
-        }
         NavHostFragment.findNavController(this@TestFragment).navigate(R.id.action_navigation_test_to_navigation_add_section, Bundle().apply {
             putBoolean(Constants.IsEdit, true)
             Log.e("TAG", "initFrameLayout: true")
@@ -299,7 +269,6 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
             layoutManager = titleLayoutManager
             adapter = titleAdapter
         }
-
     }
     //收起左侧弹窗按钮
     val btnFold by lazy {
@@ -438,7 +407,7 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
     val list=
          Util.getData(17)
     private val mContentAdapter by lazy {
-        NewsContentAdapter(context, listOf())
+        NewsContentAdapter(requireContext(), mutableListOf<NewsVo>())
     }
     private var longPress = false
 

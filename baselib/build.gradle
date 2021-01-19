@@ -82,7 +82,7 @@ dependencies {
 
     api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_coroutines_version"
     api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_coroutines_version"
-    api "org.jetbrains.kotlin:kotlin-reflect:1.4.10"
+    api "org.jetbrains.kotlin:kotlin-reflect:1.4.21"
     api 'androidx.lifecycle:lifecycle-runtime-ktx:2.2.0'
 
     api 'androidx.cardview:cardview:1.0.0'
@@ -102,4 +102,5 @@ dependencies {
     api 'com.tencent:mmkv-static:1.1.2'
 
     api  'com.billy.android:smart-swipe:1.1.2'
+    api  "com.github.chrisbanes:PhotoView:2.3.0"
 }
