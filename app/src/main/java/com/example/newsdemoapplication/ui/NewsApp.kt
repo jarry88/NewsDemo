@@ -8,21 +8,5 @@ import com.example.newsdemoapplication.room.WordDataBase
 import com.gzp.baselib.BaseApplication
 import kotlinx.coroutines.*
 
-class NewsApp:BaseApplication(),CoroutineScope by MainScope(){
-    val wordDb:WordDataBase by lazy {
-        launch {
-            withContext(){
-                Room.databaseBuilder(
-                        applicationContext,
-                        WordDataBase::class.java, "wdb"
-                ).build()
-            }
-
-        }
-    }
-
-    override fun onActivityDestroyed(activity: Activity) {
-        super.onActivityDestroyed(activity)
-        cancel()
-    }
+class NewsApp:BaseApplication(){
 }

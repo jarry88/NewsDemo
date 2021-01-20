@@ -4,8 +4,8 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "WordTable")
-class Word(
+data class Word(
         @PrimaryKey(autoGenerate = true)
-        var id:Int,
+        var id:Long,
         var name:String,
         var word:String)
