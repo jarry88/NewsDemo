@@ -49,6 +49,9 @@
         android:id="@+id/roomFragment"
         android:name="com.example.newsdemoapplication.ui.RoomFragment"
         android:label="RoomFragment" />
-
+    <fragment
+        android:id="@+id/homeV2Fragment"
+        android:name="com.example.newsdemoapplication.ui.home.HomeV2Fragment"
+        android:label="HomeV2Fragment" />
 
 </navigation>

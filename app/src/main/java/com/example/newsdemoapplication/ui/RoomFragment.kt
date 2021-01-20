@@ -2,20 +2,15 @@ package com.example.newsdemoapplication.ui
 
 import android.os.Bundle
 import android.util.Log
-import android.util.SparseLongArray
-import android.util.StatsLog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
-import androidx.navigation.fragment.NavHostFragment
 import com.example.newsdemoapplication.R
 import com.example.newsdemoapplication.dsl.*
-import com.example.newsdemoapplication.main.MainActivity
 import com.example.newsdemoapplication.main.MainActivity1
-import com.example.newsdemoapplication.room.Word
+import com.example.newsdemoapplication.model.room.Word
 import com.example.newsdemoapplication.util.backTo
 import com.example.newsdemoapplication.util.toast
 import com.example.newsdemoapplication.widget.PageTitleBar

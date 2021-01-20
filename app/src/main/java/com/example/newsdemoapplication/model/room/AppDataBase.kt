@@ -1,4 +1,4 @@
-package com.example.newsdemoapplication.room
+package com.example.newsdemoapplication.model.room
 
 import android.content.Context
 import androidx.room.Database
@@ -8,18 +8,19 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@Database(entities = [Word::class], version = 1, exportSchema = false)
-abstract class WordDataBase:RoomDatabase(){
+@Database(entities = [Word::class,Chapter::class], version = 2, exportSchema = false)
+abstract class AppDataBase:RoomDatabase(){
     abstract fun getWordDao():WordDao
+    abstract fun getChapterDao():ChapterDao
     companion object {
-        @Volatile private var INSTANCE: WordDataBase? = null
-        fun getInstance(context: Context)=
-                INSTANCE?: synchronized(this){
-                    INSTANCE?:Room.databaseBuilder(context.applicationContext,
-                            WordDataBase::class.java, wordDataBaseName)
-                            .build().also { INSTANCE=it }
-                }
-        fun getDatabase(context: Context,scope: CoroutineScope): WordDataBase{
+        @Volatile private var INSTANCE: AppDataBase? = null
+//        fun getInstance(context: Context)=
+//                INSTANCE?: synchronized(this){
+//                    INSTANCE?:Room.databaseBuilder(context.applicationContext,
+//                            AppDataBase::class.java, wordDataBaseName)
+//                            .build().also { INSTANCE=it }
+//                }
+        fun getDatabase(context: Context,scope: CoroutineScope): AppDataBase{
             val tempInstance = INSTANCE
             if (tempInstance != null) {
                 return tempInstance
@@ -27,7 +28,7 @@ abstract class WordDataBase:RoomDatabase(){
             synchronized(this) {
                 val instance = Room.databaseBuilder(
                         context.applicationContext,
-                        WordDataBase::class.java,
+                        AppDataBase::class.java,
                         "todo_database"
                 ).addCallback(WordDataBaseCallBack(scope)).build()
                 INSTANCE = instance

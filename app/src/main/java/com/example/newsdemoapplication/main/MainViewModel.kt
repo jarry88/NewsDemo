@@ -1,18 +1,20 @@
 package com.example.newsdemoapplication.main
 
 import android.app.Application
-import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.newsdemoapplication.room.Word
-import com.example.newsdemoapplication.room.WordDataBase
-import com.example.newsdemoapplication.room.WordRepository
+import com.example.newsdemoapplication.di.databaseModule
+import com.example.newsdemoapplication.model.room.Word
+import com.example.newsdemoapplication.model.room.AppDataBase
+import com.example.newsdemoapplication.model.repository.WordRepository
+import com.example.newsdemoapplication.model.room.WordDao
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class MainViewModel(application: Application) : AndroidViewModel(application){
+    val re :WordDao by databaseModule
+
     private val wordRepository by lazy {
-        WordRepository(WordDataBase.getInstance(application).getWordDao())
+        WordRepository(databaseModule.)
     }
     val allWord by lazy {
         wordRepository.WordDao.getAllWords()

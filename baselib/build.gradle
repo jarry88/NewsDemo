@@ -4,11 +4,11 @@ plugins {
 }
 
 apply plugin: 'kotlin-kapt'
-apply plugin: 'kotlin-android-extensions'
-apply plugin: 'org.greenrobot.greendao'
+//apply plugin: 'kotlin-android-extensions'
+//apply plugin: 'org.greenrobot.greendao'
 android {
     compileSdkVersion 30
-    buildToolsVersion "30.0.2"
+    buildToolsVersion "30.0.3"
 
     defaultConfig {
         minSdkVersion 21
@@ -48,14 +48,13 @@ android {
 
 dependencies {
 
-
     api 'androidx.vectordrawable:vectordrawable:1.1.0'
     api 'androidx.navigation:navigation-fragment:2.3.2'
     api 'androidx.navigation:navigation-ui:2.3.2'
     api 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
     api 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
     api 'androidx.annotation:annotation:1.1.0'
-    api "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    api "org.jetbrains.kotlin:kotlin-stdlib:1.4.21"
     api 'androidx.core:core-ktx:1.3.2'
     api 'androidx.appcompat:appcompat:1.2.0'
     api 'com.google.android.material:material:1.2.1'
@@ -77,12 +76,21 @@ dependencies {
     api 'com.squareup.okhttp3:logging-interceptor:4.9.0'
     api 'com.squareup.okhttp3:okhttp-urlconnection:4.9.0'
 
+    // Retrofit
+    api("com.squareup.retrofit2:retrofit:2.6.0")
+    api("com.squareup.retrofit2:converter-gson:2.6.0")
+
+    // Koin
+    api("org.koin:koin-android:2.1.6")
+    api("org.koin:koin-androidx-scope:2.1.6")
+    api("org.koin:koin-androidx-viewmodel:2.1.6")
+
     api 'com.github.ewgcat:ToastDemo:1.0.6'
     api 'com.github.ewgcat:MaterialDialogDemo:1.0.0'
     api 'com.github.ewgcat:BannerDemo:1.0.1'
 
-    api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_coroutines_version"
-    api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_coroutines_version"
+    api 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.7'
+    api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.7'
     api "org.jetbrains.kotlin:kotlin-reflect:1.4.21"
     api 'androidx.lifecycle:lifecycle-runtime-ktx:2.2.0'
 

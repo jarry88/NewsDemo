@@ -1,12 +1,18 @@
 package com.example.newsdemoapplication.ui
 
-import android.app.Activity
-import android.util.Log
-import androidx.room.Room
-import com.example.newsdemoapplication.model.test.NewsDatabase
-import com.example.newsdemoapplication.room.WordDataBase
+import com.example.newsdemoapplication.di.appComponent
 import com.gzp.baselib.BaseApplication
-import kotlinx.coroutines.*
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.startKoin
 
 class NewsApp:BaseApplication(){
+    override fun onCreate() {
+        super.onCreate()
+        configureDI()
+    }
+
+    private fun configureDI() = startKoin {
+        androidContext(this@NewsApp)
+        modules(appComponent)
+    }
 }
