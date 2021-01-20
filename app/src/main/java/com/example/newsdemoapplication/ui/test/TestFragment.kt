@@ -18,13 +18,12 @@ import com.example.newsdemoapplication.R
 import com.example.newsdemoapplication.Util
 import com.example.newsdemoapplication.adapter.ListDragAdapter
 import com.example.newsdemoapplication.adapter.ListDragAdapter.MyDragViewHolder
-import com.example.newsdemoapplication.adapter.NewsContentAdapter
+import com.example.newsdemoapplication.adapter.ArticleListAdapter
 import com.example.newsdemoapplication.callback.ItemDragHelperCallBack
 import com.example.newsdemoapplication.callback.OnItemClickListener
 import com.example.newsdemoapplication.databinding.TestFragmentBinding
 import com.example.newsdemoapplication.dsl.addOnClick
 import com.example.newsdemoapplication.model.test.NewsDatabase
-import com.example.newsdemoapplication.popup.ChapterPopupView
 import com.example.newsdemoapplication.ui.dashboard.ItemHelper
 import com.example.newsdemoapplication.util.CommonUtils
 import com.example.newsdemoapplication.view.ChapterDragView
@@ -51,21 +50,11 @@ private val Int.rad: Int
     }
 
 class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),CoroutineScope by MainScope() {
-    private var mPosX: Float=0f
-    private var mPosY: Float=0f
-    private var mCurPosX: Float=0f
-    private var mCurPosY: Float=0f
     private val TAG =this::class.java.simpleName
     override fun getLayoutResId()=R.layout.test_fragment
     private var editChapter: Boolean=false
     var chapterDragView:ChapterDragView?=null
     companion object{
-        fun newInstance():TestFragment {
-            val args = Bundle()
-            val fragment = TestFragment()
-            fragment.arguments = args
-            return fragment
-        }
         lateinit var instance: TestFragment
             private set
     }
@@ -81,6 +70,9 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
         }
     }
 
+    /**
+     * 保存一个章节
+     */
     private fun saveChapter(chapterVo: ChapterVo) {
         vm.listChapter.apply {
             var index=-1
@@ -137,8 +129,6 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
                     }.also { addView(it) }
 
         }
-
-        chapterDragView?.parent=leftDrawerPopupView
         mContentRecycleView.invalidate()
         initObserverbal()
         launch {
@@ -355,44 +345,6 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
 
         }
     } }
-    //左侧弹窗列表
-    private val leftDrawerPopupView by lazy {
-        ChapterPopupView(requireContext()).apply {
-            llContainer.apply {
-                chapterDragView=ChapterDragView(context, vm.listChapter).apply {
-                    layoutParams=LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)
-                    setBackgroundColor(Color.parseColor("#234567"))
-                    clickCallBack=object :ChapterDragView.ClickCallBack{
-                        override fun onChapterClicked(chapterVo: ChapterVo) {
-                           vm.currChapter.postValue(chapterVo)
-                        }
-                    }
-                    mCallBack=object: DragAndPressCallBack {
-                            //设置移动监听回调
-                            override fun onLongPress() {
-                                editChapter =true
-                                bottomSheetDialog.show()
-                            }
-                            override fun onAfterPressMove() {
-                                Log.e(TAG, "onAfterPressMove: ", )
-                                longPress = false
-                                bottomSheetDialog.dismiss()
-                            }
-                        }
-                    liveDate.observe(this@TestFragment){
-                        mAdapter.setData(it)
-                    }
-                }.also { addView(it) }
-            }
-            mOnClickListener= View.OnClickListener {
-                NavHostFragment.findNavController(this@TestFragment)
-                        .navigate(R.id.action_navigation_test_to_navigation_add_section, Bundle().apply {
-                            putBoolean(Constants.IsEdit, false)
-                        }
-                        )
-            }
-        }
-    }
 
     //标题栏是否支持局部展开
     private var supportHalfExpand = false
@@ -405,11 +357,10 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
 
 
     private var currTitleState = 0
-    var mData: List<NewsVo> = ArrayList()
     val list=
          Util.getData(17)
     private val mContentAdapter by lazy {
-        NewsContentAdapter(requireContext(), mutableListOf<NewsVo>())
+        ArticleListAdapter(requireContext(), mutableListOf())
     }
     private var longPress = false
 

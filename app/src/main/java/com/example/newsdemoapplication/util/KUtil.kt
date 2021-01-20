@@ -3,6 +3,7 @@ package com.example.newsdemoapplication.util
 import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
+import android.os.Bundle
 import android.util.Log
 import android.view.ViewGroup
 import android.widget.FrameLayout
@@ -39,4 +40,7 @@ val Any?.toast:String
     }
 fun Fragment.backTo(id:Int)= with(this){
     NavHostFragment.findNavController(this).navigate(id)
+}
+fun Fragment.navigate(id:Int,addBundle:(bundle:Bundle)->Unit={})= with(this){
+    NavHostFragment.findNavController(this).navigate(id,Bundle().also(addBundle))
 }

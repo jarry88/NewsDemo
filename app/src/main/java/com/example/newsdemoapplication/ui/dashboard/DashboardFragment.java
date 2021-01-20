@@ -4,13 +4,10 @@ import android.app.Service;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.util.Log;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,22 +17,18 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.newsdemoapplication.NewsVo;
 import com.example.newsdemoapplication.R;
 import com.example.newsdemoapplication.Util;
 import com.example.newsdemoapplication.adapter.ListDragAdapter;
-import com.example.newsdemoapplication.adapter.NewsContentAdapter;
-import com.example.newsdemoapplication.callback.ItemDragHelperCallBack;
 import com.example.newsdemoapplication.callback.OnItemClickListener;
 import com.example.newsdemoapplication.ui.home.HomeViewModel;
 import com.example.newsdemoapplication.util.CommonUtils;
 import com.example.newsdemoapplication.view.DragRecycleView;
 import com.example.newsdemoapplication.view.DragView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.lxj.xpopup.XPopup;
 
 import java.util.ArrayList;
 import java.util.Collections;

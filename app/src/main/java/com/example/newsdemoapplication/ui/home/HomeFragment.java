@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.annotation.HalfFloat;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -27,7 +26,7 @@ import com.example.newsdemoapplication.NewsVo;
 import com.example.newsdemoapplication.R;
 import com.example.newsdemoapplication.Util;
 import com.example.newsdemoapplication.adapter.ListDragAdapter;
-import com.example.newsdemoapplication.adapter.NewsContentAdapter;
+import com.example.newsdemoapplication.adapter.ArticleListAdapter;
 import com.example.newsdemoapplication.callback.OnItemClickListener;
 import com.example.newsdemoapplication.ui.dashboard.ItemHelper;
 import com.example.newsdemoapplication.callback.ItemDragHelperCallBack;
@@ -36,13 +35,10 @@ import com.example.newsdemoapplication.util.CommonUtils;
 import com.example.newsdemoapplication.view.DragRecycleView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.lxj.xpopup.XPopup;
-import com.lxj.xpopup.interfaces.OnInputConfirmListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import static com.example.newsdemoapplication.Util.getData;
 
 public class HomeFragment extends Fragment {
     final int SINGLE_LINE =0;
@@ -69,7 +65,7 @@ public class HomeFragment extends Fragment {
     List<NewsVo> mData =new ArrayList<>();
     List<String> list=new ArrayList<>();
     private int singleLineHeight;
-    private NewsContentAdapter mContenAdapter;
+    private ArticleListAdapter mContenAdapter;
     private boolean longPress;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -281,7 +277,7 @@ public class HomeFragment extends Fragment {
 
     private void initContentRecycleView() {
         mContentRecycleView = getView().findViewById(R.id.rv_content_list);
-        mContenAdapter =new NewsContentAdapter(getContext(),new ArrayList<>());
+        mContenAdapter =new ArticleListAdapter(getContext(),new ArrayList<>());
         mContentRecycleView.setAdapter(mContenAdapter);
         mContentRecycleView.setOnScrollChangeListener((v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
             LinearLayoutManager linearLayoutManager = (LinearLayoutManager) mContentRecycleView.getLayoutManager();

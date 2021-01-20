@@ -3,8 +3,6 @@ package com.gzp.baselib.constant;
 import org.jetbrains.annotations.Nullable;
 
 public class Constants {
-
-
     /**
      * bugly APPID
      */

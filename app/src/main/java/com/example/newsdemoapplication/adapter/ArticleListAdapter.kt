@@ -12,6 +12,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.newsdemoapplication.R
 import com.example.newsdemoapplication.callback.OnItemClickListener
 import com.example.newsdemoapplication.ui.test.TestFragment
+import com.example.newsdemoapplication.util.Subsection_ID
+import com.example.newsdemoapplication.util.backTo
+import com.example.newsdemoapplication.util.navigate
 import com.example.newsdemoapplication.view.DragView
 import com.example.newsdemoapplication.vo.NewsVo
 import com.gzp.baselib.constant.Constants
@@ -19,7 +22,7 @@ import com.lishuaihua.toast.ToastUtils.show
 import java.util.*
 
 
-class NewsContentAdapter(private val context: Context, private var list: MutableList<NewsVo>?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ArticleListAdapter(private val context: Context, private var list: MutableList<NewsVo>?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.news_content_item, parent, false)
         return NewsContentViewHolder(view)
@@ -39,8 +42,9 @@ class NewsContentAdapter(private val context: Context, private var list: Mutable
             viewHolder.dragView.mOnItemClickListener = object : OnItemClickListener {
                 override fun onItemClick(view: View, position: Int) {
                     show("")
-                    NavHostFragment.findNavController(TestFragment.instance)
-                            .navigate(R.id.action_navigation_test_to_photoViewPagerFragment)
+                    TestFragment.instance.navigate(R.id.action_navigation_test_to_photoViewPagerFragment){ bundle ->
+                        bundle.putLong(Subsection_ID,1)
+                    }
                 }
 
                 override fun onItemLongClick(view: View, position: Int) {}
