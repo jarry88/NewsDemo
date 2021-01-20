@@ -3,10 +3,15 @@ package com.example.newsdemoapplication.util
 import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
+import android.util.Log
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.NavHostFragment
 import com.bumptech.glide.Glide
+import com.lishuaihua.toast.ToastUtils
 import java.lang.Math.*
 
 
@@ -24,4 +29,14 @@ fun findActivity(context:Context?):Activity?=context?.let {
     } else {
         null
     }
+}
+
+val Any?.toast:String
+    get(){
+        return this.toString().also {
+            Log.i("toast", "toast--> : $it" )
+            ToastUtils.show(it) }
+    }
+fun Fragment.backTo(id:Int)= with(this){
+    NavHostFragment.findNavController(this).navigate(id)
 }

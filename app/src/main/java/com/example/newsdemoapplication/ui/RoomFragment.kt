@@ -16,6 +16,8 @@ import com.example.newsdemoapplication.dsl.*
 import com.example.newsdemoapplication.main.MainActivity
 import com.example.newsdemoapplication.main.MainActivity1
 import com.example.newsdemoapplication.room.Word
+import com.example.newsdemoapplication.util.backTo
+import com.example.newsdemoapplication.util.toast
 import com.example.newsdemoapplication.widget.PageTitleBar
 import com.lishuaihua.toast.ToastUtils
 import com.lxj.xpopup.XPopup
@@ -40,7 +42,7 @@ class RoomFragment :Fragment(){
             orientation= vertical
             PageTitleBar(context).also {
                 it.tvTile.text="点击标题后进入的新页面，后续按需求补充"
-                it.btnBack.addOnClick { NavHostFragment.findNavController(this@RoomFragment).popBackStack() }
+                it.btnBack.addOnClick { backTo(R.id.navigation_test) }
                 addView(it) }
             LinearLayout {
                 LinearLayout{
@@ -91,10 +93,8 @@ class RoomFragment :Fragment(){
                         text="queryById"
                     }.addOnClick {
                         observe(mainViewModel.queryById(queryId.value!!)){
-                            Log.e("TAG", ": $it", )
                             it.toast
                         }
-
                     }
                 }
             }
@@ -112,7 +112,3 @@ class RoomFragment :Fragment(){
         }
     }
 }
-val Any?.toast:String
-    get(){
-        return this.toString().also { ToastUtils.show(it) }
-    }

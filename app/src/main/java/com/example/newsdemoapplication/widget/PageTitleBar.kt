@@ -9,7 +9,6 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.example.newsdemoapplication.R
 import com.example.newsdemoapplication.dsl.*
-import java.util.jar.Attributes
 
 class PageTitleBar(context: Context,attributes: AttributeSet?=null):FrameLayout(context,attributes) {
     lateinit var btnBack:ImageView
