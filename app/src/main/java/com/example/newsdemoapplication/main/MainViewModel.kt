@@ -8,6 +8,7 @@ import com.example.newsdemoapplication.room.Word
 import com.example.newsdemoapplication.room.WordDataBase
 import com.example.newsdemoapplication.room.WordRepository
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainViewModel(application: Application) : AndroidViewModel(application){
     private val wordRepository by lazy {

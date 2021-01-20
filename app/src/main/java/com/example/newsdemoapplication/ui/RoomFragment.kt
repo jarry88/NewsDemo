@@ -3,6 +3,7 @@ package com.example.newsdemoapplication.ui
 import android.os.Bundle
 import android.util.Log
 import android.util.SparseLongArray
+import android.util.StatsLog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -108,12 +109,16 @@ class RoomFragment :Fragment(){
                         it.toLongOrNull()?.let {
                             queryId.value=it
                         }
-                    }
+                    }.show()
                 }
                 TextView{ weight=1f
                     text="queryById"
                 }.addOnClick {
-                    mainViewModel.queryById(queryId.value!!).value.toast
+                    observe(mainViewModel.queryById(queryId.value!!)){
+                        Log.e("TAG", ": $it", )
+                        it.toast
+                    }
+
                 }
             }
         }
