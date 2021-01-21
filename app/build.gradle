@@ -50,6 +50,8 @@ dependencies {
     api project( path: ':baselib')
 
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'androidx.wear:wear:1.0.0'
     testImplementation ("junit:junit:4.+")
     androidTestImplementation ("androidx.test.ext:junit:1.1.2")
     androidTestImplementation ("androidx.test.espresso:espresso-core:3.3.0")
@@ -58,6 +60,7 @@ dependencies {
 
     //图片加载——Glide
     api ("com.github.bumptech.glide:glide:4.11.0")
+    compileOnly 'com.google.android.wearable:wearable:2.6.0'
     kapt ("com.github.bumptech.glide:compiler:4.11.0")
     kapt ("com.alibaba:arouter-compiler:1.1.4")
     def room_version = "2.2.5"

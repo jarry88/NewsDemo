@@ -11,7 +11,7 @@ import com.example.newsdemoapplication.R
 import com.example.newsdemoapplication.dsl.*
 
 class PageTitleBar(context: Context,attributes: AttributeSet?=null):FrameLayout(context,attributes) {
-    lateinit var btnBack:ImageView
+    lateinit var    btnBack:ImageView
     lateinit var btnRight:LinearLayout
     lateinit var tvTile: TextView
     val contentView by lazy {

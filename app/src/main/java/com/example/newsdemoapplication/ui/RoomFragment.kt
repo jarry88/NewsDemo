@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import com.example.newsdemoapplication.R
 import com.example.newsdemoapplication.dsl.*
-import com.example.newsdemoapplication.main.MainActivity1
 import com.example.newsdemoapplication.model.room.Word
 import com.example.newsdemoapplication.util.backTo
 import com.example.newsdemoapplication.util.toast
@@ -19,7 +18,7 @@ import com.lxj.xpopup.XPopup
 
 class RoomFragment :Fragment(){
     private val mainViewModel by lazy {
-        (requireActivity() as? MainActivity1)?.mainViewModel!!
+        (requireActivity() as MainActivity).mainViewModel
     }
     private val allWord by lazy {
         mainViewModel.allWord

@@ -7,12 +7,12 @@ import com.gzp.baselib.base.BaseViewModel
 import kotlin.reflect.KProperty
 
 class TestViewModel : BaseViewModel() {
-    operator fun getValue(chapterDragView: ChapterDragView, property: KProperty<*>): TestViewModel {
+    operator fun getValue(chapterDragView: ChapterDragView<ChapterVo>, property: KProperty<*>): TestViewModel {
         return this
     }
 
-    val listChapter by lazy {
-        MutableLiveData<MutableList<ChapterVo>>()
+    val     listChapter by lazy {
+        MutableLiveData<List<ChapterVo>>()
     }
     val currChapter by lazy {
         MutableLiveData<ChapterVo>()

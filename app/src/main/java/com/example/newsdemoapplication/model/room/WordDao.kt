@@ -17,7 +17,7 @@ interface WordDao{
     fun getAllWords(): LiveData<List<Word>>
 
     @Query("SELECT * FROM WordTable WHERE id =:id")
-    fun queryById(id:Long): LiveData<Word>
+    fun queryById(id:Long): LiveData<Word?>
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(word: Word)
     @Query("DELETE FROM WordTable")

@@ -11,7 +11,7 @@ import com.example.newsdemoapplication.callback.OnItemClickListener
 import com.example.newsdemoapplication.vo.ChapterVo
 import com.example.newsdemoapplication.adapter.ListDragAdapter.*
 
-class ChapterDragAdapter constructor(val context: Context,var list:MutableList<ChapterVo>?): RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+class ChapterDragAdapter<T> constructor(val context: Context,var list:List<T>?): RecyclerView.Adapter<RecyclerView.ViewHolder>(){
     //    private List<T> listData;
     private var mOnItemClickListener: OnItemClickListener? = null
     private var mConvertView: ConvertView? = null
@@ -31,11 +31,11 @@ class ChapterDragAdapter constructor(val context: Context,var list:MutableList<C
         return list?.size?:0
     }
 
-    fun getData(): MutableList<ChapterVo>? {
+    fun getData(): List<T>? {
         return list
     }
 
-    fun setData(l: MutableList<ChapterVo>?) =l?.let {
+    fun setData(l: List<T>?) =l?.let {
         list=l
         notifyDataSetChanged()
     }
@@ -59,7 +59,7 @@ class ChapterDragAdapter constructor(val context: Context,var list:MutableList<C
             }
         }
 
-        mHolder.tvTag.text = list?.get(position)?.chapterName
+        mHolder.tvTag.text = (list?.get(position) as? ChapterVo)?.chapterName
         if (mConvertView != null) {
             mConvertView!!.convert(mHolder, list?.get(position))
         }

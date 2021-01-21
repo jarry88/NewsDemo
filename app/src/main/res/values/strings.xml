@@ -19,7 +19,6 @@
     <string name="login_failed">"Login failed"</string>
 
 
-
     <string name="nav_header_desc">Navigation header</string>
     <string name="nav_header_title">昵称：大猪哥  帐号：1388080800</string>
     <string name="nav_header_subtitle">普通成员  单机单登        》》</string>
@@ -30,5 +29,11 @@
     <string name="xnty_textView">虚拟体验︾</string>
     <string name="title_test">测试页面</string>
     <string name="title_Add">add</string>
+    <string name="title_activity_main">MainActivity</string>
+    <!--
+    This string is used for square devices and overridden by hello_world in
+    values-round/strings.xml for round devices.
+    -->
+    <string name="hello_world">Hello Square World!</string>
 
 </resources>

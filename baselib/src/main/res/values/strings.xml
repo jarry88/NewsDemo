@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="loading">加载中</string>
-        <string name="app_name">CashGet</string>
         <string name="start">OK,LET’S START</string>
         <string name="please_enter_mobile">Please enter mobile number.</string>
         <string name="please_enter_correct_number">Please enter correct mobile number.</string>

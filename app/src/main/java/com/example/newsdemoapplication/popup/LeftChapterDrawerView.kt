@@ -15,7 +15,7 @@ class LeftChapterDrawerView(context: Context,attributeSet: AttributeSet?=null):F
     private val liveDate by  lazy {
         object :LiveData<MutableList<ChapterVo>>(){}
     }
-    lateinit var dragView: ChapterDragView
+    lateinit var dragView: ChapterDragView<ChapterVo>
     lateinit var llContainer: LinearLayout
     private val contentLayout by lazy {
         LinearLayout(300, match_parent) {

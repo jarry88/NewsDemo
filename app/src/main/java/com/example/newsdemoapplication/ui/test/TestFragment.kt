@@ -53,7 +53,7 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
     private val TAG =this::class.java.simpleName
     override fun getLayoutResId()=R.layout.test_fragment
     private var editChapter: Boolean=false
-    var chapterDragView:ChapterDragView?=null
+    var chapterDragView:ChapterDragView<ChapterVo>?=null
     companion object{
         lateinit var instance: TestFragment
             private set
@@ -78,9 +78,7 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
             var index=-1
             value?.forEachIndexed { i, it->
                 if(it.id==chapterVo.id) index =i }
-            val newlist =if(index<0)value else {value?.removeAt(index)
-                value
-            }
+            val newlist =value?.filterNot { it.id==chapterVo.id }?.toMutableList()
             newlist?.also {
                 val chapterVoIndex =if(chapterVo.index<0) 0 else if(chapterVo.index>=newlist.size) newlist.size else chapterVo.index
                 if(chapterVo.index!=index){ chapterVo.index=chapterVoIndex }
@@ -106,8 +104,8 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
             ChapterDragView(context, vm.listChapter).apply {
                         layoutParams=LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)
                         setBackgroundColor(Color.parseColor("#234567"))
-                        clickCallBack=object :ChapterDragView.ClickCallBack{
-                            override fun onChapterClicked(chapterVo: ChapterVo) {
+                        clickCallBack=object :ChapterDragView.ClickCallBack<ChapterVo>{
+                            override fun onItemClicked(chapterVo: ChapterVo) {
                                 vm.currChapter.postValue(chapterVo)
                             }
                         }
@@ -329,11 +327,7 @@ class TestFragment : MvvmBaseFragment<TestViewModel, TestFragmentBinding>(),Coro
             if(editChapter){
                 editChapter=false
                 vm.listChapter.apply {
-                    val index =value?.indexOf(vm.currChapter.value)
-                    index?.takeIf { it>=0 }?.let {
-                        val list =value?.also { it.removeAt(index ?: 0) }
-                        postValue(list)
-                    }
+                    postValue(value?.filterNot { it==vm.currChapter.value }?.toList())
                 }
             }else{
                 Log.e("TAG", "initBottomSheetDiaLog: $currSelectedPosition")

@@ -25,7 +25,7 @@ import java.util.*
 import kotlin.math.abs
 
 @SuppressLint("ViewConstructor")
-class ChapterDragView  @JvmOverloads constructor(context: Context, val liveDate :LiveData<MutableList<ChapterVo>>, attributes: AttributeSet? = null, def: Int = 0) : RecyclerView(context, attributes, def)  {
+class  ChapterDragView< T>  @JvmOverloads constructor(context: Context, val liveDate :LiveData<List<T>>, attributes: AttributeSet? = null, def: Int = 0) : RecyclerView(context, attributes, def)  {
     var count =0;
     var moveCount =0
     var startX =0f
@@ -42,7 +42,7 @@ class ChapterDragView  @JvmOverloads constructor(context: Context, val liveDate 
     private var longPress =false
     var beginTime =System.currentTimeMillis()
     var bottomShowTime =System.currentTimeMillis()
-    var clickCallBack:ClickCallBack?=null
+    var clickCallBack:ClickCallBack<T>?=null
     val mAdapter by lazy {  ChapterDragAdapter(context ,liveDate.value ).apply {
         setOnItemClickListener(
                 object : OnItemClickListener {
@@ -155,14 +155,14 @@ class ChapterDragView  @JvmOverloads constructor(context: Context, val liveDate 
             mAdapter.currSelectPosition = position
             clickCallBack?.let {callBack ->
                 mAdapter.getData()?.get(position)?.let {
-                    callBack.onChapterClicked(it)
+                    callBack.onItemClicked(it)
                 }
             }
         }
     }
 
     fun getSelectedPosition()=mAdapter.currSelectPosition
-    interface ClickCallBack{
-        fun onChapterClicked(chapterVo: ChapterVo)
+    interface ClickCallBack<T>{
+        fun onItemClicked(chapterVo: T)
     }
 }
