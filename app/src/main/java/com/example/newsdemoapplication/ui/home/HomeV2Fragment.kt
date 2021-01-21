@@ -41,24 +41,25 @@ class HomeV2Fragment: MvvmBaseFragment<BaseViewModel, HomeV2FragmentBinding>(){
     override fun doCreateView(savedInstanceState: Bundle?) {
         binding.apply {
             with(titleBar){
-                btnBack.addOnClick { drawerLayout.openDrawer(leftId)
+                btnBack.addOnClick { drawerLayout.openDrawer(leftId)}
                 btnRight.addOnClick {
                     homeV2ViewModel.insert(homeV2ViewModel.factoryChapter().toast("addChapter-->"))
                 }
                 tvTitle.addOnClick { homeV2ViewModel.deleteAll().toast("delete--》") }
                 observe(homeV2ViewModel.currSelectChapter){
                     tvTitle.text=it.name
-                    selectedChapterId=it.id
-                    chapterDetailView.updateChapterId(selectedChapterId)
+//                    selectedChapterId=it.id
+//                    chapterDetailView.updateChapterId(selectedChapterId)
                 }
             }
             leftId.
                 addOnClick { toast("nothing") }
             with(llContainer){
-                chapterDetailView=ChapterDetailView(this@HomeV2Fragment).apply {
+                chapterDetailView=ChapterDetailView(this@HomeV2Fragment).also { addView(it) }.apply {
                     layout_width= match_parent
-                    layout_height= match_parent
-                }.also { addView(it) }
+                    layout_height= 0
+                    weight=1f
+                }
             }
 
             with(leftId.llContainer){
@@ -82,9 +83,11 @@ class HomeV2Fragment: MvvmBaseFragment<BaseViewModel, HomeV2FragmentBinding>(){
                         }
                     }
                     observe(liveDate){
-                        homeV2ViewModel.currSelectChapter.postValue( it[mAdapter.currSelectPosition])
-                        tvTitle.text= it[mAdapter.currSelectPosition].name
-                        selectedChapterId= it[mAdapter.currSelectPosition].id
+                        it.takeIf { it.size>mAdapter.currSelectPosition&&mAdapter.currSelectPosition>=0 }?.let {
+                            homeV2ViewModel.currSelectChapter.postValue( it[mAdapter.currSelectPosition])
+                            selectedChapterId= it[mAdapter.currSelectPosition].id
+                            chapterDetailView.updateChapterId(selectedChapterId)
+                        }
                     }
                 }.also { addView(it) }
             }
@@ -93,7 +96,6 @@ class HomeV2Fragment: MvvmBaseFragment<BaseViewModel, HomeV2FragmentBinding>(){
                 addOnClick { nextSheetDialog.show() }
             }
         }
-    }
     }
 
     override fun doObservable() {

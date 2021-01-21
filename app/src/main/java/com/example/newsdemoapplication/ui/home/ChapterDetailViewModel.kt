@@ -53,9 +53,7 @@ class ChapterDetailViewModel(private val subsectionDao: SubsectionDao, val newsA
 //        emit(subsectionDao.queryByChapterId(selectedChapterId))
 //    }.flowOn(Dispatchers.IO) // 通过 flowOn 切换到 IO 线程
     fun getSubsectionListByChapterId(selectedChapterId: Long)= viewModelScope.launch {
-        subsectionDao.queryByChapterId(selectedChapterId).collect {
-            currSubsectionList.postValue(it)
-        }
+            currSubsectionList.postValue(subsectionDao.queryByChapter(selectedChapterId))
     }
     fun getSubsectionList(selectedChapterId: Long)= subsectionDao.getAllSubsection()
 //            viewModelScope.launch {

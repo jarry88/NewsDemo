@@ -51,9 +51,11 @@
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:minHeight="@dimen/dp_54"
+            android:background="@color/light_green"
             android:id="@+id/rv_content_list"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/dp_12"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
     </LinearLayout>
