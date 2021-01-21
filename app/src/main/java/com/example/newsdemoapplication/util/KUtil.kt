@@ -32,12 +32,27 @@ fun findActivity(context:Context?):Activity?=context?.let {
     }
 }
 
-val Any?.toast:String
+inline val<reified T> T.toast:T
     get(){
-        return this.toString().also {
-            Log.i("toast", "toast--> : $it" )
-            ToastUtils.show(it) }
+        ToastUtils.show(str)
+        return log
     }
+inline val<reified T> T.log:T
+    get(){
+         toString().also {
+            Log.i("log", "${T::class.simpleName}--> : $it" )}
+        return this
+    }
+inline val<reified T> T.str:String
+    get(){
+        return toString()
+    }
+fun<T> T.toast(pre:String="toast-->")= with(this){
+    val msg="$pre : ${toString()}"
+    Log.i("toast",  msg)
+    ToastUtils.show(msg)
+    this
+}
 fun Fragment.backTo(id:Int)= with(this){
     NavHostFragment.findNavController(this).navigate(id)
 }

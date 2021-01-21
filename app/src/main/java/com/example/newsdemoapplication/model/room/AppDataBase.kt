@@ -8,10 +8,11 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@Database(entities = [Word::class,Chapter::class], version = 2, exportSchema = false)
+@Database(entities = [Word::class,Chapter::class,Subsection::class], version = 2, exportSchema = false)
 abstract class AppDataBase:RoomDatabase(){
     abstract fun getWordDao():WordDao
     abstract fun getChapterDao():ChapterDao
+    abstract fun getSubsectionDao():SubsectionDao
     companion object {
         @Volatile private var INSTANCE: AppDataBase? = null
 //        fun getInstance(context: Context)=

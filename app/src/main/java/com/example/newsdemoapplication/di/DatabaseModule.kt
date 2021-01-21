@@ -21,4 +21,7 @@ val databaseModule = module {
     single {
         get<AppDataBase>().getWordDao()
     }
+    single {
+        get<AppDataBase>().getSubsectionDao()
+    }
 }

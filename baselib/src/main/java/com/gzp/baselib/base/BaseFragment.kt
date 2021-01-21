@@ -43,8 +43,10 @@ abstract class BaseFragment<U : BaseViewModel>() : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         doCreateView(savedInstanceState)
+        doObservable()
     }
-
+    protected open fun doObservable(){
+    }
     /**
      * Get the layout resource id from subclass.
      *

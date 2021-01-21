@@ -10,6 +10,7 @@ import com.example.newsdemoapplication.R
 import com.example.newsdemoapplication.callback.OnItemClickListener
 import com.example.newsdemoapplication.vo.ChapterVo
 import com.example.newsdemoapplication.adapter.ListDragAdapter.*
+import com.example.newsdemoapplication.model.room.Chapter
 
 class ChapterDragAdapter<T> constructor(val context: Context,var list:List<T>?): RecyclerView.Adapter<RecyclerView.ViewHolder>(){
     //    private List<T> listData;
@@ -54,12 +55,16 @@ class ChapterDragAdapter<T> constructor(val context: Context,var list:List<T>?):
         val mHolder = holder as MyDragViewHolder
         mHolder.setSelected(holder.getAdapterPosition() == currSelectPosition)
         if (mOnItemClickListener != null) {
-            mHolder.clItem.setOnClickListener { v: View? ->
+            mHolder.clItem.setOnClickListener {
                 mOnItemClickListener!!.onItemClick(mHolder.itemView, holder.getAdapterPosition())
             }
         }
-
-        mHolder.tvTag.text = (list?.get(position) as? ChapterVo)?.chapterName
+        val item=list?.get(position)
+        mHolder.tvTag.text =when (item){
+            is ChapterVo-> item.chapterName
+            is Chapter ->item.name
+            else ->"-"
+        }
         if (mConvertView != null) {
             mConvertView!!.convert(mHolder, list?.get(position))
         }

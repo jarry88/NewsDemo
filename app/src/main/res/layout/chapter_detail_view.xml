@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/ll_container">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/ll_top_container"
+            android:orientation="vertical"
+            android:padding="@dimen/dp_10">
+            <com.example.newsdemoapplication.view.DragRecycleView
+                android:background="@color/title_default_bg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/rv_title"/>
+            <LinearLayout
+                android:background="@color/grey"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:id="@+id/ll_arrow_container">
+                <ImageView
+                    android:background="@color/white"
+                    android:layout_width="@dimen/dp_32"
+                    android:layout_height="@dimen/dp_32"
+                    android:padding="@dimen/dp_10"
+                    android:id="@+id/btn_add_subsection"
+                    android:src="@drawable/ic_baseline_add_circle_24"
+                    android:layout_marginEnd="@dimen/dp_10"/>
+                <ImageView
+                    android:background="@color/white"
+                    android:layout_width="@dimen/dp_32"
+                    android:layout_height="@dimen/dp_32"
+                    android:padding="@dimen/dp_10"
+                    android:id="@+id/btn_expand"
+                    android:src="@drawable/ic_baseline_expand_more_24"
+                    android:layout_marginEnd="@dimen/dp_10"/>
+                <ImageView
+                    android:background="@color/white"
+                    android:layout_width="@dimen/dp_32"
+                    android:layout_height="@dimen/dp_32"
+                    android:padding="@dimen/dp_10"
+                    android:id="@+id/btn_fold"
+                    android:src="@drawable/ic_baseline_arrow_upward_24"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_content_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="@dimen/dp_12"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+    </LinearLayout>
+
+</layout>

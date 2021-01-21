@@ -1,25 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
     <androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        tools:openDrawer="start">
+        tools:openDrawer="start"
+        android:paddingBottom="@dimen/bar_margin_bottom"
+        >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/bar_margin_bottom"
+            >
             <com.example.newsdemoapplication.widget.PageTitleBar
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/title_bar"/>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:orientation="vertical"
                 android:id="@+id/ll_container"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center">
+                <TextView
+                    android:id="@+id/btn_next"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="虚拟体验"
+                    android:padding="@dimen/dp_10"/>
+            </LinearLayout>
         </LinearLayout>
 
         <!-- 左边菜单 -->
@@ -29,7 +46,9 @@
             android:id="@+id/left_id"
             android:layout_gravity="start"
             android:gravity="center"
-            android:orientation="vertical"/>
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/bar_margin_bottom"
+/>
         <!-- 右边菜单 -->
         <LinearLayout
             android:id="@+id/linearLayout1_id"

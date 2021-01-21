@@ -35,7 +35,7 @@ class RoomFragment :Fragment(){
             layout_width= match_parent
             orientation= vertical
             PageTitleBar(context).also {
-                it.tvTile.text="点击标题后进入的新页面，后续按需求补充"
+                it.tvTitle.text="点击标题后进入的新页面，后续按需求补充"
                 it.btnBack.addOnClick { backTo(R.id.navigation_test) }
                 addView(it) }
             LinearLayout {

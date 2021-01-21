@@ -13,7 +13,7 @@ class ChapterPopupView(context: Context):DrawerPopupView(context) {
     val llContainer: LinearLayout by  lazy { findViewById(R.id.ll_container) }
     override fun onCreate() {
         findViewById<View>(R.id.textView).setOnClickListener { v: View? -> if (mOnClickListener != null) mOnClickListener?.onClick(v) }
-        findViewById<View>(R.id.btn_close_left).setOnClickListener { v: View? -> dismiss() }
+        findViewById<View>(R.id.btn_close_left).setOnClickListener {  dismiss() }
         findViewById<View>(R.id.btn_add).setOnClickListener { v: View? ->
             dismiss()
             if (mOnClickListener != null) mOnClickListener?.onClick(v)

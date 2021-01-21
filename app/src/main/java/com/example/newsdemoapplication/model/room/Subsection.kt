@@ -12,4 +12,5 @@ data class Subsection(
         var name:String,
         var subTitle:String,
         var url:String,
+        var unreadMsg:Int=0,
         var desc:String="这是一张图片")

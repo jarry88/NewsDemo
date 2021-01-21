@@ -18,7 +18,9 @@ import com.example.newsdemoapplication.adapter.ChapterDragAdapter
 import com.example.newsdemoapplication.adapter.ListDragAdapter
 import com.example.newsdemoapplication.callback.ItemDragHelperCallBack
 import com.example.newsdemoapplication.callback.OnItemClickListener
+import com.example.newsdemoapplication.dsl.observe
 import com.example.newsdemoapplication.ui.dashboard.ItemHelper
+import com.example.newsdemoapplication.util.toast
 import com.example.newsdemoapplication.vo.ChapterVo
 import com.lxj.xpopup.core.BasePopupView
 import java.util.*
@@ -53,6 +55,11 @@ class  ChapterDragView< T>  @JvmOverloads constructor(context: Context, val live
                     override fun onItemLongClick(view: View, position: Int) {}
                 })
     }
+    }
+    init {
+        observe(liveDate){
+            mAdapter.setData(it)
+        }
     }
     @SuppressLint("ClickableViewAccessibility")
     private fun addTouch() {
