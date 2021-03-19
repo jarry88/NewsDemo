@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">News Demo Application</string>
-    <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="login_in">登录</string>
@@ -29,6 +28,8 @@
     <string name="ts1_textView">管理</string>
     <string name="xnty_textView">虚拟体验︾</string>
     <string name="title_test">测试页面</string>
+    <string name="title_home">首页</string>
+    <string name="title_secend">第二页</string>
     <string name="title_Add">add</string>
 
 </resources>

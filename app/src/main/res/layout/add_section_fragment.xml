@@ -4,11 +4,10 @@
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@color/gray_eeeeee">
+        android:orientation="vertical">
         <include
             android:id="@+id/title_bar"
-            layout="@layout/view_navigation_bar" />
+            layout="@layout/nav_header_main" />
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -55,7 +54,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="@color/gray_eeeeee"/>
+                        android:background="@color/grey"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -95,7 +94,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="@color/gray_eeeeee"/>
+                        android:background="@color/grey"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -169,7 +168,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="@color/gray_eeeeee"/>
+                        android:background="@color/grey"/>
                 </LinearLayout>
 
 

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:id="@+id/ll_top_container"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+            <ImageButton
+                android:id="@+id/cy_imagebutton_id"
+                android:layout_width="40dp"
+                android:layout_height="16dp"
+                android:background="#FFFFFF"
+                android:contentDescription="@string/cy_imagebutton"
+                android:scaleType="fitCenter"
+                app:layout_constraintDimensionRatio="1:1"
+                app:srcCompat="@drawable/z" />
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/suo_textView_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="@dimen/dp_12"
+                    android:text="【未锁】"
+                    android:textSize="16sp"
+                     />
+
+                <TextView
+                    android:id="@+id/dd_textView_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="章节2"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/tx_textView_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="（掉线）"
+                    android:textSize="16sp"/>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <ImageButton
+                android:id="@+id/sz_imagebutton_id"
+                android:layout_width="40dp"
+                android:layout_height="24dp"
+                android:background="#FFFFFF"
+                android:contentDescription="@string/sz_imagebutton"
+                android:scaleType="fitCenter"
+                app:layout_constraintDimensionRatio="1:1"
+                app:srcCompat="@drawable/y" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <TextView
+            android:id="@+id/ts_textView_id"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="@dimen/dp_12"
+            android:layout_marginEnd="10dp"
+            android:singleLine="true"
+            android:text="@string/ts_textView"
+            app:layout_constraintEnd_toStartOf="@+id/ts1_textView_id"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ll_top_container"/>
+
+        <TextView
+            android:id="@+id/ts1_textView_id"
+            android:layout_marginEnd="@dimen/dp_12"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:singleLine="true"
+            android:text="@string/ts1_textView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ll_top_container"/>
+
+        <TextView
+            android:id="@+id/xnty_textView_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="187dp"
+            android:layout_marginEnd="154dp"
+            android:layout_marginBottom="16dp"
+            android:text="@string/xnty_textView"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="56dp"
+            android:text="室外环境 阴有小雨，无风，气温25.。。。。。             未读消息"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+        <include
+            layout="@layout/fragment_home_outside"
+            android:layout_marginTop="76dp"
+            android:layout_marginBottom="40dp"
+            android:id="@+id/frameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

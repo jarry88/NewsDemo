@@ -6,7 +6,7 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
 import androidx.recyclerview.widget.RecyclerView
-import com.example.newsdemoapplication.Util
+import com.example.newsdemoapplication.util.Util
 
 
 class DragRecycleView @JvmOverloads constructor(context: Context, attributes: AttributeSet? = null, def: Int = 0) :RecyclerView(context, attributes, def) {
