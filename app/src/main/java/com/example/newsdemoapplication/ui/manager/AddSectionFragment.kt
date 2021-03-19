@@ -1,45 +1,40 @@
-package com.example.newsdemoapplication.ui.add
+package com.example.newsdemoapplication.ui.manager
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.widget.Toast
-import androidx.navigation.NavHostController
 import androidx.navigation.fragment.NavHostFragment
 import com.example.newsdemoapplication.R
 import com.example.newsdemoapplication.databinding.AddSectionFragmentBinding
-import com.example.newsdemoapplication.vo.ChapterVo
-import com.example.newsdemoapplication.vo.ContentVo
-import com.example.newsdemoapplication.vo.NewsVo
-import com.gzp.baselib.base.MvvmBaseFragment
-import com.gzp.baselib.constant.Constants
-import com.gzp.baselib.widget.NavigationBar
+import com.example.newsdemoapplication.model.ChapterVo
+import com.example.newsdemoapplication.model.ContentVo
+import com.example.newsdemoapplication.model.NewsVo
+import com.example.newsdemoapplication.util.common.MvvmBaseFragment
 import com.lishuaihua.toast.ToastUtils.show
-import com.lxj.xpopup.XPopup
 
-class AddSectionFragment :MvvmBaseFragment<AddViewModel,AddSectionFragmentBinding>() {
+class AddSectionFragment : MvvmBaseFragment<AddViewModel, AddSectionFragmentBinding>() {
     override fun getLayoutResId()= R.layout.add_section_fragment
     private val isEdit by lazy{
-        arguments?.getBoolean(Constants.IsEdit,false)?:false
+//        arguments?.getBoolean(Constants.IsEdit,false)?:false
     }
-        private var chapterVo :ChapterVo?=null
+        private var chapterVo : ChapterVo?=null
 
         override fun doCreateView(savedInstanceState: Bundle?) {
-            (binding.titleBar as NavigationBar).apply {
-                "${if (isEdit) "管理".apply {
-                    chapterVo=arguments?.getSerializable(Constants.ChapterVo)?.let { it as ChapterVo }
-                    chapterVo?.let { loadData(it)}
-                } else "添加"}章节".let {
-                    setTitle(it)
-                }
-                setBackOnClickListener{
-                    NavHostFragment.findNavController(this@AddSectionFragment)
-                            .navigate(R.id.navigation_test)
-                }
-            }
-            if(chapterVo==null)(binding.titleBar as NavigationBar).apply {
-                "添加章节".let {
-                    setTitle(it)
-                }}
+//            (binding.titleBar as NavigationBar).apply {
+//                "${if (isEdit) "管理".apply {
+//                    chapterVo=arguments?.getSerializable(Constants.ChapterVo)?.let { it as ChapterVo }
+//                    chapterVo?.let { loadData(it)}
+//                } else "添加"}章节".let {
+//                    setTitle(it)
+//                }
+//                setBackOnClickListener{
+//                    NavHostFragment.findNavController(this@AddSectionFragment)
+//                            .navigate(R.id.navigation_test)
+//                }
+//            }
+//            if(chapterVo==null)(binding.titleBar as NavigationBar).apply {
+//                "添加章节".let {
+//                    setTitle(it)
+//                }}
             binding.btnAdd.setOnClickListener {
                 binding.etChapterTitle.text?.let {
                     if(it.isNullOrEmpty()) Toast.makeText(context, "先输入标题", Toast.LENGTH_SHORT).show()
@@ -85,7 +80,7 @@ class AddSectionFragment :MvvmBaseFragment<AddViewModel,AddSectionFragmentBindin
                             else{
                                 Toast.makeText(context, "${content} 添加成功", Toast.LENGTH_SHORT).show()
                                 val listContent = mutableListOf<ContentVo>().apply { it.listContent?.forEach{add(it) } }
-                                listContent.add(ContentVo(content.toString(),content = content.toString()))
+                                listContent.add(ContentVo(content.toString(), content = content.toString()))
                                 it.listContent=listContent.toList()
                                 chapterVo?.let {
                                     it.listNews =list.toList()
@@ -109,13 +104,12 @@ class AddSectionFragment :MvvmBaseFragment<AddViewModel,AddSectionFragmentBindin
                                     val listContent = mutableListOf<ContentVo>().apply {
                                         it.listContent?.firstOrNull { it.equals(content) }?:show("没有 $ed").also { return@setOnClickListener }
                                         it.listContent?.forEach{if(it.title != content.toString())add(it) } }
-                                    listContent.add(ContentVo(content.toString(),content = content.toString()))
+                                    listContent.add(ContentVo(content.toString(), content = content.toString()))
                                     it.listContent=listContent.toList()
                                     chapterVo?.let {
                                         it.listNews =list.toList()
                                     }
                                     Toast.makeText(context, "${content} 添加成功", Toast.LENGTH_SHORT).show()
-
                                 }
                             }?:Toast.makeText(context, "先选择标题", Toast.LENGTH_SHORT).show()
                         }
@@ -134,7 +128,7 @@ class AddSectionFragment :MvvmBaseFragment<AddViewModel,AddSectionFragmentBindin
                         }
                         NavHostFragment.findNavController(this@AddSectionFragment)
                                 .navigate(R.id.navigation_test,Bundle().apply {
-                                    putSerializable(Constants.ChapterVo,chapterVo)
+//                                    putSerializable(Constants.ChapterVo,chapterVo)
                                 })
                     }
                 }

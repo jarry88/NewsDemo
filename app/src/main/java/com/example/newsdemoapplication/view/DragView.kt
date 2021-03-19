@@ -13,14 +13,11 @@ import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.newsdemoapplication.Util
-import com.example.newsdemoapplication.adapter.ListDragAdapter
-import com.example.newsdemoapplication.adapter.ListDragAdapter.MyDragViewHolder
-import com.example.newsdemoapplication.callback.ItemDragHelperCallBack
-import com.example.newsdemoapplication.callback.OnItemClickListener
-import com.example.newsdemoapplication.ui.dashboard.ItemHelper
-import okhttp3.internal.notify
-import java.lang.Math.*
+import com.example.newsdemoapplication.util.Util
+import com.example.newsdemoapplication.view.ListDragAdapter.MyDragViewHolder
+import com.example.newsdemoapplication.util.callback.ItemDragHelperCallBack
+import com.example.newsdemoapplication.util.callback.OnItemClickListener
+import com.example.newsdemoapplication.util.callback.ItemHelper
 import java.util.*
 import kotlin.math.abs
 
@@ -147,11 +144,11 @@ open class DragView @JvmOverloads constructor(context: Context, attributes: Attr
         adapter =mAdapter
         val itemTouchHelper = ItemTouchHelper(ItemDragHelperCallBack(object : ItemHelper {
             override fun itemMoved(oldPosition: Int, newPosition: Int) {
-                Util.Loge("DragView ------>oldPosition $oldPosition move  newPosition $newPosition"  )
+                Util.Loge("DragView ------>oldPosition $oldPosition move  newPosition $newPosition")
 
                 //交换变换位置的集合数据
                 Collections.swap(mAdapter.data, oldPosition, newPosition)
-                Collections.swap(mAdapter.urlData,oldPosition,newPosition)
+                Collections.swap(mAdapter.urlData, oldPosition, newPosition)
                 Collections.swap(list, oldPosition, newPosition)
                 mAdapter.notifyItemMoved(oldPosition, newPosition)
             }
@@ -167,8 +164,7 @@ open class DragView @JvmOverloads constructor(context: Context, attributes: Attr
                 if (position < 0) return
                 count = 1
                 if (position != mAdapter.currSelectPosition) {
-                    findViewHolderForAdapterPosition(mAdapter.currSelectPosition)?.
-                    let { (it as MyDragViewHolder).setSelected(false)}
+                    findViewHolderForAdapterPosition(mAdapter.currSelectPosition)?.let { (it as MyDragViewHolder).setSelected(false) }
 //                    mAdapter.currSelectPosition = position
                 }
                 val vib = context.getSystemService(Service.VIBRATOR_SERVICE) as Vibrator

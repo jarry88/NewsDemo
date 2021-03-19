@@ -11,15 +11,12 @@ import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.newsdemoapplication.Util
-import com.example.newsdemoapplication.adapter.ChapterDragAdapter
-import com.example.newsdemoapplication.adapter.ListDragAdapter
-import com.example.newsdemoapplication.callback.ItemDragHelperCallBack
-import com.example.newsdemoapplication.callback.OnItemClickListener
-import com.example.newsdemoapplication.ui.dashboard.ItemHelper
-import com.example.newsdemoapplication.vo.ChapterVo
+import com.example.newsdemoapplication.util.Util
+import com.example.newsdemoapplication.util.callback.ItemDragHelperCallBack
+import com.example.newsdemoapplication.util.callback.OnItemClickListener
+import com.example.newsdemoapplication.util.callback.ItemHelper
+import com.example.newsdemoapplication.model.ChapterVo
 import com.lxj.xpopup.core.BasePopupView
 import java.util.*
 import kotlin.math.abs
@@ -43,7 +40,7 @@ class ChapterDragView  @JvmOverloads constructor(context: Context, val liveDate 
     var beginTime =System.currentTimeMillis()
     var bottomShowTime =System.currentTimeMillis()
     var clickCallBack:ClickCallBack?=null
-    val mAdapter by lazy {  ChapterDragAdapter(context ,liveDate.value ).apply {
+    val mAdapter by lazy {  ChapterDragAdapter(context, liveDate.value).apply {
         setOnItemClickListener(
                 object : OnItemClickListener {
                     override fun onItemClick(view: View, position: Int) {
@@ -115,14 +112,15 @@ class ChapterDragView  @JvmOverloads constructor(context: Context, val liveDate 
                 }
                 mAdapter.notifyItemMoved(oldPosition, newPosition)
             }
+
             override fun itemDismiss(position: Int) {}
             override fun itemClear(position: Int) {
                 Util.Loge("itemClear")
                 updatePosition(position)
-                moveCount=0
+                moveCount = 0
                 mAdapter.notifyDataSetChanged()
                 if (longPress) {
-                    longPress=false
+                    longPress = false
                     mCallBack?.onLongPress()
                 }
             }
@@ -132,13 +130,12 @@ class ChapterDragView  @JvmOverloads constructor(context: Context, val liveDate 
                 if (position < 0) return
                 count = 1
                 if (position != mAdapter.currSelectPosition) {
-                    findViewHolderForAdapterPosition(mAdapter.currSelectPosition)?.
-                    let { (it as ListDragAdapter.MyDragViewHolder).setSelected(false)}
+                    findViewHolderForAdapterPosition(mAdapter.currSelectPosition)?.let { (it as ListDragAdapter.MyDragViewHolder).setSelected(false) }
                 }
                 val vib = context.getSystemService(Service.VIBRATOR_SERVICE) as Vibrator
                 vib.vibrate(100)
                 //                 记录弹窗信息
-                longPress=true
+                longPress = true
             }
         }))
         itemTouchHelper.attachToRecyclerView(this)

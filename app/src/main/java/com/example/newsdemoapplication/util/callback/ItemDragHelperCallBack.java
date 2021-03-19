@@ -1,4 +1,4 @@
-package com.example.newsdemoapplication.callback;
+package com.example.newsdemoapplication.util.callback;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -6,13 +6,12 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
-import com.example.newsdemoapplication.Util;
-import com.example.newsdemoapplication.adapter.ListDragAdapter;
-import com.example.newsdemoapplication.ui.dashboard.ItemHelper;
+import com.example.newsdemoapplication.util.Util;
+import com.example.newsdemoapplication.view.ListDragAdapter;
 
 public class ItemDragHelperCallBack extends ItemTouchHelper.Callback {
 
-    private com.example.newsdemoapplication.ui.dashboard.ItemHelper ItemHelper;
+    private com.example.newsdemoapplication.util.callback.ItemHelper ItemHelper;
 
     public ItemDragHelperCallBack(ItemHelper ItemHelper) {
         this.ItemHelper = ItemHelper;

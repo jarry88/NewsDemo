@@ -9,22 +9,15 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.newsdemoapplication.Util
-import com.example.newsdemoapplication.adapter.ChapterDragAdapter
-import com.example.newsdemoapplication.adapter.List2DragAdapter
-import com.example.newsdemoapplication.adapter.ListDragAdapter
-import com.example.newsdemoapplication.adapter.ListDragAdapter.MyDragViewHolder
-import com.example.newsdemoapplication.adapter.TitleAdapter
-import com.example.newsdemoapplication.callback.ItemDragHelperCallBack
-import com.example.newsdemoapplication.callback.OnItemClickListener
-import com.example.newsdemoapplication.ui.dashboard.ItemHelper
-import com.example.newsdemoapplication.vo.ChapterVo
-import okhttp3.internal.notify
-import java.lang.Math.*
+import com.example.newsdemoapplication.util.Util
+import com.example.newsdemoapplication.view.ListDragAdapter.MyDragViewHolder
+import com.example.newsdemoapplication.util.callback.ItemDragHelperCallBack
+import com.example.newsdemoapplication.util.callback.OnItemClickListener
+import com.example.newsdemoapplication.util.callback.ItemHelper
+import com.example.newsdemoapplication.model.ChapterVo
 import java.util.*
 import kotlin.math.abs
 
@@ -49,7 +42,7 @@ open class TitleDragView @JvmOverloads constructor(context: Context, attributes:
     private val mImageLayoutManager by lazy {
         GridLayoutManager(context, 2)
     }
-    private val mAdapter by lazy {  ListDragAdapter(context, listOf("1","2","3")).apply {
+    private val mAdapter by lazy {  ListDragAdapter(context, listOf("1", "2", "3")).apply {
         setOnItemClickListener(
                 object : OnItemClickListener {
                     override fun onItemClick(view: View, position: Int) {
@@ -62,7 +55,7 @@ open class TitleDragView @JvmOverloads constructor(context: Context, attributes:
     }
     }
     @JvmOverloads
-    fun setData(l: List<ChapterVo>?,showImage:Boolean=false){
+    fun setData(l: List<ChapterVo>?, showImage:Boolean=false){
         l?:return
 //        mAdapter.add
     }
@@ -159,8 +152,7 @@ open class TitleDragView @JvmOverloads constructor(context: Context, attributes:
                 if (position < 0) return
                 count = 1
                 if (position != mAdapter.getCurrSelectPosition()) {
-                    findViewHolderForAdapterPosition(mAdapter.getCurrSelectPosition())?.
-                    let { (it as MyDragViewHolder).setSelected(false)}
+                    findViewHolderForAdapterPosition(mAdapter.getCurrSelectPosition())?.let { (it as MyDragViewHolder).setSelected(false) }
 //                    mAdapter.currSelectPosition = position
                 }
                 val vib = context.getSystemService(Service.VIBRATOR_SERVICE) as Vibrator

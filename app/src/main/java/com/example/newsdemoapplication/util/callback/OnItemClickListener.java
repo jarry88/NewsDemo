@@ -1,4 +1,4 @@
-package com.example.newsdemoapplication.callback;
+package com.example.newsdemoapplication.util.callback;
 
 import android.view.View;
 
