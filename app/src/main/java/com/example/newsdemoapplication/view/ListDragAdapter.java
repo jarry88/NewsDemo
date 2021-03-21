@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 拖动列表的适配器
+ * 拖动列表的基础适配器
  */
 public class ListDragAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -51,7 +51,8 @@ public class ListDragAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(
-                showImage?R.layout.image_item:R.layout.title_style, parent, false);
+                showImage?R.layout.image_item_style //展示图片内容的样式
+                        :R.layout.title_item_style, parent, false);//只展示标题文本的央视
         return new MyDragViewHolder(view);
     }
 

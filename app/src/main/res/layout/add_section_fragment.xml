@@ -6,6 +6,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
         <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/title_bar">
@@ -25,7 +26,7 @@
             <ImageView
                 android:layout_width="@dimen/dp_24"
                 android:layout_height="@dimen/dp_24"
-                android:src="@drawable/black_background"/>
+                android:src="@color/black_ff"/>
         </LinearLayout>
         <ScrollView
             android:layout_width="match_parent"

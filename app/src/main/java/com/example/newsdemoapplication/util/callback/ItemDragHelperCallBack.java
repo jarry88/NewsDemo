@@ -6,8 +6,9 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
-import com.example.newsdemoapplication.util.Util;
 import com.example.newsdemoapplication.view.ListDragAdapter;
+
+import static com.example.newsdemoapplication.util.KUtilKt.log;
 
 public class ItemDragHelperCallBack extends ItemTouchHelper.Callback {
 
@@ -56,7 +57,7 @@ public class ItemDragHelperCallBack extends ItemTouchHelper.Callback {
         if (ItemHelper != null) {
             ItemHelper.itemMoved(viewHolder.getAdapterPosition(), target.getAdapterPosition());
         }else{
-            Util.Loge("ss");
+            log("不同Type之间不允许移动");
         }
         return true;
     }
@@ -68,7 +69,7 @@ public class ItemDragHelperCallBack extends ItemTouchHelper.Callback {
      */
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-        Util.Loge("swipe");
+        log("swipe");
     }
 
     @Override
@@ -90,7 +91,7 @@ public class ItemDragHelperCallBack extends ItemTouchHelper.Callback {
         // We only want the active item to change
 
         if(actionState ==ItemTouchHelper.ANIMATION_TYPE_DRAG){
-            Util.Loge("drag");
+            log("drag");
         }
         if (actionState != ItemTouchHelper.ACTION_STATE_IDLE) {
             if (viewHolder instanceof ListDragAdapter.MyDragViewHolder) {

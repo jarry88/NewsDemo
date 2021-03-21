@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.newsdemoapplication.Constants
 import com.example.newsdemoapplication.R
 import com.example.newsdemoapplication.databinding.HomeFragmentBinding
-import com.example.newsdemoapplication.util.Util
 import com.example.newsdemoapplication.view.ListDragAdapter
 import com.example.newsdemoapplication.view.ListDragAdapter.MyDragViewHolder
 import com.example.newsdemoapplication.view.NewsContentAdapter
@@ -28,13 +27,14 @@ import com.example.newsdemoapplication.util.callback.ItemDragHelperCallBack
 import com.example.newsdemoapplication.util.callback.OnItemClickListener
 import com.example.newsdemoapplication.util.rad
 import com.example.newsdemoapplication.view.ChapterDragView
-import com.example.newsdemoapplication.view.DragRecycleView.DragAndPressCallBack
+import com.example.newsdemoapplication.view.TitleRecycleView.DragAndPressCallBack
 import com.example.newsdemoapplication.model.ChapterVo
 import com.example.newsdemoapplication.model.ContentVo
 import com.example.newsdemoapplication.model.NewsVo
 import com.example.newsdemoapplication.util.common.MvvmBaseFragment
+import com.example.newsdemoapplication.util.getRandomData
+import com.example.newsdemoapplication.util.log
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.lishuaihua.toast.ToastUtils.show
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.core.BasePopupView
 import com.lxj.xpopup.enums.PopupPosition
@@ -238,7 +238,7 @@ class HomeFragment : MvvmBaseFragment<HomeViewModel, HomeFragmentBinding>(),Coro
         Log.e(TAG, ": 抽屉展开按钮", )
         setOnClickListener {
             if(vm.currChapter?.value?.listNews?.size?:0<=ColumnNum){
-                show("没有更多了")
+                log("没有更多了")
                 return@setOnClickListener
             }
             if (currTitleState == COMPLETE_EXPANDED) {
@@ -263,21 +263,25 @@ class HomeFragment : MvvmBaseFragment<HomeViewModel, HomeFragmentBinding>(),Coro
     //收起左侧弹窗按钮
     val btnFold by lazy {
         Log.e(TAG, ": 合上展开按钮", )
-        binding.mainContent.btnFold.apply { setOnClickListener { showSingLine() } } }
+        binding.mainContent.btnFold.also {
+            it.setOnClickListener { updateTitleButtons() }
+        }
+    }
 
-
+    //顶部标题栏布局管理
     private val titleLayoutManager by lazy {
         GridLayoutManager(requireContext(), ColumnNum * 3).apply {
             spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                 override fun getSpanSize(position: Int): Int {
-                    val end: Int = list.size % ColumnNum
-                    return if (list.size - position <= end) ColumnNum * 3 / end else 3
+                    val end: Int = listData.size % ColumnNum
+                    return if (listData.size - position <= end) ColumnNum * 3 / end else 3
                 }
             }
         }
     }
+    //顶部标题栏适配器
     val titleAdapter by lazy {
-        ListDragAdapter(activity, list).apply {
+        ListDragAdapter(activity, listData).apply {
             setOnItemClickListener(
                     object : OnItemClickListener {
                         override fun onItemClick(view: View, position: Int) {
@@ -289,6 +293,7 @@ class HomeFragment : MvvmBaseFragment<HomeViewModel, HomeFragmentBinding>(),Coro
                     })
         }
     }
+    //内容列表试图
     private val mContentRecycleView by lazy {
         binding.mainContent.rvContentList.apply {
             adapter = mContentAdapter
@@ -306,7 +311,7 @@ class HomeFragment : MvvmBaseFragment<HomeViewModel, HomeFragmentBinding>(),Coro
         }
     }
     val bottomSheetDialog by lazy { BottomSheetDialog(requireContext()).apply {
-        setContentView(R.layout.bottom_dialog)
+        setContentView(R.layout.bottom_dialog_style)
         setCancelable(true)
         findViewById<View>(R.id.tv_cancel)?.setOnClickListener {dismiss() }
         findViewById<View>(R.id.tv_rename)?.setOnClickListener {
@@ -317,7 +322,7 @@ class HomeFragment : MvvmBaseFragment<HomeViewModel, HomeFragmentBinding>(),Coro
                 navigationEdit()
             }else
             XPopup.Builder(activity).asInputConfirm("重命名", "请输入内容。") { text: String? ->
-                    list.set(currSelectedPosition, text)
+                    listData[currSelectedPosition] = text?:"-"
                     titleAdapter.notifyItemChanged(currSelectedPosition)
                     mContentAdapter.notifyItemChanged(currSelectedPosition)
             }.show()
@@ -334,7 +339,7 @@ class HomeFragment : MvvmBaseFragment<HomeViewModel, HomeFragmentBinding>(),Coro
                 }
             }else{
                 Log.e("TAG", "initBottomSheetDiaLog: $currSelectedPosition")
-                list.removeAt(currSelectedPosition)
+                listData.removeAt(currSelectedPosition)
                 titleAdapter.notifyItemRemoved(currSelectedPosition)
                 mContentAdapter.notifyItemRemoved(currSelectedPosition)
             }
@@ -392,12 +397,11 @@ class HomeFragment : MvvmBaseFragment<HomeViewModel, HomeFragmentBinding>(),Coro
 
 
     private var currTitleState = 0
-    var mData: List<NewsVo> = ArrayList()
-    val list=
-         Util.getData(17)
+    val listData= getRandomData(17)
     private val mContentAdapter by lazy {
         NewsContentAdapter(context, listOf())
     }
+
     private var longPress = false
 
 
@@ -405,7 +409,7 @@ class HomeFragment : MvvmBaseFragment<HomeViewModel, HomeFragmentBinding>(),Coro
     private fun initTitleRecycleView() {
         val itemTouchHelper = ItemTouchHelper(ItemDragHelperCallBack(object : ItemHelper {
             override fun itemMoved(oldPosition: Int, newPosition: Int) {
-                Util.Loge("move")
+                log("move")
                 //交换变换位置的集合数据
                 Collections.swap(titleAdapter.data, oldPosition, newPosition)
                 titleAdapter.notifyItemMoved(oldPosition, newPosition)
@@ -452,10 +456,10 @@ class HomeFragment : MvvmBaseFragment<HomeViewModel, HomeFragmentBinding>(),Coro
         }
         mTitleRecycleView.postDelayed({
             //视图刷新后，计算视图高度
-            Util.Loge(String.format("height %d", mTitleRecycleView.measuredHeight))
+            log(String.format("height %d", mTitleRecycleView.measuredHeight))
             if (mTitleRecycleView.measuredHeight > titleMaxHeight) {
                 supportHalfExpand = true
-                showHalfExpand()
+                updateTitleButtons(HALF_EXPANDED)
             } else {
                 currTitleState = COMPLETE_EXPANDED
             }
@@ -468,51 +472,9 @@ class HomeFragment : MvvmBaseFragment<HomeViewModel, HomeFragmentBinding>(),Coro
 //        mContentRecycleView.offsetTopAndBottom(0);
     }
 
-    private fun showSingLine() {
-        currTitleState = SINGLE_LINE
-        val layoutParams = mTitleRecycleView.layoutParams as LinearLayout.LayoutParams
-        layoutParams.height = singleLineHeight
-        mTitleRecycleView.layoutParams = layoutParams
-        showExpandFoldBtns()
-    }
-
-    private fun showHalfExpand() {
-        currTitleState = HALF_EXPANDED
-        val layoutParams = mTitleRecycleView.layoutParams as LinearLayout.LayoutParams
-        layoutParams.height = titleMaxHeight
-        mTitleRecycleView.layoutParams = layoutParams
-        showExpandFoldBtns()
-    }
-
-    private fun showCompleteExpand() {
-        currTitleState = COMPLETE_EXPANDED
-        val layoutParams = mTitleRecycleView.layoutParams as LinearLayout.LayoutParams
-        layoutParams.height = LinearLayout.LayoutParams.WRAP_CONTENT
-        mTitleRecycleView.layoutParams = layoutParams
-        showExpandFoldBtns()
-    }
 
     /**
      * 根据顶部标题栏折叠状态，显示标题栏按钮
-     */
-    private fun showExpandFoldBtns() {
-        when (currTitleState) {
-            SINGLE_LINE -> {
-                btnExpand.setImageResource(R.drawable.ic_baseline_expand_more_24)
-                btnFold.visibility = View.GONE
-            }
-            HALF_EXPANDED -> {
-                btnExpand.setImageResource(R.drawable.ic_baseline_expand_more_24)
-                btnFold.visibility = View.VISIBLE
-            }
-            COMPLETE_EXPANDED -> {
-                btnExpand.setImageResource(R.drawable.ic_baseline_expand_less_24)
-                btnFold.visibility = View.VISIBLE
-            }
-            else -> {
-            }
-        }
-    }/**
      * 刷新标题栏按钮显示
      */
     private fun updateTitleButtons(newState:Int=SINGLE_LINE) {

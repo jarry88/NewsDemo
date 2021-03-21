@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.newsdemoapplication.util.Util
 import com.example.newsdemoapplication.view.ListDragAdapter.MyDragViewHolder
 import com.example.newsdemoapplication.util.callback.ItemDragHelperCallBack
 import com.example.newsdemoapplication.util.callback.OnItemClickListener
@@ -21,8 +20,10 @@ import com.example.newsdemoapplication.model.ChapterVo
 import java.util.*
 import kotlin.math.abs
 
-
-open class TitleDragView @JvmOverloads constructor(context: Context, attributes: AttributeSet? = null, def: Int = 0) :RecyclerView(context, attributes, def) {
+/**
+ * 首页左侧弹窗拖动列表视图
+ */
+open class LeftChapterTitleDragView @JvmOverloads constructor(context: Context, attributes: AttributeSet? = null, def: Int = 0) :RecyclerView(context, attributes, def) {
     var count =0;
     var moveCount =0
     var ColumnNum =4
@@ -54,11 +55,6 @@ open class TitleDragView @JvmOverloads constructor(context: Context, attributes:
                 })
     }
     }
-    @JvmOverloads
-    fun setData(l: List<ChapterVo>?, showImage:Boolean=false){
-        l?:return
-//        mAdapter.add
-    }
     @SuppressLint("ClickableViewAccessibility")
     private fun addTouch() {
         setOnTouchListener { v, event ->
@@ -82,12 +78,10 @@ open class TitleDragView @JvmOverloads constructor(context: Context, attributes:
                                 mCallBack?.onAfterPressMove()
                                 reset()
                             }
-                            Util.Loge("移动了")
                         }
                     }
                 }
                 MotionEvent.ACTION_UP -> {
-                    Util.Loge("ACTION_UP")
                     reset()
                 }
                 else ->{}
@@ -110,26 +104,12 @@ open class TitleDragView @JvmOverloads constructor(context: Context, attributes:
     private fun shortShow() =System.currentTimeMillis()-bottomShowTime<200
     init {
         initView()
-//        mCallBack = object :  DragAndPressCallBack {
-//            //设置移动监听回调
-//            override fun onLongPress() {
-////                bottomSheetDialog.show()
-////                mTitleRecycleView.bottomShowTime = System.currentTimeMillis()
-//            }
-//
-//            override fun onAfterPressMove() {
-////                longPress = false
-////                bottomSheetDialog.dismiss()
-//            }
-//        }
-
     }
     private fun initView(){
         adapter =mAdapter
 
         val itemTouchHelper = ItemTouchHelper(ItemDragHelperCallBack(object : ItemHelper {
             override fun itemMoved(oldPosition: Int, newPosition: Int) {
-                Util.Loge("move")
                 mAdapter.data?.let {
                     Collections.swap(it, oldPosition, newPosition)
 

@@ -8,7 +8,7 @@ import com.lxj.xpopup.core.DrawerPopupView
 import java.util.*
 
 /**
- * 左拉章节弹窗
+ * 首页左拉章节弹窗
  */
 class ChapterPopupView(context: Context):DrawerPopupView(context) {
     override fun getImplLayoutId()= R.layout.left_list_drawer

@@ -11,6 +11,9 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+/**
+ * 空Activity容器 ，后期全局添加 播放，横屏管控 ，数据统计等功能会使用
+ */
 public class MainActivity extends AppCompatActivity {
 
     @Override

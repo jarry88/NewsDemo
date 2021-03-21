@@ -6,10 +6,11 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
 import androidx.recyclerview.widget.RecyclerView
-import com.example.newsdemoapplication.util.Util
 
-
-class DragRecycleView @JvmOverloads constructor(context: Context, attributes: AttributeSet? = null, def: Int = 0) :RecyclerView(context, attributes, def) {
+/**
+ * 准备封装的顶部标题拖动视图
+ */
+class TitleRecycleView @JvmOverloads constructor(context: Context, attributes: AttributeSet? = null, def: Int = 0) :RecyclerView(context, attributes, def) {
 
     private val Long.finish: Boolean
         get() {
@@ -57,19 +58,12 @@ class DragRecycleView @JvmOverloads constructor(context: Context, attributes: At
                             if(moveCount++>0&&count<=0){
                                 mCallBack?.onAfterPressMove()
                                 reset()
-                                Util.Loge("移动了")
                             }
                         }
                     }
                 }
                 MotionEvent.ACTION_UP -> {
-                    Util.Loge("ACTION_UP")
                     reset()
-//                    if(count>0){
-//                        count=0
-//                        mCallBack?.onLongPress()
-//                    }
-//                    reset()
                 }
                 else ->{}
             }
@@ -84,11 +78,6 @@ class DragRecycleView @JvmOverloads constructor(context: Context, attributes: At
     private fun reset() {
         beginTime =System.currentTimeMillis().apply { Log.e("TAG", "reset: rese", ) }
     }
-
-    /**
-     * 间隔太短不响应
-     */
-    private fun shortShow() =System.currentTimeMillis()-bottomShowTime<200
 
 }
 

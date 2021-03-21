@@ -11,17 +11,18 @@ import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
 import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.newsdemoapplication.util.Util
 import com.example.newsdemoapplication.view.ListDragAdapter.MyDragViewHolder
 import com.example.newsdemoapplication.util.callback.ItemDragHelperCallBack
 import com.example.newsdemoapplication.util.callback.OnItemClickListener
 import com.example.newsdemoapplication.util.callback.ItemHelper
+import com.example.newsdemoapplication.util.log
 import java.util.*
 import kotlin.math.abs
 
-
+/**
+ * 拖动交换长按功能视图 ，基础模板
+ */
 open class DragView @JvmOverloads constructor(context: Context, attributes: AttributeSet? = null, def: Int = 0) :RecyclerView(context, attributes, def) {
     var count =0;
     var moveCount =0
@@ -98,12 +99,12 @@ open class DragView @JvmOverloads constructor(context: Context, attributes: Attr
                                 mCallBack?.onAfterPressMove()
                                 reset()
                             }
-                            Util.Loge("移动了")
+                            log("移动了")
                         }
                     }
                 }
                 MotionEvent.ACTION_UP -> {
-                    Util.Loge("ACTION_UP")
+                    log("ACTION_UP")
                     reset()
                 }
                 else ->{}
@@ -144,7 +145,7 @@ open class DragView @JvmOverloads constructor(context: Context, attributes: Attr
         adapter =mAdapter
         val itemTouchHelper = ItemTouchHelper(ItemDragHelperCallBack(object : ItemHelper {
             override fun itemMoved(oldPosition: Int, newPosition: Int) {
-                Util.Loge("DragView ------>oldPosition $oldPosition move  newPosition $newPosition")
+                log("DragView ------>oldPosition $oldPosition move  newPosition $newPosition")
 
                 //交换变换位置的集合数据
                 Collections.swap(mAdapter.data, oldPosition, newPosition)
@@ -181,9 +182,5 @@ open class DragView @JvmOverloads constructor(context: Context, attributes: Attr
     private fun setImageLayoutManager() {
         layoutManager =mImageLayoutManager
     }
-    fun setLineLayoutManager() {
-        layoutManager =LinearLayoutManager(context)
-    }
-    fun getSelectedPosition()=mAdapter.currSelectPosition
 }
 

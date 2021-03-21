@@ -13,8 +13,11 @@ import com.example.newsdemoapplication.model.ContentVo
 import com.example.newsdemoapplication.model.NewsVo
 import com.example.newsdemoapplication.util.common.MvvmBaseFragment
 import com.lishuaihua.toast.ToastUtils.show
-import kotlinx.android.synthetic.main.drawer_style.*
 
+/**
+ * 添加 编辑章节的页面
+ * @author gzp
+ */
 class AddSectionFragment : MvvmBaseFragment<AddViewModel, AddSectionFragmentBinding>() {
     override fun getLayoutResId()= R.layout.add_section_fragment
     private val isEdit by lazy{ //编辑还是新增的状态
@@ -72,7 +75,6 @@ class AddSectionFragment : MvvmBaseFragment<AddViewModel, AddSectionFragmentBind
                         Toast.makeText(context, "$ed 删除成功", Toast.LENGTH_SHORT).show()
                     }
                 }
-//                XPopup.Builder(context).asInputConfirm("输入内容",""){}.show()
             }
             binding.btnAddContent.setOnClickListener {
                 binding.etContentTitle.text?.let {content ->

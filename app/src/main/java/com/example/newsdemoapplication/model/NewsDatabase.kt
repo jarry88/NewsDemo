@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-
+//本地数据库部署文件
 @Database(entities = [(ChapterModel::class)],version = 1)
 abstract class NewsDatabase :RoomDatabase(){
     companion object{

@@ -42,21 +42,7 @@ public class CommonUtils {
         return (int) (dpValue * scale + 0.5f);
     }
 
-    /**
-     * Show message
-     *
-     * @param activity Activity
-     * @param msg message
-     */
-    public static void showMessage(Activity activity, String msg) {
-        LogHelper.e("showMessage ：" + msg);
-        Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show();
-    }
 
-    public static void showMessage(Application application, String msg) {
-        LogHelper.e("showMessage ：" + msg);
-        Toast.makeText(application, msg, Toast.LENGTH_SHORT).show();
-    }
 
     /**
      * 判断2个对象是否相等
