@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.observe
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -21,7 +22,6 @@ import com.example.newsdemoapplication.util.Util
 import com.example.newsdemoapplication.view.ListDragAdapter
 import com.example.newsdemoapplication.view.ListDragAdapter.MyDragViewHolder
 import com.example.newsdemoapplication.view.NewsContentAdapter
-import com.example.newsdemoapplication.model.NewsDatabase
 import com.example.newsdemoapplication.util.callback.ItemHelper
 import com.example.newsdemoapplication.util.CommonUtils
 import com.example.newsdemoapplication.util.callback.ItemDragHelperCallBack
@@ -45,11 +45,11 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.*
 
+/**
+ * app首页
+ * @author gzp
+ */
 class HomeFragment : MvvmBaseFragment<HomeViewModel, HomeFragmentBinding>(),CoroutineScope by MainScope() {
-    private var mPosX: Float=0f
-    private var mPosY: Float=0f
-    private var mCurPosX: Float=0f
-    private var mCurPosY: Float=0f
     private val TAG =this::class.java.simpleName
     override fun getLayoutResId()=R.layout.home_fragment
     private var editChapter: Boolean=false
@@ -91,7 +91,7 @@ class HomeFragment : MvvmBaseFragment<HomeViewModel, HomeFragmentBinding>(),Coro
         leftDrawerPopupView
         chapterDragView?.parent=leftDrawerPopupView
         mContentRecycleView.invalidate()
-        initObserverbal()
+        initObservable()
         launch {
             delay(1000)
             loadData()
@@ -109,7 +109,7 @@ class HomeFragment : MvvmBaseFragment<HomeViewModel, HomeFragmentBinding>(),Coro
         val list= mutableListOf<ChapterVo>()
         Toast.makeText(context, "初始化生成了一些7 条假数据", Toast.LENGTH_SHORT).show()
         for (i in 0..7) {
-            list.add(ChapterVo("章节$i", locked = radom(), index = i).apply {
+            list.add(ChapterVo("章节$i", locked = random(), index = i).apply {
                 val l = mutableListOf<NewsVo>()
                 for (j in 0..20.rad) {
                     l.add(NewsVo("随机$j").apply {
@@ -127,16 +127,16 @@ class HomeFragment : MvvmBaseFragment<HomeViewModel, HomeFragmentBinding>(),Coro
         vm.currChapter.postValue(list.first())
     }
 
-    private fun radom()=
+    private fun random()=
         Math.random()>0.5
-
-    private fun initObserverbal() {
+    //绑定监控数据变化的逻辑
+    private fun initObservable() {
         vm.apply {
             listChapter.observe(this@HomeFragment){
                 chapterDragView?.adapter
             }
             currChapter.observe(this@HomeFragment){
-                binding.frameLayout.apply {
+                binding.mainContent.apply {
                     suoTextViewId.text=it.getLockStr()
                     ddTextViewId.text=it.chapterName
                     txTextViewId.text=it.description
@@ -151,13 +151,13 @@ class HomeFragment : MvvmBaseFragment<HomeViewModel, HomeFragmentBinding>(),Coro
 
     @SuppressLint("ClickableViewAccessibility")
     private fun initFrameLayout() {
-        binding.frameLayout.apply {
+        binding.mainContent.apply {
             cyImagebuttonId.setOnClickListener {//左侧弹窗按钮
                     showLeftPopup() }
             szImagebuttonId.setOnClickListener {navigationEdit() }
         }
 
-        binding.drawerLayout.setDrawerListener(object : DrawerLayout.DrawerListener {
+        binding.drawerLayout.addDrawerListener(object : DrawerLayout.DrawerListener {
             override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
             }
 
@@ -224,19 +224,17 @@ class HomeFragment : MvvmBaseFragment<HomeViewModel, HomeFragmentBinding>(),Coro
         })
     }
 
-    private val newsDatabase by lazy {
-        NewsDatabase.getInstance(requireContext())
-    }
     private var leftPopup: BasePopupView?=null
     private val SINGLE_LINE = 0
     private val HALF_EXPANDED = 1
     private val COMPLETE_EXPANDED = 2
 
+    //标题栏最大列数
     val ColumnNum = 4
 
 
     //顶部 抽屉展开按钮
-    val btnExpand by lazy { binding.frameLayout.frameLayout.btnExpand.apply {
+    val btnExpand by lazy { binding.mainContent.btnExpand.apply {
         Log.e(TAG, ": 抽屉展开按钮", )
         setOnClickListener {
             if(vm.currChapter?.value?.listNews?.size?:0<=ColumnNum){
@@ -244,17 +242,19 @@ class HomeFragment : MvvmBaseFragment<HomeViewModel, HomeFragmentBinding>(),Coro
                 return@setOnClickListener
             }
             if (currTitleState == COMPLETE_EXPANDED) {
-                if (supportHalfExpand) showHalfExpand() else showSingLine()
+                if (supportHalfExpand) updateTitleButtons(HALF_EXPANDED)
+                else updateTitleButtons()
             } else if (currTitleState == HALF_EXPANDED) {
-                showCompleteExpand()
+                updateTitleButtons(COMPLETE_EXPANDED)
             } else {
-                if (supportHalfExpand) showHalfExpand() else showCompleteExpand()
+                if (supportHalfExpand) updateTitleButtons(HALF_EXPANDED)
+                else updateTitleButtons(COMPLETE_EXPANDED)
             }
         }
     } }
 
     private val mTitleRecycleView by lazy {
-        binding.frameLayout.frameLayout.rvTitle.apply {
+        binding.mainContent.rvTitle.apply {
             layoutManager = titleLayoutManager
             adapter = titleAdapter
         }
@@ -263,7 +263,7 @@ class HomeFragment : MvvmBaseFragment<HomeViewModel, HomeFragmentBinding>(),Coro
     //收起左侧弹窗按钮
     val btnFold by lazy {
         Log.e(TAG, ": 合上展开按钮", )
-        binding.frameLayout.frameLayout.btnFold.apply { setOnClickListener { showSingLine() } } }
+        binding.mainContent.btnFold.apply { setOnClickListener { showSingLine() } } }
 
 
     private val titleLayoutManager by lazy {
@@ -285,18 +285,17 @@ class HomeFragment : MvvmBaseFragment<HomeViewModel, HomeFragmentBinding>(),Coro
                             currSelectPosition = position
                             contentScrollToPosition(position)
                         }
-
                         override fun onItemLongClick(view: View, position: Int) {}
                     })
         }
     }
     private val mContentRecycleView by lazy {
-        binding.frameLayout.frameLayout.rvContentList.apply {
+        binding.mainContent.rvContentList.apply {
             adapter = mContentAdapter
            setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
                val linearLayoutManager = layoutManager as LinearLayoutManager
                val topPosition = linearLayoutManager.findFirstVisibleItemPosition()
-               //设置滚动监听 当使显示的第一个item 是标题栏的第一个
+               //设置滚动监听 使当前显示的第一个item 是标题栏的第一个
                if (topPosition >= 0 && topPosition != currSelectedPosition) {
                    currSelectedPosition = topPosition
                    titleAdapter.currSelectPosition = currSelectedPosition
@@ -307,7 +306,7 @@ class HomeFragment : MvvmBaseFragment<HomeViewModel, HomeFragmentBinding>(),Coro
         }
     }
     val bottomSheetDialog by lazy { BottomSheetDialog(requireContext()).apply {
-        setContentView(R.layout.botton_dialog)
+        setContentView(R.layout.bottom_dialog)
         setCancelable(true)
         findViewById<View>(R.id.tv_cancel)?.setOnClickListener {dismiss() }
         findViewById<View>(R.id.tv_rename)?.setOnClickListener {
@@ -343,7 +342,7 @@ class HomeFragment : MvvmBaseFragment<HomeViewModel, HomeFragmentBinding>(),Coro
 
         }
     } }
-    //左侧弹窗列表
+    //首页的左侧弹窗列表
     private val leftDrawerPopupView by lazy {
         ChapterPopupView(requireContext()).apply {
             llContainer.apply {
@@ -402,13 +401,13 @@ class HomeFragment : MvvmBaseFragment<HomeViewModel, HomeFragmentBinding>(),Coro
     private var longPress = false
 
 
-
+    //初始化上部小标题列表栏
     private fun initTitleRecycleView() {
         val itemTouchHelper = ItemTouchHelper(ItemDragHelperCallBack(object : ItemHelper {
             override fun itemMoved(oldPosition: Int, newPosition: Int) {
                 Util.Loge("move")
                 //交换变换位置的集合数据
-                Collections.swap(titleAdapter.getData(), oldPosition, newPosition)
+                Collections.swap(titleAdapter.data, oldPosition, newPosition)
                 titleAdapter.notifyItemMoved(oldPosition, newPosition)
                 currSelectedPosition = newPosition
             }
@@ -494,7 +493,7 @@ class HomeFragment : MvvmBaseFragment<HomeViewModel, HomeFragmentBinding>(),Coro
     }
 
     /**
-     * 根据标题栏折叠状态显示按钮
+     * 根据顶部标题栏折叠状态，显示标题栏按钮
      */
     private fun showExpandFoldBtns() {
         when (currTitleState) {
@@ -507,6 +506,34 @@ class HomeFragment : MvvmBaseFragment<HomeViewModel, HomeFragmentBinding>(),Coro
                 btnFold.visibility = View.VISIBLE
             }
             COMPLETE_EXPANDED -> {
+                btnExpand.setImageResource(R.drawable.ic_baseline_expand_less_24)
+                btnFold.visibility = View.VISIBLE
+            }
+            else -> {
+            }
+        }
+    }/**
+     * 刷新标题栏按钮显示
+     */
+    private fun updateTitleButtons(newState:Int=SINGLE_LINE) {
+        currTitleState=newState
+        val layoutParams = mTitleRecycleView.layoutParams as LinearLayout.LayoutParams
+        when (newState) {
+            SINGLE_LINE -> {
+                layoutParams.height = singleLineHeight
+                mTitleRecycleView.layoutParams = layoutParams
+                btnExpand.setImageResource(R.drawable.ic_baseline_expand_more_24)
+                btnFold.visibility = View.GONE
+            }
+            HALF_EXPANDED -> {
+                layoutParams.height = titleMaxHeight
+                mTitleRecycleView.layoutParams = layoutParams
+                btnExpand.setImageResource(R.drawable.ic_baseline_expand_more_24)
+                btnFold.visibility = View.VISIBLE
+            }
+            COMPLETE_EXPANDED -> {
+                layoutParams.height = LinearLayout.LayoutParams.WRAP_CONTENT
+                mTitleRecycleView.layoutParams = layoutParams
                 btnExpand.setImageResource(R.drawable.ic_baseline_expand_less_24)
                 btnFold.visibility = View.VISIBLE
             }

@@ -1,8 +1,11 @@
 package com.example.newsdemoapplication.ui.manager
 
 import android.os.Bundle
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.navigation.fragment.NavHostFragment
+import com.example.newsdemoapplication.Constants
 import com.example.newsdemoapplication.R
 import com.example.newsdemoapplication.databinding.AddSectionFragmentBinding
 import com.example.newsdemoapplication.model.ChapterVo
@@ -10,31 +13,34 @@ import com.example.newsdemoapplication.model.ContentVo
 import com.example.newsdemoapplication.model.NewsVo
 import com.example.newsdemoapplication.util.common.MvvmBaseFragment
 import com.lishuaihua.toast.ToastUtils.show
+import kotlinx.android.synthetic.main.drawer_style.*
 
 class AddSectionFragment : MvvmBaseFragment<AddViewModel, AddSectionFragmentBinding>() {
     override fun getLayoutResId()= R.layout.add_section_fragment
-    private val isEdit by lazy{
-//        arguments?.getBoolean(Constants.IsEdit,false)?:false
+    private val isEdit by lazy{ //编辑还是新增的状态
+        arguments?.getBoolean(Constants.IsEdit,false)?:false
     }
         private var chapterVo : ChapterVo?=null
 
         override fun doCreateView(savedInstanceState: Bundle?) {
-//            (binding.titleBar as NavigationBar).apply {
-//                "${if (isEdit) "管理".apply {
-//                    chapterVo=arguments?.getSerializable(Constants.ChapterVo)?.let { it as ChapterVo }
-//                    chapterVo?.let { loadData(it)}
-//                } else "添加"}章节".let {
-//                    setTitle(it)
-//                }
-//                setBackOnClickListener{
-//                    NavHostFragment.findNavController(this@AddSectionFragment)
-//                            .navigate(R.id.navigation_test)
-//                }
-//            }
-//            if(chapterVo==null)(binding.titleBar as NavigationBar).apply {
-//                "添加章节".let {
-//                    setTitle(it)
-//                }}
+            val tvTitle =binding.titleBar.findViewById<TextView>(R.id.tv_title)
+            val btnBack:ImageView =binding.titleBar.findViewById(R.id.btn_back)
+            btnBack.setOnClickListener {
+                NavHostFragment.findNavController(this@AddSectionFragment)
+                            .navigate(R.id.navigation_test)}
+            tvTitle.apply {
+                ("${if (isEdit) "管理".apply {
+                    chapterVo=arguments?.getSerializable(Constants.ChapterVo)?.let { it as ChapterVo }
+                    chapterVo?.let { 
+                        binding.etChapterName.setText(it.chapterName)
+                        binding.etChapterPosition.setText(it.index.toString())
+                    }} 
+                else "添加"}章节").let { text=it }
+            }
+            if(chapterVo==null)
+                tvTitle.apply {
+                    text="添加章节"
+                }
             binding.btnAdd.setOnClickListener {
                 binding.etChapterTitle.text?.let {
                     if(it.isNullOrEmpty()) Toast.makeText(context, "先输入标题", Toast.LENGTH_SHORT).show()
@@ -48,7 +54,6 @@ class AddSectionFragment : MvvmBaseFragment<AddViewModel, AddSectionFragmentBind
                         }
                     }
                 }
-//                XPopup.Builder(context).asInputConfirm("输入内容",""){}.show()
             }
             binding.btnDeleteTitle.setOnClickListener {
                 binding.etChapterTitle.text?.let {ed->
@@ -115,7 +120,6 @@ class AddSectionFragment : MvvmBaseFragment<AddViewModel, AddSectionFragmentBind
                         }
                     }
                 }
-//                XPopup.Builder(context).asInputConfirm("输入内容",""){}.show()
             }
             binding.btnSave.setOnClickListener {
                 binding.etChapterName.text.let {ed->
@@ -128,18 +132,10 @@ class AddSectionFragment : MvvmBaseFragment<AddViewModel, AddSectionFragmentBind
                         }
                         NavHostFragment.findNavController(this@AddSectionFragment)
                                 .navigate(R.id.navigation_test,Bundle().apply {
-//                                    putSerializable(Constants.ChapterVo,chapterVo)
+                                    putSerializable(Constants.ChapterVo,chapterVo)
                                 })
                     }
                 }
-            }
-
-        }
-
-        private fun loadData(chapterVo: ChapterVo) {
-            binding.apply {
-                etChapterName.setText(chapterVo.chapterName)
-                etChapterPosition.setText(chapterVo.index.toString())
             }
         }
 }

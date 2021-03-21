@@ -23,12 +23,14 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 拖动列表的适配器
+ */
 public class ListDragAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context mContext;
     private List<String> list;
     private OnItemClickListener mOnItemClickListener;
-    private ConvertView mConvertView;
     private int currSelectPosition;
     public ListDragAdapter(Context context, List<String> list) {
         this.mContext = context;
@@ -49,7 +51,7 @@ public class ListDragAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(
-                showImage?R.layout.image_item:R.layout.tag_item, parent, false);
+                showImage?R.layout.image_item:R.layout.title_style, parent, false);
         return new MyDragViewHolder(view);
     }
 
@@ -70,9 +72,6 @@ public class ListDragAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHold
             }
         }else {
             mHolder.tvTag.setText(list.get(position));
-        }
-        if(mConvertView!=null){
-            mConvertView.convert(mHolder,list.get(position));
         }
     }
 

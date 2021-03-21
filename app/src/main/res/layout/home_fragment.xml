@@ -11,9 +11,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="@dimen/dp_48">
+            <!--中间层内容-->
             <include
                 layout="@layout/activity_content_cotainer"
-                android:id="@+id/frameLayout"
+                android:id="@+id/main_content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </RelativeLayout>
@@ -55,8 +56,5 @@
                 android:text="关闭" />
 
         </LinearLayout>
-
-
-
     </androidx.drawerlayout.widget.DrawerLayout>
 </layout>

@@ -46,7 +46,7 @@ class ChapterDragAdapter constructor(val context: Context,var list:MutableList<C
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view: View = LayoutInflater.from(context).inflate(
-                if (showImage) R.layout.image_item else R.layout.tag_item, parent, false)
+                if (showImage) R.layout.image_item else R.layout.title_style, parent, false)
         return MyDragViewHolder(view)
     }
 
