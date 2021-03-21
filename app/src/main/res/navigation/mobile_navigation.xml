@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
     app:startDestination="@id/navigation_test">
     <fragment
         android:id="@+id/navigation_test"
         android:name="com.example.newsdemoapplication.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home_outside" >
+        android:label="@string/title_home">
         <action
             android:id="@+id/action_navigation_test_to_navigation_add_section"
             app:destination="@id/navigation_add_section" />
@@ -17,6 +15,5 @@
     <fragment
         android:id="@+id/navigation_add_section"
         android:name="com.example.newsdemoapplication.ui.manager.AddSectionFragment"
-        android:label="@string/title_Add"
-        tools:layout="@layout/fragment_notifications" />
+        android:label="@string/title_Add" />
 </navigation>

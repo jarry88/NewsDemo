@@ -136,7 +136,7 @@ class HomeFragment : MvvmBaseFragment<HomeViewModel, HomeFragmentBinding>(),Coro
                 chapterDragView?.adapter
             }
             currChapter.observe(this@HomeFragment){
-                binding.mainContent.apply {
+                binding.apply {
                     suoTextViewId.text=it.getLockStr()
                     ddTextViewId.text=it.chapterName
                     txTextViewId.text=it.description
@@ -149,11 +149,14 @@ class HomeFragment : MvvmBaseFragment<HomeViewModel, HomeFragmentBinding>(),Coro
         }
     }
 
+    /**
+     * 设置页面点击响应事件
+     */
     @SuppressLint("ClickableViewAccessibility")
     private fun initFrameLayout() {
-        binding.mainContent.apply {
+        binding.apply {
             cyImagebuttonId.setOnClickListener {//左侧弹窗按钮
-                    showLeftPopup() }
+                showLeftPopup() }
             szImagebuttonId.setOnClickListener {navigationEdit() }
         }
 
@@ -234,7 +237,7 @@ class HomeFragment : MvvmBaseFragment<HomeViewModel, HomeFragmentBinding>(),Coro
 
 
     //顶部 抽屉展开按钮
-    val btnExpand by lazy { binding.mainContent.btnExpand.apply {
+    val btnExpand by lazy { binding.btnExpand.apply {
         Log.e(TAG, ": 抽屉展开按钮", )
         setOnClickListener {
             if(vm.currChapter?.value?.listNews?.size?:0<=ColumnNum){
@@ -254,7 +257,7 @@ class HomeFragment : MvvmBaseFragment<HomeViewModel, HomeFragmentBinding>(),Coro
     } }
 
     private val mTitleRecycleView by lazy {
-        binding.mainContent.rvTitle.apply {
+        binding.rvTitle.apply {
             layoutManager = titleLayoutManager
             adapter = titleAdapter
         }
@@ -263,7 +266,7 @@ class HomeFragment : MvvmBaseFragment<HomeViewModel, HomeFragmentBinding>(),Coro
     //收起左侧弹窗按钮
     val btnFold by lazy {
         Log.e(TAG, ": 合上展开按钮", )
-        binding.mainContent.btnFold.also {
+        binding.btnFold.also {
             it.setOnClickListener { updateTitleButtons() }
         }
     }
@@ -295,9 +298,8 @@ class HomeFragment : MvvmBaseFragment<HomeViewModel, HomeFragmentBinding>(),Coro
     }
     //内容列表试图
     private val mContentRecycleView by lazy {
-        binding.mainContent.rvContentList.apply {
-            adapter = mContentAdapter
-           setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+        binding.rvContentList.apply { adapter = mContentAdapter
+           setOnScrollChangeListener { _, _, _, _, _ ->
                val linearLayoutManager = layoutManager as LinearLayoutManager
                val topPosition = linearLayoutManager.findFirstVisibleItemPosition()
                //设置滚动监听 使当前显示的第一个item 是标题栏的第一个
