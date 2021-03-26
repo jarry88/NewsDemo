@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.navigation.fragment.NavHostFragment
 import com.example.newsdemoapplication.Constants
 import com.example.newsdemoapplication.R
 import com.example.newsdemoapplication.databinding.AddSectionFragmentBinding
@@ -28,9 +27,9 @@ class AddSectionFragment : MvvmBaseFragment<AddViewModel, AddSectionFragmentBind
         override fun doCreateView(savedInstanceState: Bundle?) {
             val tvTitle =binding.titleBar.findViewById<TextView>(R.id.tv_title)
             val btnBack:ImageView =binding.titleBar.findViewById(R.id.btn_back)
-            btnBack.setOnClickListener {
-                NavHostFragment.findNavController(this@AddSectionFragment)
-                            .navigate(R.id.navigation_test)}
+//            btnBack.setOnClickListener {
+//                NavHostFragment.findNavController(this@AddSectionFragment)
+//                            .navigate(R.id.navigation_test)}
             tvTitle.apply {
                 ("${if (isEdit) "管理".apply {
                     chapterVo=arguments?.getSerializable(Constants.ChapterVo)?.let { it as ChapterVo }
@@ -132,10 +131,10 @@ class AddSectionFragment : MvvmBaseFragment<AddViewModel, AddSectionFragmentBind
                             chapterName =ed.toString()
                             index=binding.etChapterPosition.text?.toString()?.toIntOrNull()?: Int.MAX_VALUE
                         }
-                        NavHostFragment.findNavController(this@AddSectionFragment)
-                                .navigate(R.id.navigation_test,Bundle().apply {
-                                    putSerializable(Constants.ChapterVo,chapterVo)
-                                })
+//                        NavHostFragment.findNavController(this@AddSectionFragment)
+//                                .navigate(R.id.navigation_test,Bundle().apply {
+//                                    putSerializable(Constants.ChapterVo,chapterVo)
+//                                })
                     }
                 }
             }

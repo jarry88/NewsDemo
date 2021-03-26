@@ -9,9 +9,7 @@ import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.Toast
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.observe
-import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -81,9 +79,6 @@ class HomeFragment : MvvmBaseFragment<HomeViewModel, HomeFragmentBinding>(),Coro
     }
 
     override fun doCreateView(savedInstanceState: Bundle?) {
-        binding.btnCloseRight.apply {
-            setOnClickListener { showLoading() }
-        }
         btnFold
         btnExpand
         initFrameLayout()
@@ -155,64 +150,15 @@ class HomeFragment : MvvmBaseFragment<HomeViewModel, HomeFragmentBinding>(),Coro
     @SuppressLint("ClickableViewAccessibility")
     private fun initFrameLayout() {
         binding.apply {
-            cyImagebuttonId.setOnClickListener {//左侧弹窗按钮
-                showLeftPopup() }
+            cyImagebuttonId.setOnClickListener {//todo 左侧弹窗按钮
+//                showLeftPopup()
+                }
             szImagebuttonId.setOnClickListener {navigationEdit() }
         }
 
-        binding.drawerLayout.addDrawerListener(object : DrawerLayout.DrawerListener {
-            override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
-            }
 
-            override fun onDrawerOpened(drawerView: View) {
-                Log.e(TAG, "onDrawerOpened: 滑动", )
-                if(binding.drawerLayout.isDrawerOpen(binding.leftId)){
-                    showLeftPopup()
-                }
-            }
-
-            override fun onDrawerClosed(drawerView: View) {
-            }
-
-            override fun onDrawerStateChanged(newState: Int) {
-            }
-
-        })
     }
 
-    private fun showLeftPopup() {
-        leftPopup?.show() ?:XPopup.Builder(context)
-                .isDestroyOnDismiss(false) //对于只使用一次的弹窗，推荐设置这个
-                .popupPosition(PopupPosition.Left)//左边
-                .hasStatusBarShadow(true) //启用状态栏阴影
-                .autoDismiss(true)
-                .dismissOnBackPressed(true)
-                .dismissOnTouchOutside(true)
-                .setPopupCallback(object :XPopupCallback{
-                    override fun onCreated(popupView: BasePopupView?) {}
-
-                    override fun beforeShow(popupView: BasePopupView?) { }
-
-                    override fun onShow(popupView: BasePopupView?) {}
-
-                    override fun onDismiss(popupView: BasePopupView?) { binding.drawerLayout.closeDrawer(binding.leftId)}
-
-                    override fun beforeDismiss(popupView: BasePopupView?) {}
-
-                    override fun onBackPressed(popupView: BasePopupView?): Boolean {
-                        return true
-                    }
-
-                    override fun onKeyBoardStateChanged(popupView: BasePopupView?, height: Int) {}
-
-                    override fun onDrag(popupView: BasePopupView?, value: Int, percent: Float, upOrLeft: Boolean) {}
-                })
-
-                .asCustom(leftDrawerPopupView)
-                .show().also {
-                    leftPopup = it
-                }
-    }
 
     private fun navigationEdit() {
         try {
@@ -220,11 +166,12 @@ class HomeFragment : MvvmBaseFragment<HomeViewModel, HomeFragmentBinding>(),Coro
         }catch (e: Exception){
             Log.e("TAG", "navigationEdit:$e ")
         }
-        NavHostFragment.findNavController(this@HomeFragment).navigate(R.id.action_navigation_test_to_navigation_add_section, Bundle().apply {
-            putBoolean(Constants.IsEdit, true)
-            Log.e("TAG", "initFrameLayout: true")
-            putSerializable(Constants.ChapterVo, vm.currChapter.value)
-        })
+        //todo
+//        NavHostFragment.findNavController(this@HomeFragment).navigate(R.id.action_navigation_test_to_navigation_add_section, Bundle().apply {
+//            putBoolean(Constants.IsEdit, true)
+//            Log.e("TAG", "initFrameLayout: true")
+//            putSerializable(Constants.ChapterVo, vm.currChapter.value)
+//        })
     }
 
     private var leftPopup: BasePopupView?=null
@@ -379,11 +326,12 @@ class HomeFragment : MvvmBaseFragment<HomeViewModel, HomeFragmentBinding>(),Coro
                 }.also { addView(it) }
             }
             mOnClickListener= View.OnClickListener {
-                NavHostFragment.findNavController(this@HomeFragment)
-                        .navigate(R.id.action_navigation_test_to_navigation_add_section, Bundle().apply {
-                            putBoolean(Constants.IsEdit, false)
-                        }
-                        )
+                //Todo 跳转页面
+//                NavHostFragment.findNavController(this@HomeFragment)
+//                        .navigate(R.id.action_navigation_test_to_navigation_add_section, Bundle().apply {
+//                            putBoolean(Constants.IsEdit, false)
+//                        }
+//                        )
             }
         }
     }
