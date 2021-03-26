@@ -52,7 +52,7 @@ dependencies {
 
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
-
+    implementation "androidx.viewpager2:viewpager2:1.0.0"
     api "androidx.vectordrawable:vectordrawable:1.1.0"
     api 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.0'
     api 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0'

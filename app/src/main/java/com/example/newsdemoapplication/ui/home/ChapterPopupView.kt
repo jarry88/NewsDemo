@@ -11,16 +11,16 @@ import java.util.*
  * 首页左拉章节弹窗
  */
 class ChapterPopupView(context: Context):DrawerPopupView(context) {
-    override fun getImplLayoutId()= R.layout.left_list_drawer
-    var mOnClickListener: OnClickListener? = null
-    val llContainer: LinearLayout by  lazy { findViewById<LinearLayout>(R.id.ll_container) }
-    override fun onCreate() {
-        findViewById<View>(R.id.textView).setOnClickListener { v: View? -> if (mOnClickListener != null) mOnClickListener?.onClick(v) }
-        findViewById<View>(R.id.btn_close_left).setOnClickListener {  dismiss() }
-        findViewById<View>(R.id.btn_add).setOnClickListener { v: View? ->
-            dismiss()
-            if (mOnClickListener != null) mOnClickListener?.onClick(v)
-        }
-    }
+//    override fun getImplLayoutId()= R.layout.left_list_drawer
+//    var mOnClickListener: OnClickListener? = null
+//    val llContainer: LinearLayout by  lazy { findViewById<LinearLayout>(R.id.ll_container) }
+//    override fun onCreate() {
+//        findViewById<View>(R.id.textView).setOnClickListener { v: View? -> if (mOnClickListener != null) mOnClickListener?.onClick(v) }
+//        findViewById<View>(R.id.btn_close_left).setOnClickListener {  dismiss() }
+//        findViewById<View>(R.id.btn_add).setOnClickListener { v: View? ->
+//            dismiss()
+//            if (mOnClickListener != null) mOnClickListener?.onClick(v)
+//        }
+//    }
 
 }

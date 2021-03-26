@@ -12,10 +12,9 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="@dimen/dp_48">
+            android:paddingBottom="@dimen/dp_05">
             <!--中间层内容-->
             <androidx.constraintlayout.widget.ConstraintLayout
-
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
                 <androidx.appcompat.widget.LinearLayoutCompat
@@ -25,15 +24,27 @@
                     android:id="@+id/ll_top_message"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
-                    <ImageButton
-                        android:id="@+id/cy_imagebutton_id"
-                        android:layout_width="40dp"
-                        android:layout_height="16dp"
-                        android:background="#FFFFFF"
-                        android:contentDescription="@string/cy_imagebutton"
-                        android:scaleType="fitCenter"
-                        app:layout_constraintDimensionRatio="1:1"
-                        app:srcCompat="@drawable/z" />
+<!--                    左返回按钮-->
+                    <LinearLayout
+                        android:id="@+id/ll_top_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center">
+                        <ImageButton
+                            android:id="@+id/cy_imagebutton_id"
+                            android:layout_width="15dp"
+                            android:layout_height="16dp"
+                            android:background="#FFFFFF"
+                            android:contentDescription="@string/cy_imagebutton"
+                            android:scaleType="fitCenter"
+                            app:layout_constraintDimensionRatio="1:1"
+                            app:srcCompat="@drawable/z" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="【左抽屉】"/>
+                    </LinearLayout>
+
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="0dp"
                         android:layout_weight="1"
@@ -67,15 +78,27 @@
                             android:textSize="16sp"/>
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
+                    <!--                    右返回按钮-->
+                    <LinearLayout
+                        android:id="@+id/ll_top_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="【右抽屉】"/>
                     <ImageButton
                         android:id="@+id/sz_imagebutton_id"
-                        android:layout_width="40dp"
-                        android:layout_height="24dp"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
                         android:background="#FFFFFF"
                         android:contentDescription="@string/sz_imagebutton"
                         android:scaleType="fitCenter"
                         app:layout_constraintDimensionRatio="1:1"
                         app:srcCompat="@drawable/y" />
+                    </LinearLayout>
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <TextView
@@ -142,6 +165,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:id="@+id/rv_title"/>
+<!--                        顶部标题栏展开收起按钮-->
                         <LinearLayout
                             android:background="@color/grey"
                             android:layout_width="match_parent"
@@ -167,37 +191,20 @@
                         </LinearLayout>
                     </LinearLayout>
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_content_list"
+                    <androidx.viewpager2.widget.ViewPager2
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:id="@+id/pager"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
+                        android:background="@color/white"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/ll_top_container"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:layout_marginBottom="@dimen/dp_48"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                        app:layout_constraintBottom_toBottomOf="parent"/>
 
-                    <TextView
-                        android:visibility="gone"
-                        android:id="@+id/btn_login"
-                        android:layout_marginBottom="60dp"
-
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:textAlignment="center"
-                        android:text="密码登录弹窗"
-                        android:textSize="20sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </RelativeLayout>
-
     </LinearLayout>
 </layout>
