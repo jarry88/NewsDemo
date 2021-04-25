@@ -3,7 +3,7 @@ package com.example.newsdemoapplication.model
 import java.io.Serializable
 
 var Id=0
-//章节属性 （chapter -》news-》content）
+//一级标题属性 （chapter -》news-》content）
  data class ChapterVo(
          var chapterName:String,
          var locked:Boolean=false,

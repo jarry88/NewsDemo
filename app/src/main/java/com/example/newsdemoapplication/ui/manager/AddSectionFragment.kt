@@ -14,7 +14,7 @@ import com.example.newsdemoapplication.util.common.MvvmBaseFragment
 import com.lishuaihua.toast.ToastUtils.show
 
 /**
- * 添加 编辑章节的页面
+ * 添加 编辑一级标题的页面
  * @author gzp
  */
 class AddSectionFragment : MvvmBaseFragment<AddViewModel, AddSectionFragmentBinding>() {
@@ -37,11 +37,11 @@ class AddSectionFragment : MvvmBaseFragment<AddViewModel, AddSectionFragmentBind
                         binding.etChapterName.setText(it.chapterName)
                         binding.etChapterPosition.setText(it.index.toString())
                     }} 
-                else "添加"}章节").let { text=it }
+                else "添加"}一级标题").let { text=it }
             }
             if(chapterVo==null)
                 tvTitle.apply {
-                    text="添加章节"
+                    text="添加一级标题"
                 }
             binding.btnAdd.setOnClickListener {
                 binding.etChapterTitle.text?.let {
@@ -124,7 +124,7 @@ class AddSectionFragment : MvvmBaseFragment<AddViewModel, AddSectionFragmentBind
             }
             binding.btnSave.setOnClickListener {
                 binding.etChapterName.text.let {ed->
-                    if(ed.isNullOrEmpty()) Toast.makeText(context, "请先输入章节名称", Toast.LENGTH_SHORT).show()
+                    if(ed.isNullOrEmpty()) Toast.makeText(context, "请先输入一级标题名称", Toast.LENGTH_SHORT).show()
                     else{
                         if(chapterVo==null) chapterVo= ChapterVo(ed.toString())
                         chapterVo?.apply {

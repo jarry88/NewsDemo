@@ -66,8 +66,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:text="章节2"
-                            android:textSize="16sp"/>
+                            android:textStyle="bold"
+                            android:text="一级标题2"
+                            android:textSize="19sp"/>
 
                         <TextView
                             android:id="@+id/tx_textView_id"

@@ -17,11 +17,11 @@ class HomeViewModel : BaseViewModel() {
     operator fun getValue(chapterDragView: ChapterDragView, property: KProperty<*>): HomeViewModel {
         return this
     }
-    //章节列表
+    //一级标题列表
     val listChapter by lazy {
         MutableLiveData<MutableList<ChapterVo>>()
     }
-    //当前章节
+    //当前一级标题
     val currChapter by lazy {
         MutableLiveData<ChapterVo>()
     }
@@ -33,7 +33,7 @@ class HomeViewModel : BaseViewModel() {
     fun randomData(){
         val list= mutableListOf<ChapterVo>()
         for (i in 4..9) {
-            list.add(ChapterVo("章节$i", locked = random(), index = i).apply {
+            list.add(ChapterVo("一级标题$i", locked = random(), index = i).apply {
                 val l = mutableListOf<NewsVo>()
                 for (j in 0..20.rad) {
                     l.add(NewsVo("成发$j 公司").apply {
@@ -50,6 +50,12 @@ class HomeViewModel : BaseViewModel() {
         listChapter.postValue(list)
         currChapter.postValue(list.first())
     }
+    fun changeChapter(id:Int){
+        listChapter.value?.firstOrNull { it.id==id }?.let {
+            currChapter.postValue(it)
+        }
+    }
+
     fun saveChapter(chapterVo: ChapterVo) {
         listChapter.apply {
             var index=-1

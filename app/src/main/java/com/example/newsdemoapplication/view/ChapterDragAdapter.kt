@@ -9,10 +9,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.newsdemoapplication.R
 import com.example.newsdemoapplication.model.ChapterVo
 import com.example.newsdemoapplication.util.callback.OnItemClickListener
+import com.example.newsdemoapplication.util.callback.SimpleCallback
 
 class ChapterDragAdapter constructor(val context: Context): RecyclerView.Adapter<RecyclerView.ViewHolder>(){
     //    private List<T> listData;
     var list= mutableListOf<ChapterVo>()
+    var selectCallback:SimpleCallback?=null
     private var mOnItemClickListener: OnItemClickListener? = null
     private var mConvertView: ListDragAdapter.ConvertView? = null
     var currSelectPosition =0
@@ -22,6 +24,7 @@ class ChapterDragAdapter constructor(val context: Context): RecyclerView.Adapter
             field = value
             notifyItemChanged(old)
             notifyItemChanged(field)
+            selectCallback?.changeChapter(list[value].id)
         }
 
     private var showImage = false

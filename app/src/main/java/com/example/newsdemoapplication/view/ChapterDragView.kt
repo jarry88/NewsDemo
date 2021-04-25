@@ -25,7 +25,7 @@ import kotlin.math.abs
 
 /**
  * 首页左侧拉出抽屉
- * 章节列表信息可拖动视图
+ * 一级标题列表信息可拖动视图
  * @author gzp
  */
 

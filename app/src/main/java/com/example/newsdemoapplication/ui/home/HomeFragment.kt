@@ -26,6 +26,7 @@ import com.example.newsdemoapplication.view.ChapterDragView
 import com.example.newsdemoapplication.view.TitleRecycleView.DragAndPressCallBack
 import com.example.newsdemoapplication.model.ChapterVo
 import com.example.newsdemoapplication.ui.main_activity.MainActivity
+import com.example.newsdemoapplication.util.callback.SimpleCallback
 import com.example.newsdemoapplication.util.common.MvvmBaseFragment
 import com.example.newsdemoapplication.util.getRandomData
 import com.example.newsdemoapplication.util.log
@@ -42,7 +43,7 @@ import java.util.*
  * app首页
  * @author gzp
  */
-class HomeFragment : MvvmBaseFragment<HomeViewModel, HomeFragmentBinding>(),CoroutineScope by MainScope() {
+class HomeFragment : MvvmBaseFragment<HomeViewModel, HomeFragmentBinding>(),CoroutineScope by MainScope(),SimpleCallback {
     private val TAG =this::class.java.simpleName
     override fun getLayoutResId()=R.layout.home_fragment
     val mainActivity by lazy { activity as MainActivity }
@@ -57,12 +58,16 @@ class HomeFragment : MvvmBaseFragment<HomeViewModel, HomeFragmentBinding>(),Coro
 
 
     private var editChapter: Boolean=false
-    val chapterDragView:ChapterDragView by lazy { mainActivity.binding.zuoyeId.listView }
+    val chapterDragView:ChapterDragView by lazy { mainActivity.binding.zuoyeId.listView.also {
+        it.mAdapter.selectCallback=this
+    }}
+
     var currContentNewsItem=0
     lateinit var mFragmentAdapter:FragmentStateAdapter
     //回到页面时更新数据
     override fun onResume() {
         super.onResume()
+        log("resume")
         arguments?.getSerializable(Constants.ChapterVo)?.let {
             vm.saveChapter(it as ChapterVo)
         }
@@ -128,6 +133,8 @@ class HomeFragment : MvvmBaseFragment<HomeViewModel, HomeFragmentBinding>(),Coro
         vm.apply {
             listChapter.observe(this@HomeFragment){
                 chapterDragView.mAdapter.list=it
+                chapterDragView.mAdapter.notifyDataSetChanged()
+
                 toastShort(it.size.toString())
             }
             currChapter.observe(this@HomeFragment){
@@ -373,5 +380,10 @@ class HomeFragment : MvvmBaseFragment<HomeViewModel, HomeFragmentBinding>(),Coro
 
     fun refreshDate() {
         vm.randomData()
+    }
+
+    override fun changeChapter(id: Int) {
+        log("changeChapter $id")
+        vm.changeChapter(id)
     }
 }

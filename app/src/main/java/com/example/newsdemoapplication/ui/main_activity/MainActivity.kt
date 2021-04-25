@@ -38,6 +38,5 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun updateLeftList(){
-        binding.zuoyeId.textView10.text="ss"
     }
 }
