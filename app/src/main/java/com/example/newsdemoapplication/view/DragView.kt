@@ -23,7 +23,8 @@ import kotlin.math.abs
 /**
  * 拖动交换长按功能视图 ，基础模板
  */
-open class DragView @JvmOverloads constructor(context: Context, attributes: AttributeSet? = null, def: Int = 0) :RecyclerView(context, attributes, def) {
+open class DragView @JvmOverloads constructor(context: Context, attributes: AttributeSet? = null, def: Int = 0)
+    :RecyclerView(context, attributes, def) {
     var count =0;
     var moveCount =0
     var ColumnNum =4

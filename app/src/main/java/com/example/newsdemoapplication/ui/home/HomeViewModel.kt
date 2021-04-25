@@ -32,12 +32,11 @@ class HomeViewModel : BaseViewModel() {
     // 前期提供假数据展示UI的方法
     fun randomData(){
         val list= mutableListOf<ChapterVo>()
-//        Toast.makeText(context, "初始化生成了一些7 条假数据", Toast.LENGTH_SHORT).show()
         for (i in 4..9) {
             list.add(ChapterVo("章节$i", locked = random(), index = i).apply {
                 val l = mutableListOf<NewsVo>()
                 for (j in 0..20.rad) {
-                    l.add(NewsVo("随机$j").apply {
+                    l.add(NewsVo("成发$j 公司").apply {
                         val ll = mutableListOf<ContentVo>()
                         for (m in 0..20.rad) {
                             ll.add(ContentVo("随机$m", "sss"))

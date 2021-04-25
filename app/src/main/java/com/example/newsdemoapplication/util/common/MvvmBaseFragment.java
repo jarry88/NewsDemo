@@ -11,6 +11,8 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 
+import static com.example.newsdemoapplication.util.KUtilKt.log;
+
 
 public abstract class MvvmBaseFragment<U extends BaseViewModel, T extends ViewDataBinding> extends BaseFragment<U> {
 
@@ -35,6 +37,7 @@ public abstract class MvvmBaseFragment<U extends BaseViewModel, T extends ViewDa
     }
 
     public void toastShort(String string){
+        log("toast $string");
         Toast.makeText(requireContext(),string,Toast.LENGTH_SHORT);
     }
 }

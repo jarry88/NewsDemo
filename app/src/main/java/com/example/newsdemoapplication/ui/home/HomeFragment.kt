@@ -35,6 +35,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import okhttp3.internal.notify
 import java.util.*
 
 /**
@@ -44,7 +45,7 @@ import java.util.*
 class HomeFragment : MvvmBaseFragment<HomeViewModel, HomeFragmentBinding>(),CoroutineScope by MainScope() {
     private val TAG =this::class.java.simpleName
     override fun getLayoutResId()=R.layout.home_fragment
-
+    val mainActivity by lazy { activity as MainActivity }
     //标题栏最大列数
     val ColumnNum = 4
     //顶部标题栏折叠状态
@@ -56,9 +57,10 @@ class HomeFragment : MvvmBaseFragment<HomeViewModel, HomeFragmentBinding>(),Coro
 
 
     private var editChapter: Boolean=false
-    var chapterDragView:ChapterDragView?=null
+    val chapterDragView:ChapterDragView by lazy { mainActivity.binding.zuoyeId.listView }
     var currContentNewsItem=0
     lateinit var mFragmentAdapter:FragmentStateAdapter
+    //回到页面时更新数据
     override fun onResume() {
         super.onResume()
         arguments?.getSerializable(Constants.ChapterVo)?.let {
@@ -110,6 +112,7 @@ class HomeFragment : MvvmBaseFragment<HomeViewModel, HomeFragmentBinding>(),Coro
             (activity as? MainActivity)?.let {a->
                 llTopLeft.setOnClickListener {// 左侧弹窗按钮
                     a.mDrawerLayout.openDrawer(GravityCompat.START) }
+                    chapterDragView.mAdapter.notifyDataSetChanged()
                 llTopRight.setOnClickListener {
                     a.mDrawerLayout.openDrawer(GravityCompat.END)
                 }
@@ -124,7 +127,8 @@ class HomeFragment : MvvmBaseFragment<HomeViewModel, HomeFragmentBinding>(),Coro
     private fun initObservable() {
         vm.apply {
             listChapter.observe(this@HomeFragment){
-                chapterDragView?.adapter
+                chapterDragView.mAdapter.list=it
+                toastShort(it.size.toString())
             }
             currChapter.observe(this@HomeFragment){
                 log("数据初始化")
@@ -335,14 +339,6 @@ class HomeFragment : MvvmBaseFragment<HomeViewModel, HomeFragmentBinding>(),Coro
         log("${vm.currChapter.value}itemCount ${mFragmentAdapter.itemCount} 页")
         binding.pager.setCurrentItem(position,false)
         mFragmentAdapter.createFragment(position)
-//
-//        if(binding.pager.currentItem>position){
-//            log("移动到第$position 页")
-//
-//        }else{
-//            log("创造$position 页")
-//            binding.pager.setCurrentItem(position,true)
-//        }
     }
 
 
@@ -373,7 +369,9 @@ class HomeFragment : MvvmBaseFragment<HomeViewModel, HomeFragmentBinding>(),Coro
             }
         }
         mTitleRecycleView.layoutParams = layoutParams
+    }
 
-
+    fun refreshDate() {
+        vm.randomData()
     }
 }

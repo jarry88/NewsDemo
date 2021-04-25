@@ -10,7 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 /**
  * 准备封装的顶部标题拖动视图
  */
-class TitleRecycleView @JvmOverloads constructor(context: Context, attributes: AttributeSet? = null, def: Int = 0) :RecyclerView(context, attributes, def) {
+class TitleRecycleView @JvmOverloads constructor(context: Context, attributes: AttributeSet? = null, def: Int = 0)
+    :RecyclerView(context, attributes, def) {
 
     private val Long.finish: Boolean
         get() {

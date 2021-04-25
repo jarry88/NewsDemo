@@ -28,8 +28,8 @@ import kotlin.math.abs
  * 章节列表信息可拖动视图
  * @author gzp
  */
-@SuppressLint("ViewConstructor")
-class ChapterDragView  @JvmOverloads constructor(context: Context, val liveDate :LiveData<MutableList<ChapterVo>>, attributes: AttributeSet? = null, def: Int = 0) : RecyclerView(context, attributes, def)  {
+
+class ChapterDragView  @JvmOverloads constructor(context: Context, attributes: AttributeSet? = null, def: Int = 0) : RecyclerView(context, attributes, def)  {
     var count =0;
     var moveCount =0
     var startX =0f
@@ -47,7 +47,7 @@ class ChapterDragView  @JvmOverloads constructor(context: Context, val liveDate 
     var beginTime =System.currentTimeMillis()
     var bottomShowTime =System.currentTimeMillis()
     var clickCallBack:ClickCallBack?=null
-    val mAdapter by lazy {  ChapterDragAdapter(context, liveDate.value).apply {
+    val mAdapter by lazy {  ChapterDragAdapter(context).apply {
         setOnItemClickListener(
                 object : OnItemClickListener {
                     override fun onItemClick(view: View, position: Int) {
@@ -165,59 +165,4 @@ class ChapterDragView  @JvmOverloads constructor(context: Context, val liveDate 
     interface ClickCallBack{
         fun onChapterClicked(chapterVo: ChapterVo)
     }
-}
-class ChapterDragAdapter constructor(val context: Context,var list:MutableList<ChapterVo>?): RecyclerView.Adapter<RecyclerView.ViewHolder>(){
-    //    private List<T> listData;
-    private var mOnItemClickListener: OnItemClickListener? = null
-    private var mConvertView: ListDragAdapter.ConvertView? = null
-    var currSelectPosition =0
-        set(value) {
-            Log.e("TAG", "setCurrSelectPosition: " + value + list!![value])
-            val old = field
-            field = value
-            notifyItemChanged(old)
-            notifyItemChanged(field)
-        }
-
-    private var showImage = false
-
-
-    override fun getItemCount(): Int {
-        return list?.size?:0
-    }
-
-    fun getData(): MutableList<ChapterVo>? {
-        return list
-    }
-
-    fun setData(l: MutableList<ChapterVo>?) =l?.let {
-        list=l
-        notifyDataSetChanged()
-    }
-
-    fun setOnItemClickListener(onItemClickListener: OnItemClickListener?) {
-        mOnItemClickListener = onItemClickListener
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val view: View = LayoutInflater.from(context).inflate(
-                if (showImage) R.layout.image_item_style else R.layout.title_item_style, parent, false)
-        return ListDragAdapter.MyDragViewHolder(view)
-    }
-
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val mHolder = holder as ListDragAdapter.MyDragViewHolder
-        mHolder.setSelected(holder.getAdapterPosition() == currSelectPosition)
-        if (mOnItemClickListener != null) {
-            mHolder.clItem.setOnClickListener { v: View? ->
-                mOnItemClickListener!!.onItemClick(mHolder.itemView, holder.getAdapterPosition())
-            }
-        }
-
-        mHolder.tvTag.text = list?.get(position)?.chapterName
-        if (mConvertView != null) {
-            mConvertView!!.convert(mHolder, list?.get(position))
-        }
-    }
-
 }

@@ -13,6 +13,9 @@ import com.example.newsdemoapplication.util.log
 import com.example.newsdemoapplication.view.DragView
 import java.util.*
 
+/**
+ * 滚动的内容页
+ */
 class ScrollSliderFragment:Fragment() {
     val tvTitle: TextView by lazy {
         requireView().findViewById<TextView>(R.id.tv_title)

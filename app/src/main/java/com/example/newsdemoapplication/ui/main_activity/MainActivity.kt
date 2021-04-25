@@ -1,10 +1,14 @@
 package com.example.newsdemoapplication.ui.main_activity
 
 import android.os.Bundle
+import android.view.Gravity
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
+import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.newsdemoapplication.R
+import com.example.newsdemoapplication.databinding.ActivityMainBinding
 import com.example.newsdemoapplication.ui.home.HomeFragment
 
 /**
@@ -19,12 +23,21 @@ class MainActivity : AppCompatActivity() {
             it.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
         }
     }
+    val binding by lazy {
+        DataBindingUtil.setContentView<ActivityMainBinding>(this,R.layout.activity_main)
+    }
+    val homeFragment by lazy { HomeFragment() }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
+        binding.zuoyeId.zuoyeGuanbiAn.setOnClickListener { mDrawerLayout.closeDrawer(GravityCompat.START)}
+        binding.zuoyeId.updateButton.setOnClickListener { homeFragment.refreshDate()}
+        updateLeftList()
         supportFragmentManager.beginTransaction()
-                .replace(R.id.cl_container,HomeFragment())
+                .replace(R.id.cl_container,homeFragment)
                 .commit()
+    }
+
+    fun updateLeftList(){
+        binding.zuoyeId.textView10.text="ss"
     }
 }
