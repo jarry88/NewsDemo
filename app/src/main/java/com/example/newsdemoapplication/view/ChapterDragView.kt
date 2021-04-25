@@ -80,6 +80,7 @@ class ChapterDragView  @JvmOverloads constructor(context: Context, attributes: A
                             if (moveCount++ > 0) {
                                 longPress=false
                                 mCallBack?.onAfterPressMove()
+
                                 reset()
                             }
                         }

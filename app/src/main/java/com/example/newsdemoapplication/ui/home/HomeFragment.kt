@@ -60,6 +60,18 @@ class HomeFragment : MvvmBaseFragment<HomeViewModel, HomeFragmentBinding>(),Coro
     private var editChapter: Boolean=false
     val chapterDragView:ChapterDragView by lazy { mainActivity.binding.zuoyeId.listView.also {
         it.mAdapter.selectCallback=this
+        it.mCallBack = object : DragAndPressCallBack {
+            //设置移动监听回调
+            override fun onLongPress() {
+                bottomSheetDialog.show()
+                mTitleRecycleView.bottomShowTime = System.currentTimeMillis()
+            }
+
+            override fun onAfterPressMove() {
+                longPress = false
+                bottomSheetDialog.dismiss()
+            }
+        }
     }}
 
     var currContentNewsItem=0
@@ -231,15 +243,19 @@ class HomeFragment : MvvmBaseFragment<HomeViewModel, HomeFragmentBinding>(),Coro
         findViewById<View>(R.id.tv_rename)?.setOnClickListener {
             Log.e("TAG", "initBottomSheetDiaLog: $currSelectedPosition")
             dismiss()
-            if(editChapter){
+            val leftListOpen =mainActivity.mDrawerLayout.isDrawerOpen(mainActivity.binding.zuochoutiId)
+            if(editChapter&&! leftListOpen){
                 editChapter=false //todo 跳转到编辑页
             }else
-            XPopup.Builder(activity).asInputConfirm("重命名", "请输入内容。") { text: String? ->
+            XPopup.Builder(activity).asInputConfirm("重命名 $leftListOpen", "请输入内容。") { text: String? ->
+                if(!leftListOpen){
                     listData[currSelectedPosition] = text?:"-"
                     titleAdapter.notifyItemChanged(currSelectedPosition)
                     mFragmentAdapter.notifyItemChanged(currSelectedPosition)
-//                    mContentAdapter.notifyItemChanged(currSelectedPosition)
-
+//                                        mContentAdapter.notifyItemChanged(currSelectedPosition)
+                }else{
+                    vm.currChapter.value?.chapterName=text?:"-"
+                }
             }.show()
         }
         findViewById<View>(R.id.tv_delete)?.setOnClickListener { v: View? ->
