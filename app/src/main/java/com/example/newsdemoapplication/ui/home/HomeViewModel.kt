@@ -1,6 +1,8 @@
 package com.example.newsdemoapplication.ui.home
 
+import android.os.Build
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import com.example.newsdemoapplication.view.ChapterDragView
 import com.example.newsdemoapplication.model.ChapterVo
@@ -82,6 +84,12 @@ class HomeViewModel : BaseViewModel() {
         }else{
             it.get(p)
         }
+    }
+
+    fun deleteChapter() {
+        listChapter.value?.remove(currChapter.value)
+        listChapter.value=listChapter.value
+        currChapter.postValue(listChapter.value?.first())
     }
 
 }

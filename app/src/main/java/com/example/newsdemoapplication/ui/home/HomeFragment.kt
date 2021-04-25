@@ -254,12 +254,20 @@ class HomeFragment : MvvmBaseFragment<HomeViewModel, HomeFragmentBinding>(),Coro
                     mFragmentAdapter.notifyItemChanged(currSelectedPosition)
 //                                        mContentAdapter.notifyItemChanged(currSelectedPosition)
                 }else{
-                    vm.currChapter.value?.chapterName=text?:"-"
+                    vm.currChapter.value?.let {
+                        val a =it
+                        a.chapterName=text?:"-"
+                        vm.listChapter.value?.firstOrNull { it.id==a.id }?.let { it.chapterName=a.chapterName }
+                        vm.currChapter.postValue(a)
+                        vm.listChapter.value=vm.listChapter.value
+                    }
+
                 }
             }.show()
         }
         findViewById<View>(R.id.tv_delete)?.setOnClickListener { v: View? ->
-            if(editChapter){
+            val leftListOpen =mainActivity.mDrawerLayout.isDrawerOpen(mainActivity.binding.zuochoutiId)
+            if(editChapter&&! leftListOpen){
                 editChapter=false
                 vm.listChapter.apply {
                     val index =value?.indexOf(vm.currChapter.value)
@@ -270,9 +278,16 @@ class HomeFragment : MvvmBaseFragment<HomeViewModel, HomeFragmentBinding>(),Coro
                 }
             }else{
                 Log.e("TAG", "initBottomSheetDiaLog: $currSelectedPosition")
-                listData.removeAt(currSelectedPosition)
-                titleAdapter.notifyItemRemoved(currSelectedPosition)
-                mFragmentAdapter.notifyItemRemoved(currSelectedPosition)
+
+                if(leftListOpen){
+                    vm.deleteChapter()
+                    mainActivity.mDrawerLayout.closeDrawer(mainActivity.binding.zuochoutiId)
+                }else{
+                    listData.removeAt(currSelectedPosition)
+                    titleAdapter.notifyItemRemoved(currSelectedPosition)
+                    mFragmentAdapter.notifyItemRemoved(currSelectedPosition)
+                }
+
             }
             dismiss()
 
