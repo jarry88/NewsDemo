@@ -25,7 +25,9 @@ import com.example.newsdemoapplication.util.callback.OnItemClickListener
 import com.example.newsdemoapplication.view.ChapterDragView
 import com.example.newsdemoapplication.view.TitleRecycleView.DragAndPressCallBack
 import com.example.newsdemoapplication.model.ChapterVo
+import com.example.newsdemoapplication.ui.BlackFragment
 import com.example.newsdemoapplication.ui.main_activity.MainActivity
+import com.example.newsdemoapplication.ui.manager.AddSectionFragment
 import com.example.newsdemoapplication.util.callback.SimpleCallback
 import com.example.newsdemoapplication.util.common.MvvmBaseFragment
 import com.example.newsdemoapplication.util.getRandomData
@@ -103,6 +105,10 @@ class HomeFragment : MvvmBaseFragment<HomeViewModel, HomeFragmentBinding>(),Coro
      */
     @SuppressLint("ClickableViewAccessibility")
     private fun initView() {
+        mainActivity.binding.zuoyeId.tjanjiadidianAn.setOnClickListener {
+            mainActivity.closeDrawerLayout()
+            start(AddSectionFragment())
+        }
         binding.apply {
             mFragmentAdapter=object :FragmentStateAdapter(this@HomeFragment){
                 override fun getItemCount()=currContentNewsItem
@@ -243,7 +249,8 @@ class HomeFragment : MvvmBaseFragment<HomeViewModel, HomeFragmentBinding>(),Coro
         findViewById<View>(R.id.tv_rename)?.setOnClickListener {
             Log.e("TAG", "initBottomSheetDiaLog: $currSelectedPosition")
             dismiss()
-            val leftListOpen =mainActivity.mDrawerLayout.isDrawerOpen(mainActivity.binding.zuochoutiId)
+//            val leftListOpen =mainActivity.mDrawerLayout.isDrawerOpen(mainActivity.binding.zuochoutiId)
+            val leftListOpen =true
             if(editChapter&&! leftListOpen){
                 editChapter=false //todo 跳转到编辑页
             }else
@@ -266,7 +273,8 @@ class HomeFragment : MvvmBaseFragment<HomeViewModel, HomeFragmentBinding>(),Coro
             }.show()
         }
         findViewById<View>(R.id.tv_delete)?.setOnClickListener { v: View? ->
-            val leftListOpen =mainActivity.mDrawerLayout.isDrawerOpen(mainActivity.binding.zuochoutiId)
+//            val leftListOpen =mainActivity.mDrawerLayout.isDrawerOpen(mainActivity.binding.zuochoutiId)
+            val leftListOpen =true
             if(editChapter&&! leftListOpen){
                 editChapter=false
                 vm.listChapter.apply {
@@ -281,7 +289,7 @@ class HomeFragment : MvvmBaseFragment<HomeViewModel, HomeFragmentBinding>(),Coro
 
                 if(leftListOpen){
                     vm.deleteChapter()
-                    mainActivity.mDrawerLayout.closeDrawer(mainActivity.binding.zuochoutiId)
+//                    mainActivity.mDrawerLayout.closeDrawer(mainActivity.binding.zuochoutiId)
                 }else{
                     listData.removeAt(currSelectedPosition)
                     titleAdapter.notifyItemRemoved(currSelectedPosition)

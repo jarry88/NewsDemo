@@ -8,10 +8,11 @@ import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.lishuaihua.materialdialogs.MaterialDialog
+import me.yokeyword.fragmentation.SupportFragment
 import java.lang.reflect.ParameterizedType
 
 
-abstract class BaseFragment<U : BaseViewModel>() : Fragment() {
+abstract class BaseFragment<U : BaseViewModel>() : SupportFragment() {
     protected lateinit var vm: U
 
 

@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
-    <!--        根据官方文档，如果某个View 的fitsSystemWindows 设为true，那么该View的padding属性将由系统设置，用户在布局文件中设置的-->
-    <!--    padding会被忽略。系统会为该View设置一个paddingTop，值为statusbar的高度。fitsSystemWindows默认为false。-->
-
+<layout >
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -11,6 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
+        android:background="@color/blue"
         tools:openDrawer="start">
         <RelativeLayout
             android:layout_width="match_parent"
@@ -27,7 +25,7 @@
                     android:id="@+id/ll_top_message"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
-<!--                    左返回按钮-->
+                    <!--                    左返回按钮-->
                     <LinearLayout
                         android:id="@+id/ll_top_left"
                         android:layout_width="wrap_content"
@@ -93,15 +91,15 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="【右抽屉】"/>
-                    <ImageButton
-                        android:id="@+id/sz_imagebutton_id"
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
-                        android:background="#FFFFFF"
-                        android:contentDescription="@string/sz_imagebutton"
-                        android:scaleType="fitCenter"
-                        app:layout_constraintDimensionRatio="1:1"
-                        app:srcCompat="@drawable/y" />
+                        <ImageButton
+                            android:id="@+id/sz_imagebutton_id"
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:background="#FFFFFF"
+                            android:contentDescription="@string/sz_imagebutton"
+                            android:scaleType="fitCenter"
+                            app:layout_constraintDimensionRatio="1:1"
+                            app:srcCompat="@drawable/y" />
                     </LinearLayout>
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -169,7 +167,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:id="@+id/rv_title"/>
-<!--                        顶部标题栏展开收起按钮-->
+                        <!--                        顶部标题栏展开收起按钮-->
                         <LinearLayout
                             android:background="@color/grey"
                             android:layout_width="match_parent"

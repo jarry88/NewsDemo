@@ -13,8 +13,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/cl_container"/>
-
+        android:id="@+id/ft_container"/>
     <!-- 左抽屉 -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/zuochouti_id"
