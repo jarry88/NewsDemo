@@ -4,14 +4,18 @@ import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import com.example.newsdemoapplication.Constants
 import com.example.newsdemoapplication.R
 import com.example.newsdemoapplication.databinding.AddSectionFragmentBinding
 import com.example.newsdemoapplication.model.ChapterVo
 import com.example.newsdemoapplication.model.ContentVo
 import com.example.newsdemoapplication.model.NewsVo
+import com.example.newsdemoapplication.util.CHAPTER_VO
+import com.example.newsdemoapplication.util.ReturnChapterCode
 import com.example.newsdemoapplication.util.common.MvvmBaseFragment
 import com.lishuaihua.toast.ToastUtils.show
+import me.yokeyword.fragmentation.ISupportFragment
 
 /**
  * 添加 编辑一级标题的页面
@@ -129,12 +133,11 @@ class AddSectionFragment : MvvmBaseFragment<AddViewModel, AddSectionFragmentBind
                         chapterName =ed.toString()
                         index=binding.etChapterPosition.text?.toString()?.toIntOrNull()?: Int.MAX_VALUE
                     }
-//                        NavHostFragment.findNavController(this@AddSectionFragment)
-//                                .navigate(R.id.navigation_test,Bundle().apply {
-//                                    putSerializable(Constants.ChapterVo,chapterVo)
-//                                })
+                    setFragmentResult(ReturnChapterCode, bundleOf(CHAPTER_VO to chapterVo))
+                    pop()
                 }
             }
         }
     }
+
 }

@@ -19,7 +19,6 @@ import com.example.newsdemoapplication.databinding.HomeFragmentBinding
 import com.example.newsdemoapplication.view.ListDragAdapter
 import com.example.newsdemoapplication.view.ListDragAdapter.MyDragViewHolder
 import com.example.newsdemoapplication.util.callback.ItemHelper
-import com.example.newsdemoapplication.util.CommonUtils
 import com.example.newsdemoapplication.util.callback.ItemDragHelperCallBack
 import com.example.newsdemoapplication.util.callback.OnItemClickListener
 import com.example.newsdemoapplication.view.ChapterDragView
@@ -28,10 +27,9 @@ import com.example.newsdemoapplication.model.ChapterVo
 import com.example.newsdemoapplication.ui.BlackFragment
 import com.example.newsdemoapplication.ui.main_activity.MainActivity
 import com.example.newsdemoapplication.ui.manager.AddSectionFragment
+import com.example.newsdemoapplication.util.*
 import com.example.newsdemoapplication.util.callback.SimpleCallback
 import com.example.newsdemoapplication.util.common.MvvmBaseFragment
-import com.example.newsdemoapplication.util.getRandomData
-import com.example.newsdemoapplication.util.log
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.lxj.xpopup.XPopup
 import kotlinx.coroutines.CoroutineScope
@@ -107,7 +105,12 @@ class HomeFragment : MvvmBaseFragment<HomeViewModel, HomeFragmentBinding>(),Coro
     private fun initView() {
         mainActivity.binding.zuoyeId.tjanjiadidianAn.setOnClickListener {
             mainActivity.closeDrawerLayout()
-            start(AddSectionFragment())
+            startForResult(AddSectionFragment().apply {
+                arguments?.apply {
+                    putBoolean(Constants.IsEdit,false)
+                }
+            }, ReturnChapterCode)
+//            start(AddSectionFragment())
         }
         binding.apply {
             mFragmentAdapter=object :FragmentStateAdapter(this@HomeFragment){
@@ -249,8 +252,7 @@ class HomeFragment : MvvmBaseFragment<HomeViewModel, HomeFragmentBinding>(),Coro
         findViewById<View>(R.id.tv_rename)?.setOnClickListener {
             Log.e("TAG", "initBottomSheetDiaLog: $currSelectedPosition")
             dismiss()
-//            val leftListOpen =mainActivity.mDrawerLayout.isDrawerOpen(mainActivity.binding.zuochoutiId)
-            val leftListOpen =true
+            val leftListOpen =mainActivity.mDrawerLayout.isDrawerOpen(mainActivity.binding.zuochoutiId)
             if(editChapter&&! leftListOpen){
                 editChapter=false //todo 跳转到编辑页
             }else
@@ -259,7 +261,7 @@ class HomeFragment : MvvmBaseFragment<HomeViewModel, HomeFragmentBinding>(),Coro
                     listData[currSelectedPosition] = text?:"-"
                     titleAdapter.notifyItemChanged(currSelectedPosition)
                     mFragmentAdapter.notifyItemChanged(currSelectedPosition)
-//                                        mContentAdapter.notifyItemChanged(currSelectedPosition)
+//                     mContentAdapter.notifyItemChanged(currSelectedPosition)
                 }else{
                     vm.currChapter.value?.let {
                         val a =it
@@ -273,8 +275,7 @@ class HomeFragment : MvvmBaseFragment<HomeViewModel, HomeFragmentBinding>(),Coro
             }.show()
         }
         findViewById<View>(R.id.tv_delete)?.setOnClickListener { v: View? ->
-//            val leftListOpen =mainActivity.mDrawerLayout.isDrawerOpen(mainActivity.binding.zuochoutiId)
-            val leftListOpen =true
+            val leftListOpen =mainActivity.mDrawerLayout.isDrawerOpen(mainActivity.binding.zuochoutiId)
             if(editChapter&&! leftListOpen){
                 editChapter=false
                 vm.listChapter.apply {
@@ -289,7 +290,7 @@ class HomeFragment : MvvmBaseFragment<HomeViewModel, HomeFragmentBinding>(),Coro
 
                 if(leftListOpen){
                     vm.deleteChapter()
-//                    mainActivity.mDrawerLayout.closeDrawer(mainActivity.binding.zuochoutiId)
+                    mainActivity.mDrawerLayout.closeDrawer(mainActivity.binding.zuochoutiId)
                 }else{
                     listData.removeAt(currSelectedPosition)
                     titleAdapter.notifyItemRemoved(currSelectedPosition)
@@ -424,5 +425,13 @@ class HomeFragment : MvvmBaseFragment<HomeViewModel, HomeFragmentBinding>(),Coro
     override fun changeChapter(id: Int) {
         log("changeChapter $id")
         vm.changeChapter(id)
+    }
+
+    override fun onFragmentResult(requestCode: Int, resultCode: Int, data: Bundle?) {
+        super.onFragmentResult(requestCode, resultCode, data)
+        val chapterVo =data?.get(CHAPTER_VO) as? ChapterVo
+        log("chapterVo :$chapterVo")
+        chapterVo?.let { vm.insertChapter(it) }
+
     }
 }

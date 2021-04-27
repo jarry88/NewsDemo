@@ -92,4 +92,13 @@ class HomeViewModel : BaseViewModel() {
         currChapter.postValue(listChapter.value?.first())
     }
 
+    fun insertChapter(chapterVo: ChapterVo) {
+        listChapter.value?.firstOrNull { it.id==chapterVo.id }?.let {
+//            listChapter.value?.re {  }
+        }?:listChapter.value?.add(chapterVo)
+
+        listChapter.value=listChapter.value
+        currChapter.postValue(chapterVo)
+    }
+
 }
